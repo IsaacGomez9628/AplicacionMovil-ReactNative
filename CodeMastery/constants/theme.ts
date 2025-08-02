@@ -1,4 +1,4 @@
-import { scale, verticalScale } from "@/utils/styling";
+import { scale, verticalScale } from "react-native-size-matters";
 
 export const colors = {
   primary: "#a3e635",

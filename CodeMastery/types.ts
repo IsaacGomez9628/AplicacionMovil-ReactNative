@@ -9,10 +9,12 @@ import {
   TouchableOpacityProps,
   ViewStyle,
 } from "react-native";
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
 
 export type ScreenWrapperProps = {
   style?: ViewStyle;
   children: React.ReactNode;
+  size: Float;
 };
 export type ModalWrapperProps = {
   style?: ViewStyle;
