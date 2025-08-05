@@ -1,44 +1,31 @@
 import { colors } from "@/constants/theme";
 import { useRouter } from "expo-router";
 import LottieView from "lottie-react-native";
-import { useEffect, useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import "react-native-reanimated";
 import LoaderAnimation from "../assets/lotties/Loader Animation using box.json";
 
 const Index = () => {
-  const [showSplash, setShowSplash] = useState(true); // Para controlar si se muestra el splash
   const router = useRouter();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setShowSplash(false); // Oculta splash después de 4 segundos
-      router.push("/(auth)/welcome");
-    }, 2000); // Duración en milisegundos
+      router.push("/(auth)/Welcome");
+    }, 3000); // Duración de la animación de carga (3 segundos)
 
-    return () => clearTimeout(timeout); // Limpia el timeout si el componente se desmonta
-  }, []);
+    return () => clearTimeout(timeout);
+  }, [router]);
 
-  if (showSplash) {
-    return (
-      <View style={styles.splashContainer}>
-        <LottieView
-          source={LoaderAnimation}
-          autoPlay
-          loop={false} // Si quieres que se repita, pon true
-          resizeMode="contain"
-          style={styles.lottie}
-        />
-      </View>
-    );
-  }
-
+  // Solo mostrar la pantalla de carga - removido el estado showSplash
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.logo}
+    <View style={styles.splashContainer}>
+      <LottieView
+        source={LoaderAnimation}
+        autoPlay
+        loop={false}
         resizeMode="contain"
-        source={require("../assets/images/Logo_CM_Blanco_Sinfondo.png")}
+        style={styles.lottie}
       />
     </View>
   );
@@ -56,15 +43,5 @@ const styles = StyleSheet.create({
   lottie: {
     width: "100%",
     height: "100%",
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: colors.neutral900,
-  },
-  logo: {
-    height: "10%",
-    aspectRatio: 1,
   },
 });

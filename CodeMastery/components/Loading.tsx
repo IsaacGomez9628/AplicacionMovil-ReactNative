@@ -9,7 +9,7 @@ import {
 
 const Loading = ({
   size = "large",
-  color = colors.primary,
+  color = colors.neutral100,
 }: ActivityIndicatorProps) => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
