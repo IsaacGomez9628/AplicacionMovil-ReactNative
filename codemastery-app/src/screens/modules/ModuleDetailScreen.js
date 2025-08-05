@@ -1,12 +1,12 @@
-import { View, StyleSheet, ScrollView } from "react-native"
-import { Text, Card, Button, Divider } from "react-native-paper"
-import { useQuery } from "@tanstack/react-query"
-import { moduleService } from "../../services/moduleService"
-import LoadingScreen from "../LoadingScreen"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { View, StyleSheet, ScrollView } from "react-native";
+import { Text, Card, Button, Divider } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
+import { moduleService } from "../../services/moduleService";
+import LoadingScreen from "../LoadingScreen";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function ModuleDetailScreen({ route, navigation }) {
-  const { moduleId } = route.params
+  const { moduleId } = route.params;
 
   const {
     data: module,
@@ -15,14 +15,14 @@ export default function ModuleDetailScreen({ route, navigation }) {
   } = useQuery({
     queryKey: ["module", moduleId],
     queryFn: () => moduleService.getModule(moduleId),
-  })
+  });
 
   const { data: lessons, isLoading: lessonsLoading } = useQuery({
     queryKey: ["moduleLessons", moduleId],
     queryFn: () => moduleService.getModuleLessons(moduleId),
-  })
+  });
 
-  if (isLoading) return <LoadingScreen />
+  if (isLoading) return <LoadingScreen />;
 
   if (error) {
     return (
@@ -30,7 +30,7 @@ export default function ModuleDetailScreen({ route, navigation }) {
         <Icon name="alert-circle" size={48} color="#ef4444" />
         <Text style={styles.errorText}>Error al cargar el módulo</Text>
       </View>
-    )
+    );
   }
 
   return (
@@ -47,7 +47,9 @@ export default function ModuleDetailScreen({ route, navigation }) {
           <View style={styles.statsContainer}>
             <View style={styles.stat}>
               <Icon name="book-outline" size={20} color="#6366f1" />
-              <Text style={styles.statText}>{lessons?.length || 0} lecciones</Text>
+              <Text style={styles.statText}>
+                {lessons?.length || 0} lecciones
+              </Text>
             </View>
             <View style={styles.stat}>
               <Icon name="sort-numeric-ascending" size={20} color="#6366f1" />
@@ -73,12 +75,16 @@ export default function ModuleDetailScreen({ route, navigation }) {
                 <Card
                   key={lesson.id}
                   style={styles.lessonCard}
-                  onPress={() => navigation.navigate("LessonDetail", { lessonId: lesson.id })}
+                  onPress={() =>
+                    navigation.navigate("LessonDetail", { lessonId: lesson.id })
+                  }
                 >
                   <Card.Content>
                     <View style={styles.lessonHeader}>
                       <View style={styles.lessonNumber}>
-                        <Text style={styles.lessonNumberText}>{lesson.position}</Text>
+                        <Text style={styles.lessonNumberText}>
+                          {lesson.position}
+                        </Text>
                       </View>
                       <View style={styles.lessonInfo}>
                         <Text variant="titleSmall" style={styles.lessonTitle}>
@@ -89,8 +95,20 @@ export default function ModuleDetailScreen({ route, navigation }) {
                           <Text style={styles.lessonType}>Teoría</Text>
                           {lesson.practice_instructions && (
                             <>
-                              <Icon name="code-tags" size={14} color="#8b5cf6" style={{ marginLeft: 12 }} />
-                              <Text style={[styles.lessonType, { color: "#8b5cf6" }]}>Práctica</Text>
+                              <Icon
+                                name="code-tags"
+                                size={14}
+                                color="#8b5cf6"
+                                style={{ marginLeft: 12 }}
+                              />
+                              <Text
+                                style={[
+                                  styles.lessonType,
+                                  { color: "#8b5cf6" },
+                                ]}
+                              >
+                                Práctica
+                              </Text>
                             </>
                           )}
                         </View>
@@ -120,7 +138,7 @@ export default function ModuleDetailScreen({ route, navigation }) {
         </Button>
       </View>
     </ScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -231,4 +249,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#ef4444",
   },
-})
+});

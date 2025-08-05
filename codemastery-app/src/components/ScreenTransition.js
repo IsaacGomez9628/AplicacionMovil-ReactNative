@@ -1,15 +1,18 @@
-"use client"
+import { useEffect, useRef } from "react";
+import { Animated, Easing } from "react-native";
 
-import { useEffect, useRef } from "react"
-import { Animated, Easing } from "react-native"
-
-const ScreenTransition = ({ children, type = "fadeIn", duration = 300, delay = 0 }) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current
-  const slideAnim = useRef(new Animated.Value(50)).current
-  const scaleAnim = useRef(new Animated.Value(0.9)).current
+const ScreenTransition = ({
+  children,
+  type = "fadeIn",
+  duration = 300,
+  delay = 0,
+}) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(50)).current;
+  const scaleAnim = useRef(new Animated.Value(0.9)).current;
 
   useEffect(() => {
-    const animations = []
+    const animations = [];
 
     switch (type) {
       case "fadeIn":
@@ -20,9 +23,9 @@ const ScreenTransition = ({ children, type = "fadeIn", duration = 300, delay = 0
             delay,
             easing: Easing.out(Easing.quad),
             useNativeDriver: true,
-          }),
-        )
-        break
+          })
+        );
+        break;
 
       case "slideUp":
         animations.push(
@@ -38,9 +41,9 @@ const ScreenTransition = ({ children, type = "fadeIn", duration = 300, delay = 0
             delay,
             easing: Easing.out(Easing.back(1.1)),
             useNativeDriver: true,
-          }),
-        )
-        break
+          })
+        );
+        break;
 
       case "scaleIn":
         animations.push(
@@ -56,12 +59,12 @@ const ScreenTransition = ({ children, type = "fadeIn", duration = 300, delay = 0
             tension: 100,
             friction: 8,
             useNativeDriver: true,
-          }),
-        )
-        break
+          })
+        );
+        break;
 
       case "slideInLeft":
-        slideAnim.setValue(-50)
+        slideAnim.setValue(-50);
         animations.push(
           Animated.timing(fadeAnim, {
             toValue: 1,
@@ -75,43 +78,47 @@ const ScreenTransition = ({ children, type = "fadeIn", duration = 300, delay = 0
             delay,
             easing: Easing.out(Easing.quad),
             useNativeDriver: true,
-          }),
-        )
-        break
+          })
+        );
+        break;
     }
 
-    Animated.parallel(animations).start()
-  }, [type, duration, delay])
+    Animated.parallel(animations).start();
+  }, [type, duration, delay]);
 
   const getAnimatedStyle = () => {
     switch (type) {
       case "fadeIn":
-        return { opacity: fadeAnim }
+        return { opacity: fadeAnim };
 
       case "slideUp":
         return {
           opacity: fadeAnim,
           transform: [{ translateY: slideAnim }],
-        }
+        };
 
       case "scaleIn":
         return {
           opacity: fadeAnim,
           transform: [{ scale: scaleAnim }],
-        }
+        };
 
       case "slideInLeft":
         return {
           opacity: fadeAnim,
           transform: [{ translateX: slideAnim }],
-        }
+        };
 
       default:
-        return { opacity: fadeAnim }
+        return { opacity: fadeAnim };
     }
-  }
+  };
 
-  return <Animated.View style={[{ flex: 1 }, getAnimatedStyle()]}>{children}</Animated.View>
-}
+  return (
+    <Animated.View style={[{ flex: 1 }, getAnimatedStyle()]}>
+      {children}
+    </Animated.View>
+  );
+};
 
-export default ScreenTransition
+export default ScreenTransition;

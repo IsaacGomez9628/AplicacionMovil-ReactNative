@@ -1,17 +1,16 @@
-"use client"
-import { createStackNavigator } from "@react-navigation/stack"
-import { useAuth } from "../context/AuthContext"
-import AuthNavigator from "./AuthNavigator"
-import MainNavigator from "./MainNavigator"
-import LoadingScreen from "../screens/LoadingScreen"
+import { createStackNavigator } from "@react-navigation/stack";
+import { useAuth } from "../context/AuthContext";
+import AuthNavigator from "./AuthNavigator";
+import MainNavigator from "./MainNavigator";
+import LoadingScreen from "../screens/LoadingScreen";
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 export default function AppNavigator() {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
 
   return (
@@ -22,5 +21,5 @@ export default function AppNavigator() {
         <Stack.Screen name="Auth" component={AuthNavigator} />
       )}
     </Stack.Navigator>
-  )
+  );
 }

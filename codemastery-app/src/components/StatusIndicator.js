@@ -1,11 +1,9 @@
-"use client"
-
-import { useEffect, useRef } from "react"
-import { View, StyleSheet, Animated } from "react-native"
-import { Text } from "react-native-paper"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import LottieView from "lottie-react-native"
-import useResponsive from "../hooks/useResponsive"
+import { useEffect, useRef } from "react";
+import { View, StyleSheet, Animated } from "react-native";
+import { Text } from "react-native-paper";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+import LottieView from "lottie-react-native";
+import useResponsive from "../hooks/useResponsive";
 
 const StatusIndicator = ({
   type = "success", // success, error, warning, info, loading
@@ -17,9 +15,9 @@ const StatusIndicator = ({
   lottieSource,
   position = "top", // top, center, bottom
 }) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current
-  const slideAnim = useRef(new Animated.Value(-100)).current
-  const { spacing, fontSize } = useResponsive()
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(-100)).current;
+  const { spacing, fontSize } = useResponsive();
 
   useEffect(() => {
     if (visible) {
@@ -36,18 +34,18 @@ const StatusIndicator = ({
           friction: 8,
           useNativeDriver: true,
         }),
-      ]).start()
+      ]).start();
 
       // Auto hide
       if (autoHide) {
         setTimeout(() => {
-          hideIndicator()
-        }, duration)
+          hideIndicator();
+        }, duration);
       }
     } else {
-      hideIndicator()
+      hideIndicator();
     }
-  }, [visible])
+  }, [visible]);
 
   const hideIndicator = () => {
     Animated.parallel([
@@ -62,9 +60,9 @@ const StatusIndicator = ({
         useNativeDriver: true,
       }),
     ]).start(() => {
-      if (onHide) onHide()
-    })
-  }
+      if (onHide) onHide();
+    });
+  };
 
   const getStatusConfig = () => {
     switch (type) {
@@ -73,41 +71,41 @@ const StatusIndicator = ({
           backgroundColor: "#10b981",
           icon: "check-circle",
           color: "#ffffff",
-        }
+        };
       case "error":
         return {
           backgroundColor: "#ef4444",
           icon: "close-circle",
           color: "#ffffff",
-        }
+        };
       case "warning":
         return {
           backgroundColor: "#f59e0b",
           icon: "alert-circle",
           color: "#ffffff",
-        }
+        };
       case "info":
         return {
           backgroundColor: "#3b82f6",
           icon: "information",
           color: "#ffffff",
-        }
+        };
       case "loading":
         return {
           backgroundColor: "#6366f1",
           icon: "loading",
           color: "#ffffff",
-        }
+        };
       default:
         return {
           backgroundColor: "#6b7280",
           icon: "information",
           color: "#ffffff",
-        }
+        };
     }
-  }
+  };
 
-  const config = getStatusConfig()
+  const config = getStatusConfig();
 
   const containerStyle = [
     styles.container,
@@ -118,7 +116,7 @@ const StatusIndicator = ({
       paddingHorizontal: spacing.md,
       paddingVertical: spacing.sm,
     },
-  ]
+  ];
 
   const animatedStyle = {
     opacity: fadeAnim,
@@ -127,17 +125,27 @@ const StatusIndicator = ({
         translateY: position === "center" ? 0 : slideAnim,
       },
     ],
-  }
+  };
 
-  if (!visible && fadeAnim._value === 0) return null
+  if (!visible && fadeAnim._value === 0) return null;
 
   return (
     <Animated.View style={[containerStyle, animatedStyle]}>
       <View style={styles.content}>
         {lottieSource ? (
-          <LottieView source={lottieSource} autoPlay loop={type === "loading"} style={styles.lottie} />
+          <LottieView
+            source={lottieSource}
+            autoPlay
+            loop={type === "loading"}
+            style={styles.lottie}
+          />
         ) : (
-          <Icon name={config.icon} size={24} color={config.color} style={styles.icon} />
+          <Icon
+            name={config.icon}
+            size={24}
+            color={config.color}
+            style={styles.icon}
+          />
         )}
         {message && (
           <Text
@@ -154,8 +162,8 @@ const StatusIndicator = ({
         )}
       </View>
     </Animated.View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -189,6 +197,6 @@ const styles = StyleSheet.create({
     height: 24,
     marginRight: 12,
   },
-})
+});
 
-export default StatusIndicator
+export default StatusIndicator;

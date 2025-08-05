@@ -1,16 +1,14 @@
-"use client"
-
-import React from "react"
-import { View, StyleSheet, FlatList, Alert } from "react-native"
-import { Text, Card, Button, FAB, Searchbar, Chip } from "react-native-paper"
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { userService } from "../../services/userService"
-import LoadingScreen from "../LoadingScreen"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import React from "react";
+import { View, StyleSheet, FlatList, Alert } from "react-native";
+import { Text, Card, Button, FAB, Searchbar, Chip } from "react-native-paper";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { userService } from "../../services/userService";
+import LoadingScreen from "../LoadingScreen";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function UsersScreen() {
-  const [searchQuery, setSearchQuery] = React.useState("")
-  const queryClient = useQueryClient()
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const queryClient = useQueryClient();
 
   const {
     data: users,
@@ -20,38 +18,42 @@ export default function UsersScreen() {
   } = useQuery({
     queryKey: ["users"],
     queryFn: userService.getUsers,
-  })
+  });
 
   const deleteUserMutation = useMutation({
     mutationFn: userService.deleteUser,
     onSuccess: () => {
-      queryClient.invalidateQueries(["users"])
-      Alert.alert("Éxito", "Usuario eliminado correctamente")
+      queryClient.invalidateQueries(["users"]);
+      Alert.alert("Éxito", "Usuario eliminado correctamente");
     },
     onError: () => {
-      Alert.alert("Error", "No se pudo eliminar el usuario")
+      Alert.alert("Error", "No se pudo eliminar el usuario");
     },
-  })
+  });
 
   const filteredUsers =
     users?.filter(
       (user) =>
         user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.email?.toLowerCase().includes(searchQuery.toLowerCase()),
-    ) || []
+        user.email?.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
-  if (isLoading) return <LoadingScreen />
+  if (isLoading) return <LoadingScreen />;
 
   const handleDeleteUser = (userId, userName) => {
-    Alert.alert("Eliminar Usuario", `¿Estás seguro de que quieres eliminar a ${userName}?`, [
-      { text: "Cancelar", style: "cancel" },
-      {
-        text: "Eliminar",
-        onPress: () => deleteUserMutation.mutate(userId),
-        style: "destructive",
-      },
-    ])
-  }
+    Alert.alert(
+      "Eliminar Usuario",
+      `¿Estás seguro de que quieres eliminar a ${userName}?`,
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Eliminar",
+          onPress: () => deleteUserMutation.mutate(userId),
+          style: "destructive",
+        },
+      ]
+    );
+  };
 
   const renderUser = ({ item }) => (
     <Card style={styles.userCard}>
@@ -98,7 +100,7 @@ export default function UsersScreen() {
         </View>
       </Card.Content>
     </Card>
-  )
+  );
 
   return (
     <View style={styles.container}>
@@ -130,7 +132,7 @@ export default function UsersScreen() {
         }}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -200,4 +202,4 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-})
+});

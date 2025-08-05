@@ -1,13 +1,18 @@
-import { StyleSheet, View } from "react-native"
-import { Card, Text } from "react-native-paper"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { StyleSheet, View } from "react-native";
+import { Card, Text } from "react-native-paper";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function CourseCard({ course, onPress }) {
   return (
     <Card style={styles.card} onPress={onPress}>
       <Card.Content>
         <View style={styles.header}>
-          <View style={[styles.icon, { backgroundColor: course.color_class || "#6366f1" }]}>
+          <View
+            style={[
+              styles.icon,
+              { backgroundColor: course.color_class || "#6366f1" },
+            ]}
+          >
             <Icon name={course.icon || "book"} size={24} color="white" />
           </View>
           <View style={styles.info}>
@@ -22,7 +27,7 @@ export default function CourseCard({ course, onPress }) {
         </View>
       </Card.Content>
     </Card>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -52,4 +57,4 @@ const styles = StyleSheet.create({
   description: {
     color: "#6b7280",
   },
-})
+});

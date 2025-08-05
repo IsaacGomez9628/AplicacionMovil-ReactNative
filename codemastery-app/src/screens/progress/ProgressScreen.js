@@ -1,38 +1,37 @@
-"use client"
-import { View, StyleSheet, ScrollView } from "react-native"
-import { Text, Card, ProgressBar, Button } from "react-native-paper"
-import { useQuery } from "@tanstack/react-query"
-import { progressService } from "../../services/progressService"
-import { lessonService } from "../../services/lessonService"
-import { useAuth } from "../../context/AuthContext"
-import LoadingScreen from "../LoadingScreen"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { View, StyleSheet, ScrollView } from "react-native";
+import { Text, Card, ProgressBar, Button } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
+import { progressService } from "../../services/progressService";
+import { lessonService } from "../../services/lessonService";
+import { useAuth } from "../../context/AuthContext";
+import LoadingScreen from "../LoadingScreen";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function ProgressScreen({ navigation }) {
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   const { data: progress, isLoading: progressLoading } = useQuery({
     queryKey: ["userProgress", user?.id],
     queryFn: () => progressService.getUserProgress(user?.id),
     enabled: !!user?.id,
-  })
+  });
 
   const { data: summary, isLoading: summaryLoading } = useQuery({
     queryKey: ["userSummary", user?.id],
     queryFn: () => progressService.getUserSummary(user?.id),
     enabled: !!user?.id,
-  })
+  });
 
   const { data: attempts, isLoading: attemptsLoading } = useQuery({
     queryKey: ["userAttempts", user?.id],
     queryFn: () => lessonService.getUserAttempts(user?.id),
     enabled: !!user?.id,
-  })
+  });
 
-  if (progressLoading || summaryLoading) return <LoadingScreen />
+  if (progressLoading || summaryLoading) return <LoadingScreen />;
 
-  const completionPercentage = summary?.completion_percentage || 0
-  const recentAttempts = attempts?.slice(0, 5) || []
+  const completionPercentage = summary?.completion_percentage || 0;
+  const recentAttempts = attempts?.slice(0, 5) || [];
 
   return (
     <ScrollView style={styles.container}>
@@ -49,7 +48,10 @@ export default function ProgressScreen({ navigation }) {
                 {Math.round(completionPercentage)}%
               </Text>
             </View>
-            <ProgressBar progress={completionPercentage / 100} style={styles.progressBar} />
+            <ProgressBar
+              progress={completionPercentage / 100}
+              style={styles.progressBar}
+            />
           </View>
 
           <View style={styles.statsGrid}>
@@ -97,17 +99,24 @@ export default function ProgressScreen({ navigation }) {
               <View key={moduleProgress.id} style={styles.moduleProgress}>
                 <View style={styles.moduleHeader}>
                   <Text variant="titleSmall" style={styles.moduleName}>
-                    {moduleProgress.module?.title || `Módulo ${moduleProgress.module_id}`}
+                    {moduleProgress.module?.title ||
+                      `Módulo ${moduleProgress.module_id}`}
                   </Text>
                   <Icon
-                    name={moduleProgress.completed ? "check-circle" : "clock-outline"}
+                    name={
+                      moduleProgress.completed
+                        ? "check-circle"
+                        : "clock-outline"
+                    }
                     size={20}
                     color={moduleProgress.completed ? "#10b981" : "#6b7280"}
                   />
                 </View>
                 <Text variant="bodySmall" style={styles.moduleStatus}>
                   {moduleProgress.completed
-                    ? `Completado el ${new Date(moduleProgress.completion_date).toLocaleDateString()}`
+                    ? `Completado el ${new Date(
+                        moduleProgress.completion_date
+                      ).toLocaleDateString()}`
                     : "En progreso"}
                 </Text>
               </View>
@@ -154,7 +163,7 @@ export default function ProgressScreen({ navigation }) {
         </Card>
       )}
     </ScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -253,4 +262,4 @@ const styles = StyleSheet.create({
   viewAllButton: {
     marginTop: 16,
   },
-})
+});

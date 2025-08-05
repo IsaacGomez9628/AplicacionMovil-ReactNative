@@ -1,16 +1,16 @@
-import { View, StyleSheet, FlatList } from "react-native"
-import { Text, Button } from "react-native-paper"
-import { useQuery } from "@tanstack/react-query"
-import { courseService } from "../../services/courseService"
-import SafeContainer from "../../components/SafeContainer"
-import ResponsiveCard from "../../components/ResponsiveCard"
-import LoadingScreen from "../LoadingScreen"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import useResponsive from "../../hooks/useResponsive"
+import { View, StyleSheet, FlatList } from "react-native";
+import { Text, Button } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
+import { courseService } from "../../services/courseService";
+import SafeContainer from "../../components/SafeContainer";
+import ResponsiveCard from "../../components/ResponsiveCard";
+import LoadingScreen from "../LoadingScreen";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+import useResponsive from "../../hooks/useResponsive";
 
 export default function CourseDetailScreen({ route, navigation }) {
-  const { courseId } = route.params
-  const { spacing, fontSize, isTablet } = useResponsive()
+  const { courseId } = route.params;
+  const { spacing, fontSize, isTablet } = useResponsive();
 
   const {
     data: course,
@@ -19,14 +19,14 @@ export default function CourseDetailScreen({ route, navigation }) {
   } = useQuery({
     queryKey: ["course", courseId],
     queryFn: () => courseService.getCourse(courseId),
-  })
+  });
 
   const { data: modules, isLoading: modulesLoading } = useQuery({
     queryKey: ["courseModules", courseId],
     queryFn: () => courseService.getCourseModules(courseId),
-  })
+  });
 
-  if (isLoading) return <LoadingScreen />
+  if (isLoading) return <LoadingScreen />;
 
   if (error) {
     return (
@@ -36,17 +36,29 @@ export default function CourseDetailScreen({ route, navigation }) {
           <Text style={styles.errorText}>Error al cargar el curso</Text>
         </View>
       </SafeContainer>
-    )
+    );
   }
 
   const renderHeader = () => (
     <ResponsiveCard style={styles.headerCard}>
       <View style={styles.courseHeader}>
-        <View style={[styles.courseIcon, { backgroundColor: course.color_class || "#6366f1" }]}>
-          <Icon name={course.icon || "book"} size={isTablet ? 40 : 32} color="white" />
+        <View
+          style={[
+            styles.courseIcon,
+            { backgroundColor: course.color_class || "#6366f1" },
+          ]}
+        >
+          <Icon
+            name={course.icon || "book"}
+            size={isTablet ? 40 : 32}
+            color="white"
+          />
         </View>
         <View style={styles.courseInfo}>
-          <Text variant={isTablet ? "headlineMedium" : "headlineSmall"} style={styles.title}>
+          <Text
+            variant={isTablet ? "headlineMedium" : "headlineSmall"}
+            style={styles.title}
+          >
             {course.title}
           </Text>
           <Text variant="bodyMedium" style={styles.description}>
@@ -58,7 +70,9 @@ export default function CourseDetailScreen({ route, navigation }) {
       <View style={[styles.statsContainer, { marginTop: spacing.md }]}>
         <View style={styles.stat}>
           <Icon name="book-outline" size={20} color="#6366f1" />
-          <Text style={[styles.statText, { fontSize: fontSize.sm }]}>{modules?.length || 0} módulos</Text>
+          <Text style={[styles.statText, { fontSize: fontSize.sm }]}>
+            {modules?.length || 0} módulos
+          </Text>
         </View>
         <View style={styles.stat}>
           <Icon name="calendar" size={20} color="#6366f1" />
@@ -68,7 +82,7 @@ export default function CourseDetailScreen({ route, navigation }) {
         </View>
       </View>
     </ResponsiveCard>
-  )
+  );
 
   const renderModule = ({ item, index }) => (
     <ResponsiveCard
@@ -83,7 +97,11 @@ export default function CourseDetailScreen({ route, navigation }) {
           <Text variant="titleSmall" style={styles.moduleTitle}>
             {item.title}
           </Text>
-          <Text variant="bodySmall" style={styles.moduleDescription} numberOfLines={2}>
+          <Text
+            variant="bodySmall"
+            style={styles.moduleDescription}
+            numberOfLines={2}
+          >
             {item.description}
           </Text>
           <Text variant="bodySmall" style={styles.lessonsCount}>
@@ -93,14 +111,14 @@ export default function CourseDetailScreen({ route, navigation }) {
         <Icon name="chevron-right" size={24} color="#6b7280" />
       </View>
     </ResponsiveCard>
-  )
+  );
 
   const renderEmpty = () => (
     <View style={styles.emptyModules}>
       <Icon name="book-outline" size={48} color="#d1d5db" />
       <Text style={styles.emptyText}>No hay módulos disponibles</Text>
     </View>
-  )
+  );
 
   const renderFooter = () => (
     <View style={[styles.actionContainer, { paddingHorizontal: spacing.md }]}>
@@ -113,7 +131,7 @@ export default function CourseDetailScreen({ route, navigation }) {
         Explorar Módulos
       </Button>
     </View>
-  )
+  );
 
   return (
     <SafeContainer>
@@ -128,7 +146,7 @@ export default function CourseDetailScreen({ route, navigation }) {
         showsVerticalScrollIndicator={false}
       />
     </SafeContainer>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -234,4 +252,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#ef4444",
   },
-})
+});

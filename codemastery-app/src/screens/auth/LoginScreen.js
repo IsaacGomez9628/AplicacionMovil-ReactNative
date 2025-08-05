@@ -1,32 +1,33 @@
-"use client"
-
-import { useState } from "react"
-import { View } from "react-native"
-import { Text, Divider } from "react-native-paper"
-import { useForm, Controller } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
-import { useAuth } from "../../context/AuthContext"
-import AuthContainer from "../../components/AuthContainer"
-import AuthCard from "../../components/AuthCard"
-import AuthInput from "../../components/AuthInput"
-import AuthButton from "../../components/AuthButton"
-import ScreenTransition from "../../components/ScreenTransition"
-import StatusIndicator from "../../components/StatusIndicator"
-import { darkColors } from "../../theme/darkTheme"
-import useResponsive from "../../hooks/useResponsive"
+import { useState } from "react";
+import { View } from "react-native";
+import { Text, Divider } from "react-native-paper";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useAuth } from "../../context/AuthContext";
+import AuthContainer from "../../components/AuthContainer";
+import AuthCard from "../../components/AuthCard";
+import AuthInput from "../../components/AuthInput";
+import AuthButton from "../../components/AuthButton";
+import ScreenTransition from "../../components/ScreenTransition";
+import StatusIndicator from "../../components/StatusIndicator";
+import { darkColors } from "../../theme/darkTheme";
+import useResponsive from "../../hooks/useResponsive";
 
 const schema = yup.object({
   email: yup.string().email("Email inválido").required("Email es requerido"),
-  password: yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("Contraseña es requerida"),
-})
+  password: yup
+    .string()
+    .min(6, "La contraseña debe tener al menos 6 caracteres")
+    .required("Contraseña es requerida"),
+});
 
 export default function LoginScreen({ navigation }) {
-  const [loading, setLoading] = useState(false)
-  const [showError, setShowError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
-  const { login } = useAuth()
-  const { spacing, utils, isTablet } = useResponsive()
+  const [loading, setLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const { login } = useAuth();
+  const { spacing, utils, isTablet } = useResponsive();
 
   const {
     control,
@@ -38,25 +39,25 @@ export default function LoginScreen({ navigation }) {
       email: "",
       password: "",
     },
-  })
+  });
 
   const onSubmit = async (data) => {
-    setLoading(true)
-    setShowError(false)
+    setLoading(true);
+    setShowError(false);
 
     try {
-      const result = await login(data.email, data.password)
+      const result = await login(data.email, data.password);
       if (!result.success) {
-        setErrorMessage(result.error)
-        setShowError(true)
+        setErrorMessage(result.error);
+        setShowError(true);
       }
     } catch (error) {
-      setErrorMessage("Ocurrió un error inesperado")
-      setShowError(true)
+      setErrorMessage("Ocurrió un error inesperado");
+      setShowError(true);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const styles = {
     content: {
@@ -84,12 +85,17 @@ export default function LoginScreen({ navigation }) {
       backgroundColor: darkColors.outline,
       marginVertical: utils.getSpacing("lg"),
     },
-  }
+  };
 
   return (
     <AuthContainer statusBarStyle="light">
       <ScreenTransition type="slideUp">
-        <StatusIndicator type="error" message={errorMessage} visible={showError} onHide={() => setShowError(false)} />
+        <StatusIndicator
+          type="error"
+          message={errorMessage}
+          visible={showError}
+          onHide={() => setShowError(false)}
+        />
 
         <View style={styles.content}>
           <ScreenTransition type="fadeIn" delay={200}>
@@ -156,12 +162,15 @@ export default function LoginScreen({ navigation }) {
           <ScreenTransition type="fadeIn" delay={800}>
             <Divider style={styles.divider} />
 
-            <AuthButton variant="text" onPress={() => navigation.navigate("Register")}>
+            <AuthButton
+              variant="text"
+              onPress={() => navigation.navigate("Register")}
+            >
               ¿No tienes cuenta? Regístrate
             </AuthButton>
           </ScreenTransition>
         </View>
       </ScreenTransition>
     </AuthContainer>
-  )
+  );
 }

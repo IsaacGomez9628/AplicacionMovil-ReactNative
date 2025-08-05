@@ -1,23 +1,30 @@
-"use client"
-import { StyleSheet, ScrollView, Alert } from "react-native"
-import { Text, Card, Button, Avatar, Divider, List } from "react-native-paper"
-import { useAuth } from "../../context/AuthContext"
+import { StyleSheet, ScrollView, Alert } from "react-native";
+import { Text, Card, Button, Avatar, Divider, List } from "react-native-paper";
+import { useAuth } from "../../context/AuthContext";
 
 export default function ProfileScreen({ navigation }) {
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
-    Alert.alert("Cerrar Sesión", "¿Estás seguro de que quieres cerrar sesión?", [
-      { text: "Cancelar", style: "cancel" },
-      { text: "Cerrar Sesión", onPress: logout, style: "destructive" },
-    ])
-  }
+    Alert.alert(
+      "Cerrar Sesión",
+      "¿Estás seguro de que quieres cerrar sesión?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        { text: "Cerrar Sesión", onPress: logout, style: "destructive" },
+      ]
+    );
+  };
 
   return (
     <ScrollView style={styles.container}>
       <Card style={styles.profileCard}>
         <Card.Content style={styles.profileContent}>
-          <Avatar.Text size={80} label={user?.name?.charAt(0)?.toUpperCase() || "U"} style={styles.avatar} />
+          <Avatar.Text
+            size={80}
+            label={user?.name?.charAt(0)?.toUpperCase() || "U"}
+            style={styles.avatar}
+          />
           <Text variant="headlineSmall" style={styles.name}>
             {user?.name || "Usuario"}
           </Text>
@@ -105,7 +112,7 @@ export default function ProfileScreen({ navigation }) {
         </Card.Content>
       </Card>
     </ScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -148,4 +155,4 @@ const styles = StyleSheet.create({
   logoutButton: {
     paddingVertical: 8,
   },
-})
+});

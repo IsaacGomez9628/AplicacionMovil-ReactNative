@@ -1,94 +1,96 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useEffect, useState } from "react"
-import * as SecureStore from "expo-secure-store"
-import { authService } from "../services/authService"
+import { createContext, useContext, useEffect, useState } from "react";
+import * as SecureStore from "expo-secure-store";
+import { authService } from "../services/authService";
 
-const AuthContext = createContext({})
+const AuthContext = createContext({});
 
 export const useAuth = () => {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider")
+    throw new Error("useAuth must be used within an AuthProvider");
   }
-  return context
-}
+  return context;
+};
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [token, setToken] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadStoredAuth()
-  }, [])
+    loadStoredAuth();
+  }, []);
 
   const loadStoredAuth = async () => {
     try {
-      const storedToken = await SecureStore.getItemAsync("access_token")
+      setLoading(true);
+      const storedToken = await SecureStore.getItemAsync("access_token");
       if (storedToken) {
-        setToken(storedToken)
-        authService.setAuthToken(storedToken)
-        await loadUser()
+        setToken(storedToken);
+        authService.setAuthToken(storedToken);
+        await loadUser();
       }
     } catch (error) {
-      console.error("Error loading stored auth:", error)
+      console.error("Error loading stored auth:", error);
+      await logout();
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const loadUser = async () => {
     try {
-      const userData = await authService.getMe()
-      setUser(userData)
+      const userData = await authService.getMe();
+      setUser(userData);
     } catch (error) {
-      console.error("Error loading user:", error)
-      await logout()
+      console.error("Error loading user:", error);
+      await logout();
     }
-  }
+  };
 
   const login = async (email, password) => {
     try {
-      const response = await authService.login(email, password)
-      const { access_token } = response
+      const response = await authService.login(email, password);
+      const { access_token } = response;
 
-      await SecureStore.setItemAsync("access_token", access_token)
-      setToken(access_token)
-      authService.setAuthToken(access_token)
+      await SecureStore.setItemAsync("access_token", access_token);
+      setToken(access_token);
+      authService.setAuthToken(access_token);
 
-      await loadUser()
-      return { success: true }
+      await loadUser();
+      return { success: true };
     } catch (error) {
       return {
         success: false,
         error: error.response?.data?.detail || "Error al iniciar sesión",
-      }
+      };
     }
-  }
+  };
 
   const register = async (name, email, password) => {
     try {
-      await authService.register(name, email, password)
-      return { success: true }
+      await authService.register(name, email, password);
+      return { success: true };
     } catch (error) {
       return {
         success: false,
         error: error.response?.data?.detail || "Error al registrarse",
-      }
+      };
     }
-  }
+  };
 
   const logout = async () => {
     try {
-      await SecureStore.deleteItemAsync("access_token")
-      setToken(null)
-      setUser(null)
-      authService.setAuthToken(null)
+      await SecureStore.deleteItemAsync("access_token");
+      setToken(null);
+      setUser(null);
+      authService.setAuthToken(null);
     } catch (error) {
-      console.error("Error during logout:", error)
+      console.error("Error during logout:", error);
     }
-  }
+  };
 
   const value = {
     user,
@@ -98,7 +100,7 @@ export const AuthProvider = ({ children }) => {
     register,
     logout,
     isAuthenticated: !!token && !!user,
-  }
+  };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-}
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};

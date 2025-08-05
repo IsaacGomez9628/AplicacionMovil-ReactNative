@@ -1,23 +1,21 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { View, StyleSheet, Alert, FlatList } from "react-native"
-import { Text, Button, TextInput, Chip, Divider } from "react-native-paper"
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { lessonService } from "../../services/lessonService"
-import { useAuth } from "../../context/AuthContext"
-import SafeContainer from "../../components/SafeContainer"
-import ResponsiveCard from "../../components/ResponsiveCard"
-import LoadingScreen from "../LoadingScreen"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import useResponsive from "../../hooks/useResponsive"
+import { useState, useEffect } from "react";
+import { View, StyleSheet, Alert, FlatList } from "react-native";
+import { Text, Button, TextInput, Chip, Divider } from "react-native-paper";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { lessonService } from "../../services/lessonService";
+import { useAuth } from "../../context/AuthContext";
+import SafeContainer from "../../components/SafeContainer";
+import ResponsiveCard from "../../components/ResponsiveCard";
+import LoadingScreen from "../LoadingScreen";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+import useResponsive from "../../hooks/useResponsive";
 
 export default function LessonDetailScreen({ route }) {
-  const { lessonId } = route.params
-  const { user } = useAuth()
-  const [code, setCode] = useState("")
-  const queryClient = useQueryClient()
-  const { spacing, fontSize, isTablet, orientation } = useResponsive()
+  const { lessonId } = route.params;
+  const { user } = useAuth();
+  const [code, setCode] = useState("");
+  const queryClient = useQueryClient();
+  const { spacing, fontSize, isTablet, orientation } = useResponsive();
 
   const {
     data: lesson,
@@ -26,35 +24,39 @@ export default function LessonDetailScreen({ route }) {
   } = useQuery({
     queryKey: ["lesson", lessonId],
     queryFn: () => lessonService.getLesson(lessonId),
-  })
+  });
 
   const { data: lastAttempt } = useQuery({
     queryKey: ["lastAttempt", lessonId, user?.id],
     queryFn: () => lessonService.getLastAttempt(lessonId, user?.id),
     enabled: !!user?.id && !!lesson?.practice_instructions,
-  })
+  });
 
   const submitCodeMutation = useMutation({
-    mutationFn: (codeSubmitted) => lessonService.submitCode(lessonId, codeSubmitted),
+    mutationFn: (codeSubmitted) =>
+      lessonService.submitCode(lessonId, codeSubmitted),
     onSuccess: (data) => {
       Alert.alert(
         data.is_correct ? "¡Correcto!" : "Incorrecto",
-        data.message || (data.is_correct ? "Tu código es correcto" : "Revisa tu código e intenta de nuevo"),
-      )
-      queryClient.invalidateQueries(["lastAttempt", lessonId, user?.id])
+        data.message ||
+          (data.is_correct
+            ? "Tu código es correcto"
+            : "Revisa tu código e intenta de nuevo")
+      );
+      queryClient.invalidateQueries(["lastAttempt", lessonId, user?.id]);
     },
     onError: (error) => {
-      Alert.alert("Error", "No se pudo enviar el código")
+      Alert.alert("Error", "No se pudo enviar el código");
     },
-  })
+  });
 
   useEffect(() => {
     if (lesson?.practice_initial_code && !code) {
-      setCode(lesson.practice_initial_code)
+      setCode(lesson.practice_initial_code);
     }
-  }, [lesson])
+  }, [lesson]);
 
-  if (isLoading) return <LoadingScreen />
+  if (isLoading) return <LoadingScreen />;
 
   if (error) {
     return (
@@ -64,18 +66,19 @@ export default function LessonDetailScreen({ route }) {
           <Text style={styles.errorText}>Error al cargar la lección</Text>
         </View>
       </SafeContainer>
-    )
+    );
   }
 
   const handleSubmitCode = () => {
     if (!code.trim()) {
-      Alert.alert("Error", "Por favor ingresa tu código")
-      return
+      Alert.alert("Error", "Por favor ingresa tu código");
+      return;
     }
-    submitCodeMutation.mutate(code)
-  }
+    submitCodeMutation.mutate(code);
+  };
 
-  const hasPractice = lesson.practice_instructions && lesson.practice_instructions.trim() !== ""
+  const hasPractice =
+    lesson.practice_instructions && lesson.practice_instructions.trim() !== "";
 
   const sections = [
     {
@@ -98,7 +101,13 @@ export default function LessonDetailScreen({ route }) {
           {
             id: "code",
             type: "code",
-            data: { lesson, code, setCode, handleSubmitCode, isLoading: submitCodeMutation.isPending },
+            data: {
+              lesson,
+              code,
+              setCode,
+              handleSubmitCode,
+              isLoading: submitCodeMutation.isPending,
+            },
           },
           ...(lastAttempt
             ? [
@@ -111,7 +120,7 @@ export default function LessonDetailScreen({ route }) {
             : []),
         ]
       : []),
-  ]
+  ];
 
   const renderSection = ({ item }) => {
     switch (item.type) {
@@ -136,54 +145,75 @@ export default function LessonDetailScreen({ route }) {
                 )}
               </View>
             </View>
-            <Text variant="bodySmall" style={[styles.position, { fontSize: fontSize.sm, marginTop: spacing.sm }]}>
+            <Text
+              variant="bodySmall"
+              style={[
+                styles.position,
+                { fontSize: fontSize.sm, marginTop: spacing.sm },
+              ]}
+            >
               Lección {item.data.position}
             </Text>
           </ResponsiveCard>
-        )
+        );
 
       case "theory":
         return (
           <ResponsiveCard style={styles.contentCard}>
             <View style={styles.sectionHeader}>
               <Icon name="text" size={24} color="#6366f1" />
-              <Text variant="titleMedium" style={[styles.sectionTitle, { fontSize: fontSize.lg }]}>
+              <Text
+                variant="titleMedium"
+                style={[styles.sectionTitle, { fontSize: fontSize.lg }]}
+              >
                 Teoría
               </Text>
             </View>
             <Text
               variant="bodyMedium"
-              style={[styles.content, { fontSize: fontSize.md, lineHeight: fontSize.md * 1.5 }]}
+              style={[
+                styles.content,
+                { fontSize: fontSize.md, lineHeight: fontSize.md * 1.5 },
+              ]}
             >
               {item.data.theory}
             </Text>
           </ResponsiveCard>
-        )
+        );
 
       case "practice":
         return (
           <ResponsiveCard style={styles.contentCard}>
             <View style={styles.sectionHeader}>
               <Icon name="code-tags" size={24} color="#8b5cf6" />
-              <Text variant="titleMedium" style={[styles.sectionTitle, { fontSize: fontSize.lg }]}>
+              <Text
+                variant="titleMedium"
+                style={[styles.sectionTitle, { fontSize: fontSize.lg }]}
+              >
                 Ejercicio Práctico
               </Text>
             </View>
             <Text
               variant="bodyMedium"
-              style={[styles.content, { fontSize: fontSize.md, lineHeight: fontSize.md * 1.5 }]}
+              style={[
+                styles.content,
+                { fontSize: fontSize.md, lineHeight: fontSize.md * 1.5 },
+              ]}
             >
               {item.data.practice_instructions}
             </Text>
           </ResponsiveCard>
-        )
+        );
 
       case "code":
         return (
           <ResponsiveCard style={styles.codeCard}>
             <Text
               variant="titleMedium"
-              style={[styles.sectionTitle, { fontSize: fontSize.lg, marginBottom: spacing.md }]}
+              style={[
+                styles.sectionTitle,
+                { fontSize: fontSize.lg, marginBottom: spacing.md },
+              ]}
             >
               Tu Código
             </Text>
@@ -215,14 +245,17 @@ export default function LessonDetailScreen({ route }) {
               Enviar Código
             </Button>
           </ResponsiveCard>
-        )
+        );
 
       case "attempt":
         return (
           <ResponsiveCard style={styles.attemptCard}>
             <Text
               variant="titleMedium"
-              style={[styles.sectionTitle, { fontSize: fontSize.lg, marginBottom: spacing.md }]}
+              style={[
+                styles.sectionTitle,
+                { fontSize: fontSize.lg, marginBottom: spacing.md },
+              ]}
             >
               Último Intento
             </Text>
@@ -244,7 +277,13 @@ export default function LessonDetailScreen({ route }) {
                 {item.data.is_correct ? "Correcto" : "Incorrecto"}
               </Text>
             </View>
-            <Text variant="bodySmall" style={[styles.attemptDate, { fontSize: fontSize.sm, marginBottom: spacing.md }]}>
+            <Text
+              variant="bodySmall"
+              style={[
+                styles.attemptDate,
+                { fontSize: fontSize.sm, marginBottom: spacing.md },
+              ]}
+            >
               {new Date(item.data.attempt_date).toLocaleString()}
             </Text>
 
@@ -252,20 +291,25 @@ export default function LessonDetailScreen({ route }) {
 
             <Text
               variant="titleSmall"
-              style={[styles.submittedCodeTitle, { fontSize: fontSize.md, marginBottom: spacing.sm }]}
+              style={[
+                styles.submittedCodeTitle,
+                { fontSize: fontSize.md, marginBottom: spacing.sm },
+              ]}
             >
               Código enviado:
             </Text>
             <View style={styles.submittedCodeContainer}>
-              <Text style={[styles.submittedCode, { fontSize: fontSize.xs }]}>{item.data.code_submitted}</Text>
+              <Text style={[styles.submittedCode, { fontSize: fontSize.xs }]}>
+                {item.data.code_submitted}
+              </Text>
             </View>
           </ResponsiveCard>
-        )
+        );
 
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <SafeContainer>
@@ -273,11 +317,14 @@ export default function LessonDetailScreen({ route }) {
         data={sections}
         renderItem={renderSection}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={[styles.container, { paddingBottom: spacing.xl }]}
+        contentContainerStyle={[
+          styles.container,
+          { paddingBottom: spacing.xl },
+        ]}
         showsVerticalScrollIndicator={false}
       />
     </SafeContainer>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -376,4 +423,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#ef4444",
   },
-})
+});

@@ -1,23 +1,22 @@
-"use client"
-
-import { useState, useMemo } from "react"
-import { View, StyleSheet, FlatList, RefreshControl } from "react-native"
-import { Text, FAB, Searchbar } from "react-native-paper"
-import { useQuery } from "@tanstack/react-query"
-import { courseService } from "../../services/courseService"
-import SafeContainer from "../../components/SafeContainer"
-import ResponsiveCard from "../../components/ResponsiveCard"
-import LoadingSpinner from "../../components/LoadingSpinner"
-import AnimatedButton from "../../components/AnimatedButton"
-import ScreenTransition from "../../components/ScreenTransition"
-import StatusIndicator from "../../components/StatusIndicator"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import useResponsive from "../../hooks/useResponsive"
+import { useState, useMemo } from "react";
+import { View, StyleSheet, FlatList, RefreshControl } from "react-native";
+import { Text, FAB, Searchbar } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
+import { courseService } from "../../services/courseService";
+import SafeContainer from "../../components/SafeContainer";
+import ResponsiveCard from "../../components/ResponsiveCard";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import AnimatedButton from "../../components/AnimatedButton";
+import ScreenTransition from "../../components/ScreenTransition";
+import StatusIndicator from "../../components/StatusIndicator";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+import useResponsive from "../../hooks/useResponsive";
 
 export default function CoursesScreen({ navigation }) {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [showError, setShowError] = useState(false)
-  const { spacing, isTablet, orientation, getResponsiveValue, utils } = useResponsive()
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showError, setShowError] = useState(false);
+  const { spacing, isTablet, orientation, getResponsiveValue, utils } =
+    useResponsive();
 
   const {
     data: courses,
@@ -28,46 +27,64 @@ export default function CoursesScreen({ navigation }) {
     queryKey: ["courses"],
     queryFn: courseService.getCourses,
     onError: () => setShowError(true),
-  })
+  });
 
   const filteredCourses = useMemo(() => {
-    if (!courses) return []
+    if (!courses) return [];
     return courses.filter(
       (course) =>
         course.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.description?.toLowerCase().includes(searchQuery.toLowerCase()),
-    )
-  }, [courses, searchQuery])
+        course.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [courses, searchQuery]);
 
   if (isLoading) {
-    return <LoadingSpinner type="dots" message="Cargando cursos..." overlay={false} />
+    return (
+      <LoadingSpinner
+        type="dots"
+        message="Cargando cursos..."
+        overlay={false}
+      />
+    );
   }
 
-  const numColumns = getResponsiveValue(1, 1, isTablet ? 2 : 1)
-  const key = `${numColumns}-${orientation}`
+  const numColumns = getResponsiveValue(1, 1, isTablet ? 2 : 1);
+  const key = `${numColumns}-${orientation}`;
 
   const renderCourse = ({ item, index }) => (
     <ScreenTransition type="slideUp" delay={index * 100}>
       <ResponsiveCard
-        onPress={() => navigation.navigate("CourseDetail", { courseId: item.id })}
+        onPress={() =>
+          navigation.navigate("CourseDetail", { courseId: item.id })
+        }
         shadowType="cardShadow" // ✅ Especificar tipo de sombra
         style={[
           styles.courseCard,
           {
-            marginHorizontal: isTablet && numColumns > 1 ? spacing.xs : spacing.md,
+            marginHorizontal:
+              isTablet && numColumns > 1 ? spacing.xs : spacing.md,
             flex: isTablet && numColumns > 1 ? 1 : undefined,
           },
         ]}
       >
         <View style={styles.courseHeader}>
-          <View style={[styles.courseIcon, { backgroundColor: item.color_class || "#6366f1" }]}>
+          <View
+            style={[
+              styles.courseIcon,
+              { backgroundColor: item.color_class || "#6366f1" },
+            ]}
+          >
             <Icon name={item.icon || "book"} size={24} color="white" />
           </View>
           <View style={styles.courseInfo}>
             <Text variant="titleMedium" style={styles.courseTitle}>
               {item.title}
             </Text>
-            <Text variant="bodyMedium" style={styles.courseDescription} numberOfLines={2}>
+            <Text
+              variant="bodyMedium"
+              style={styles.courseDescription}
+              numberOfLines={2}
+            >
               {item.description}
             </Text>
           </View>
@@ -75,7 +92,7 @@ export default function CoursesScreen({ navigation }) {
         </View>
       </ResponsiveCard>
     </ScreenTransition>
-  )
+  );
 
   const renderEmpty = () => (
     <ScreenTransition type="scaleIn">
@@ -93,7 +110,7 @@ export default function CoursesScreen({ navigation }) {
         </AnimatedButton>
       </View>
     </ScreenTransition>
-  )
+  );
 
   const renderError = () => (
     <ScreenTransition type="slideUp">
@@ -103,8 +120,8 @@ export default function CoursesScreen({ navigation }) {
         <AnimatedButton
           mode="contained"
           onPress={() => {
-            setShowError(false)
-            refetch()
+            setShowError(false);
+            refetch();
           }}
           style={styles.retryButton}
           animationType="scale"
@@ -114,10 +131,12 @@ export default function CoursesScreen({ navigation }) {
         </AnimatedButton>
       </View>
     </ScreenTransition>
-  )
+  );
 
   if (error && !courses) {
-    return <SafeContainer safeAreaType="container">{renderError()}</SafeContainer>
+    return (
+      <SafeContainer safeAreaType="container">{renderError()}</SafeContainer>
+    );
   }
 
   return (
@@ -150,10 +169,17 @@ export default function CoursesScreen({ navigation }) {
             numColumns={numColumns}
             contentContainerStyle={[
               styles.listContainer,
-              { paddingHorizontal: isTablet && numColumns > 1 ? spacing.md : 0 },
+              {
+                paddingHorizontal: isTablet && numColumns > 1 ? spacing.md : 0,
+              },
             ]}
             refreshControl={
-              <RefreshControl refreshing={isLoading} onRefresh={refetch} colors={["#6366f1"]} tintColor="#6366f1" />
+              <RefreshControl
+                refreshing={isLoading}
+                onRefresh={refetch}
+                colors={["#6366f1"]}
+                tintColor="#6366f1"
+              />
             }
             ListEmptyComponent={renderEmpty}
             showsVerticalScrollIndicator={false}
@@ -177,7 +203,7 @@ export default function CoursesScreen({ navigation }) {
         </View>
       </ScreenTransition>
     </SafeContainer>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -250,4 +276,4 @@ const styles = StyleSheet.create({
   row: {
     justifyContent: "space-around",
   },
-})
+});

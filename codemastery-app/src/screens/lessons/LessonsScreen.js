@@ -1,12 +1,12 @@
-import { View, StyleSheet, FlatList } from "react-native"
-import { Text, Card, FAB, Chip } from "react-native-paper"
-import { useQuery } from "@tanstack/react-query"
-import { moduleService } from "../../services/moduleService"
-import LoadingScreen from "../LoadingScreen"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { View, StyleSheet, FlatList } from "react-native";
+import { Text, Card, FAB, Chip } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
+import { moduleService } from "../../services/moduleService";
+import LoadingScreen from "../LoadingScreen";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function LessonsScreen({ route, navigation }) {
-  const { moduleId } = route.params
+  const { moduleId } = route.params;
 
   const {
     data: lessons,
@@ -15,12 +15,15 @@ export default function LessonsScreen({ route, navigation }) {
   } = useQuery({
     queryKey: ["moduleLessons", moduleId],
     queryFn: () => moduleService.getModuleLessons(moduleId),
-  })
+  });
 
-  if (isLoading) return <LoadingScreen />
+  if (isLoading) return <LoadingScreen />;
 
   const renderLesson = ({ item }) => (
-    <Card style={styles.lessonCard} onPress={() => navigation.navigate("LessonDetail", { lessonId: item.id })}>
+    <Card
+      style={styles.lessonCard}
+      onPress={() => navigation.navigate("LessonDetail", { lessonId: item.id })}
+    >
       <Card.Content>
         <View style={styles.lessonHeader}>
           <View style={styles.lessonNumber}>
@@ -47,7 +50,7 @@ export default function LessonsScreen({ route, navigation }) {
         </View>
       </Card.Content>
     </Card>
-  )
+  );
 
   return (
     <View style={styles.container}>
@@ -72,7 +75,7 @@ export default function LessonsScreen({ route, navigation }) {
         }}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -155,4 +158,4 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-})
+});

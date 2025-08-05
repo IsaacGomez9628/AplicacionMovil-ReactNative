@@ -1,12 +1,12 @@
-import { View, StyleSheet, FlatList } from "react-native"
-import { Text, Card, FAB } from "react-native-paper"
-import { useQuery } from "@tanstack/react-query"
-import { courseService } from "../../services/courseService"
-import LoadingScreen from "../LoadingScreen"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { View, StyleSheet, FlatList } from "react-native";
+import { Text, Card, FAB } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
+import { courseService } from "../../services/courseService";
+import LoadingScreen from "../LoadingScreen";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function ModulesScreen({ route, navigation }) {
-  const { courseId } = route.params
+  const { courseId } = route.params;
 
   const {
     data: modules,
@@ -15,12 +15,15 @@ export default function ModulesScreen({ route, navigation }) {
   } = useQuery({
     queryKey: ["courseModules", courseId],
     queryFn: () => courseService.getCourseModules(courseId),
-  })
+  });
 
-  if (isLoading) return <LoadingScreen />
+  if (isLoading) return <LoadingScreen />;
 
   const renderModule = ({ item, index }) => (
-    <Card style={styles.moduleCard} onPress={() => navigation.navigate("ModuleDetail", { moduleId: item.id })}>
+    <Card
+      style={styles.moduleCard}
+      onPress={() => navigation.navigate("ModuleDetail", { moduleId: item.id })}
+    >
       <Card.Content>
         <View style={styles.moduleHeader}>
           <View style={styles.moduleNumber}>
@@ -35,14 +38,16 @@ export default function ModulesScreen({ route, navigation }) {
             </Text>
             <View style={styles.moduleStats}>
               <Icon name="book-outline" size={16} color="#6b7280" />
-              <Text style={styles.statText}>{item.lessons?.length || 0} lecciones</Text>
+              <Text style={styles.statText}>
+                {item.lessons?.length || 0} lecciones
+              </Text>
             </View>
           </View>
           <Icon name="chevron-right" size={24} color="#6b7280" />
         </View>
       </Card.Content>
     </Card>
-  )
+  );
 
   return (
     <View style={styles.container}>
@@ -67,7 +72,7 @@ export default function ModulesScreen({ route, navigation }) {
         }}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -137,4 +142,4 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-})
+});

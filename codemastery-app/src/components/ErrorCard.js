@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native"
-import { Card, Text, Button } from "react-native-paper"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { StyleSheet } from "react-native";
+import { Card, Text, Button } from "react-native-paper";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function ErrorCard({ message, onRetry }) {
   return (
@@ -15,7 +15,7 @@ export default function ErrorCard({ message, onRetry }) {
         )}
       </Card.Content>
     </Card>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 8,
   },
-})
+});

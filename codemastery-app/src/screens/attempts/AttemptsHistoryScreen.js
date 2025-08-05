@@ -1,18 +1,16 @@
-"use client"
-
-import React from "react"
-import { View, StyleSheet, FlatList, Alert } from "react-native"
-import { Text, Card, Button, Searchbar, Chip } from "react-native-paper"
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { lessonService } from "../../services/lessonService"
-import { useAuth } from "../../context/AuthContext"
-import LoadingScreen from "../LoadingScreen"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import React from "react";
+import { View, StyleSheet, FlatList, Alert } from "react-native";
+import { Text, Card, Button, Searchbar, Chip } from "react-native-paper";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { lessonService } from "../../services/lessonService";
+import { useAuth } from "../../context/AuthContext";
+import LoadingScreen from "../LoadingScreen";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function AttemptsHistoryScreen() {
-  const [searchQuery, setSearchQuery] = React.useState("")
-  const { user } = useAuth()
-  const queryClient = useQueryClient()
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
 
   const {
     data: attempts,
@@ -23,38 +21,42 @@ export default function AttemptsHistoryScreen() {
     queryKey: ["userAttempts", user?.id],
     queryFn: () => lessonService.getUserAttempts(user?.id),
     enabled: !!user?.id,
-  })
+  });
 
   const deleteAttemptMutation = useMutation({
     mutationFn: lessonService.deleteAttempt,
     onSuccess: () => {
-      queryClient.invalidateQueries(["userAttempts", user?.id])
-      Alert.alert("Éxito", "Intento eliminado correctamente")
+      queryClient.invalidateQueries(["userAttempts", user?.id]);
+      Alert.alert("Éxito", "Intento eliminado correctamente");
     },
     onError: () => {
-      Alert.alert("Error", "No se pudo eliminar el intento")
+      Alert.alert("Error", "No se pudo eliminar el intento");
     },
-  })
+  });
 
   const filteredAttempts =
     attempts?.filter(
       (attempt) =>
         attempt.lesson_id.toString().includes(searchQuery) ||
-        attempt.code_submitted.toLowerCase().includes(searchQuery.toLowerCase()),
-    ) || []
+        attempt.code_submitted.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
-  if (isLoading) return <LoadingScreen />
+  if (isLoading) return <LoadingScreen />;
 
   const handleDeleteAttempt = (attemptId) => {
-    Alert.alert("Eliminar Intento", "¿Estás seguro de que quieres eliminar este intento?", [
-      { text: "Cancelar", style: "cancel" },
-      {
-        text: "Eliminar",
-        onPress: () => deleteAttemptMutation.mutate(attemptId),
-        style: "destructive",
-      },
-    ])
-  }
+    Alert.alert(
+      "Eliminar Intento",
+      "¿Estás seguro de que quieres eliminar este intento?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Eliminar",
+          onPress: () => deleteAttemptMutation.mutate(attemptId),
+          style: "destructive",
+        },
+      ]
+    );
+  };
 
   const renderAttempt = ({ item }) => (
     <Card style={styles.attemptCard}>
@@ -67,7 +69,10 @@ export default function AttemptsHistoryScreen() {
             <View style={styles.attemptMeta}>
               <Chip
                 icon={item.is_correct ? "check-circle" : "close-circle"}
-                style={[styles.statusChip, item.is_correct ? styles.correctChip : styles.incorrectChip]}
+                style={[
+                  styles.statusChip,
+                  item.is_correct ? styles.correctChip : styles.incorrectChip,
+                ]}
                 compact
               >
                 {item.is_correct ? "Correcto" : "Incorrecto"}
@@ -95,13 +100,15 @@ export default function AttemptsHistoryScreen() {
           </Text>
           <View style={styles.codeBlock}>
             <Text style={styles.codeText}>
-              {item.code_submitted.length > 200 ? `${item.code_submitted.substring(0, 200)}...` : item.code_submitted}
+              {item.code_submitted.length > 200
+                ? `${item.code_submitted.substring(0, 200)}...`
+                : item.code_submitted}
             </Text>
           </View>
         </View>
       </Card.Content>
     </Card>
-  )
+  );
 
   return (
     <View style={styles.container}>
@@ -125,7 +132,7 @@ export default function AttemptsHistoryScreen() {
         }
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -205,4 +212,4 @@ const styles = StyleSheet.create({
     color: "#6b7280",
     fontSize: 16,
   },
-})
+});

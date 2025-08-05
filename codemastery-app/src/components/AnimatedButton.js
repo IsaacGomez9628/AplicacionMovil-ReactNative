@@ -1,11 +1,9 @@
-"use client"
-
-import { useRef } from "react"
-import { Animated, TouchableOpacity, StyleSheet, Platform } from "react-native"
-import { Button } from "react-native-paper"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import LoadingSpinner from "./LoadingSpinner"
-import useResponsive from "../hooks/useResponsive"
+import { useRef } from "react";
+import { Animated, TouchableOpacity, StyleSheet, Platform } from "react-native";
+import { Button } from "react-native-paper";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+import LoadingSpinner from "./LoadingSpinner";
+import useResponsive from "../hooks/useResponsive";
 
 const AnimatedButton = ({
   children,
@@ -20,20 +18,20 @@ const AnimatedButton = ({
   shadowType = "shadow",
   ...props
 }) => {
-  const scaleAnim = useRef(new Animated.Value(1)).current
-  const opacityAnim = useRef(new Animated.Value(1)).current
-  const { spacing, utils } = useResponsive()
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const opacityAnim = useRef(new Animated.Value(1)).current;
+  const { spacing, utils } = useResponsive();
 
   const handlePressIn = () => {
-    if (disabled || loading) return
+    if (disabled || loading) return;
 
     // Haptic feedback
     if (hapticFeedback && Platform.OS === "ios") {
       try {
-        const { HapticFeedback } = require("expo-haptics")
-        HapticFeedback.impactAsync(HapticFeedback.ImpactFeedbackStyle.Light)
+        const { HapticFeedback } = require("expo-haptics");
+        HapticFeedback.impactAsync(HapticFeedback.ImpactFeedbackStyle.Light);
       } catch (error) {
-        console.log("Haptic feedback not available")
+        console.log("Haptic feedback not available");
       }
     }
 
@@ -43,15 +41,15 @@ const AnimatedButton = ({
         Animated.spring(scaleAnim, {
           toValue: 0.95,
           useNativeDriver: true,
-        }).start()
-        break
+        }).start();
+        break;
       case "opacity":
         Animated.timing(opacityAnim, {
           toValue: 0.7,
           duration: 100,
           useNativeDriver: true,
-        }).start()
-        break
+        }).start();
+        break;
       case "both":
         Animated.parallel([
           Animated.spring(scaleAnim, {
@@ -63,13 +61,13 @@ const AnimatedButton = ({
             duration: 100,
             useNativeDriver: true,
           }),
-        ]).start()
-        break
+        ]).start();
+        break;
     }
-  }
+  };
 
   const handlePressOut = () => {
-    if (disabled || loading) return
+    if (disabled || loading) return;
 
     Animated.parallel([
       Animated.spring(scaleAnim, {
@@ -81,16 +79,16 @@ const AnimatedButton = ({
         duration: 100,
         useNativeDriver: true,
       }),
-    ]).start()
-  }
+    ]).start();
+  };
 
   const animatedStyle = {
     transform: [{ scale: scaleAnim }],
     opacity: opacityAnim,
-  }
+  };
 
   // ✅ SOLUCIÓN: Usar utils.getShadow
-  const shadowStyle = utils.getShadow(shadowType)
+  const shadowStyle = utils.getShadow(shadowType);
 
   const buttonStyle = [
     styles.button,
@@ -100,19 +98,19 @@ const AnimatedButton = ({
       paddingHorizontal: spacing.md,
     },
     style,
-  ]
+  ];
 
   const renderIcon = () => {
     if (loading) {
-      return <LoadingSpinner size="small" type="dots" />
+      return <LoadingSpinner size="small" type="dots" />;
     }
 
     if (icon) {
-      return <Icon name={icon} size={20} color="#ffffff" />
+      return <Icon name={icon} size={20} color="#ffffff" />;
     }
 
-    return null
-  }
+    return null;
+  };
 
   return (
     <Animated.View style={animatedStyle}>
@@ -137,8 +135,8 @@ const AnimatedButton = ({
         </Button>
       </TouchableOpacity>
     </Animated.View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   button: {
@@ -154,6 +152,6 @@ const styles = StyleSheet.create({
   buttonLabel: {
     fontWeight: "600",
   },
-})
+});
 
-export default AnimatedButton
+export default AnimatedButton;

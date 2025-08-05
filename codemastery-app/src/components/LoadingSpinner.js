@@ -1,10 +1,7 @@
-"use client"
-
-import { useEffect, useRef } from "react"
-import { View, StyleSheet, Animated, Easing } from "react-native"
-import { ActivityIndicator, Text } from "react-native-paper"
-import LottieView from "lottie-react-native"
-import useResponsive from "../hooks/useResponsive"
+import { useEffect, useRef } from "react";
+import { View, StyleSheet, Animated, Easing } from "react-native";
+import { ActivityIndicator, Text } from "react-native-paper";
+import useResponsive from "../hooks/useResponsive";
 
 const LoadingSpinner = ({
   type = "default",
@@ -12,11 +9,10 @@ const LoadingSpinner = ({
   size = "large",
   color = "#6366f1",
   overlay = false,
-  lottieSource = null,
 }) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current
-  const scaleAnim = useRef(new Animated.Value(0.8)).current
-  const { spacing, fontSize } = useResponsive()
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(0.8)).current;
+  const { spacing, fontSize } = useResponsive();
 
   useEffect(() => {
     Animated.parallel([
@@ -32,35 +28,31 @@ const LoadingSpinner = ({
         friction: 8,
         useNativeDriver: true,
       }),
-    ]).start()
-  }, [])
+    ]).start();
+  }, []);
 
   const containerStyle = [
     overlay ? styles.overlay : styles.container,
     {
       padding: spacing.lg,
     },
-  ]
+  ];
 
   const animatedStyle = {
     opacity: fadeAnim,
     transform: [{ scale: scaleAnim }],
-  }
+  };
 
   const renderSpinner = () => {
-    if (lottieSource) {
-      return <LottieView source={lottieSource} autoPlay loop style={styles.lottie} />
-    }
-
     switch (type) {
       case "pulse":
-        return <PulseLoader color={color} size={size} />
+        return <PulseLoader color={color} size={size} />;
       case "dots":
-        return <DotsLoader color={color} />
+        return <DotsLoader color={color} />;
       default:
-        return <ActivityIndicator size={size} color={color} />
+        return <ActivityIndicator size={size} color={color} />;
     }
-  }
+  };
 
   return (
     <View style={containerStyle}>
@@ -82,12 +74,12 @@ const LoadingSpinner = ({
         )}
       </Animated.View>
     </View>
-  )
-}
+  );
+};
 
-// Custom Pulse Loader
+// Custom Pulse Loader compatible con Hermes
 const PulseLoader = ({ color, size }) => {
-  const pulseAnim = useRef(new Animated.Value(1)).current
+  const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     const pulse = () => {
@@ -104,12 +96,12 @@ const PulseLoader = ({ color, size }) => {
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
-      ]).start(() => pulse())
-    }
-    pulse()
-  }, [])
+      ]).start(() => pulse());
+    };
+    pulse();
+  }, []);
 
-  const sizeValue = size === "large" ? 60 : size === "small" ? 30 : 45
+  const sizeValue = size === "large" ? 60 : size === "small" ? 30 : 45;
 
   return (
     <Animated.View
@@ -123,18 +115,18 @@ const PulseLoader = ({ color, size }) => {
         },
       ]}
     />
-  )
-}
+  );
+};
 
-// Custom Dots Loader
+// Custom Dots Loader compatible con Hermes
 const DotsLoader = ({ color }) => {
-  const dot1 = useRef(new Animated.Value(0)).current
-  const dot2 = useRef(new Animated.Value(0)).current
-  const dot3 = useRef(new Animated.Value(0)).current
+  const dot1 = useRef(new Animated.Value(0)).current;
+  const dot2 = useRef(new Animated.Value(0)).current;
+  const dot3 = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const animateDots = () => {
-      const duration = 600
+      const duration = 600;
       Animated.sequence([
         Animated.timing(dot1, { toValue: 1, duration, useNativeDriver: true }),
         Animated.timing(dot2, { toValue: 1, duration, useNativeDriver: true }),
@@ -142,10 +134,10 @@ const DotsLoader = ({ color }) => {
         Animated.timing(dot1, { toValue: 0, duration, useNativeDriver: true }),
         Animated.timing(dot2, { toValue: 0, duration, useNativeDriver: true }),
         Animated.timing(dot3, { toValue: 0, duration, useNativeDriver: true }),
-      ]).start(() => animateDots())
-    }
-    animateDots()
-  }, [])
+      ]).start(() => animateDots());
+    };
+    animateDots();
+  }, []);
 
   return (
     <View style={styles.dotsContainer}>
@@ -170,8 +162,8 @@ const DotsLoader = ({ color }) => {
         />
       ))}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -198,10 +190,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "500",
   },
-  lottie: {
-    width: 100,
-    height: 100,
-  },
   pulseContainer: {
     borderRadius: 30,
   },
@@ -215,6 +203,6 @@ const styles = StyleSheet.create({
     height: 12,
     borderRadius: 6,
   },
-})
+});
 
-export default LoadingSpinner
+export default LoadingSpinner;

@@ -1,9 +1,10 @@
-import { StyleSheet, View } from "react-native"
-import { Card, Text, Chip } from "react-native-paper"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { StyleSheet, View } from "react-native";
+import { Card, Text, Chip } from "react-native-paper";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function LessonCard({ lesson, onPress, showPosition = true }) {
-  const hasPractice = lesson.practice_instructions && lesson.practice_instructions.trim() !== ""
+  const hasPractice =
+    lesson.practice_instructions && lesson.practice_instructions.trim() !== "";
 
   return (
     <Card style={styles.card} onPress={onPress}>
@@ -33,7 +34,7 @@ export default function LessonCard({ lesson, onPress, showPosition = true }) {
         </View>
       </Card.Content>
     </Card>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -78,4 +79,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd6fe",
     height: 24,
   },
-})
+});

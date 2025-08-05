@@ -1,6 +1,6 @@
-import { StyleSheet, View } from "react-native"
-import { Card, Text } from "react-native-paper"
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { StyleSheet, View } from "react-native";
+import { Card, Text } from "react-native-paper";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default function ModuleCard({ module, onPress, showPosition = true }) {
   return (
@@ -24,7 +24,7 @@ export default function ModuleCard({ module, onPress, showPosition = true }) {
         </View>
       </Card.Content>
     </Card>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   description: {
     color: "#6b7280",
   },
-})
+});
