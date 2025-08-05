@@ -2,39 +2,21 @@ const { getDefaultConfig } = require("expo/metro-config");
 
 const config = getDefaultConfig(__dirname);
 
-// Configuración optimizada para Hermes
-config.resolver.assetExts.push(
-  // Lottie animations
-  "lottie",
-  "json"
-);
+// Configuración simplificada sin optimizaciones para Hermes
+config.resolver.assetExts.push("lottie", "json");
 
-// Configuración para mejorar la estabilidad con Hermes
+// Configuración básica del transformer
 config.transformer = {
   ...config.transformer,
+  // Remover configuraciones específicas de Hermes por ahora
   minifierConfig: {
-    mangle: {
-      keep_fnames: true,
-    },
-    output: {
-      ascii_only: true,
-      quote_keys: true,
-      wrap_iife: true,
-    },
-    sourceMap: {
-      includeSources: false,
-    },
-    toplevel: false,
-    compress: {
-      reduce_funcs: false,
-    },
+    // Configuración mínima para evitar problemas
   },
 };
 
-// Optimización de memoria para iOS
+// Configuración básica del serializer
 config.serializer = {
   ...config.serializer,
-  customSerializer: null,
 };
 
 module.exports = config;
