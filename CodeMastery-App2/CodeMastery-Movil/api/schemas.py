@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from pydantic import validator
 from typing import Optional, List
 from datetime import datetime
 
@@ -9,6 +10,18 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
+    
+    @validator('password')
+    def validate_password(cls, v):
+        if len(v) < 6:
+            raise ValueError('Password must be at least 6 characters long')
+        return v
+    
+    @validator('name')
+    def validate_name(cls, v):
+        if len(v.strip()) < 2:
+            raise ValueError('Name must be at least 2 characters long')
+        return v.strip()
 
 class UserUpdate(BaseModel):
     name: Optional[str] = None

@@ -20,9 +20,14 @@ app = FastAPI(
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # En producción, especifica los dominios permitidos
+    allow_origins=[
+        "http://localhost:19006",  # Expo dev server
+        "http://192.168.1.*",      # Red local
+        "http://10.0.2.2:19006",   # Android emulator
+        "exp://192.168.1.*",       # Expo Go
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 

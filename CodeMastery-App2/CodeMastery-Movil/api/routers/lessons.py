@@ -61,13 +61,12 @@ def submit_code(
 @router.get("/{lesson_id}/ultimo-intento")
 def get_last_attempt(
     lesson_id: int,
-    user_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     attempt = db.query(ExerciseAttempt).filter(
         ExerciseAttempt.lesson_id == lesson_id,
-        ExerciseAttempt.user_id == user_id
+        ExerciseAttempt.user_id == current_user.id  # ✅ Usar current_user.id
     ).order_by(ExerciseAttempt.attempt_date.desc()).first()
     
     if attempt is None:
@@ -77,12 +76,11 @@ def get_last_attempt(
 
 @router.get("/intentos", response_model=List[ExerciseAttemptSchema])
 def get_user_attempts(
-    user_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     attempts = db.query(ExerciseAttempt).filter(
-        ExerciseAttempt.user_id == user_id
+        ExerciseAttempt.user_id == current_user.id  # ✅ Usar current_user.id automáticamente
     ).order_by(ExerciseAttempt.attempt_date.desc()).all()
     
     return attempts

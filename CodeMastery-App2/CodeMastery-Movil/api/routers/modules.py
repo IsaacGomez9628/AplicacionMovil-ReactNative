@@ -26,7 +26,9 @@ def get_module_lessons(
     current_user: User = Depends(get_current_user)
 ):
     from models import Lesson
-    lessons = db.query(Lesson).filter(Lesson.module_id == module_id).order_by(Lesson.position).all()
+    lessons = db.query(Lesson).filter(
+        Lesson.module_id == module_id
+    ).order_by(Lesson.position).all()
     return lessons
 
 @router.post("/", response_model=ModuleSchema)

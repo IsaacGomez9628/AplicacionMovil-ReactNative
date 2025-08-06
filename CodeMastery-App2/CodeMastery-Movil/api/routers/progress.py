@@ -18,14 +18,17 @@ def get_user_progress(
     progress = db.query(UserProgress).filter(UserProgress.user_id == user_id).all()
     return progress
 
-@router.put("/", response_model=UserProgressSchema)
+@router.put("/")
 def update_progress(
-    progress: UserProgressUpdate,
     user_id: int,
     module_id: str,
+    progress: UserProgressUpdate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    # Verificar que el usuario solo puede actualizar su propio progreso
+    if current_user.id != user_id:
+        raise HTTPException(status_code=403, detail="Cannot update other user's progress")
     # Buscar progreso existente
     db_progress = db.query(UserProgress).filter(
         UserProgress.user_id == user_id,
