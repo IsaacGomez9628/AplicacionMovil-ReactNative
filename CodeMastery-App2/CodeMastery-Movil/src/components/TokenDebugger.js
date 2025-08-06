@@ -1,10 +1,10 @@
-// ✅ COMPONENTE ACTUALIZADO: src/components/TokenDebugger.js
+// src/components/TokenDebugger.js - CORREGIDO
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 import { Card, Text, Button, Chip } from "react-native-paper";
 import { useAuth } from "../context/AuthContext";
 import { authService } from "../services/authService";
-import { testCompleteAuthFlow, getTokenStatus } from "../services/api"; // ✅ AGREGAR IMPORTS
+import { testCompleteAuthFlow, getTokenStatus } from "../services/api";
 
 const TokenDebugger = () => {
   const [tokenInfo, setTokenInfo] = useState({
@@ -16,7 +16,6 @@ const TokenDebugger = () => {
   const [loading, setLoading] = useState(false);
   const { tokenExpiring, refreshTokens } = useAuth();
 
-  // Actualizar info del token cada 10 segundos
   useEffect(() => {
     const updateTokenInfo = async () => {
       try {
@@ -37,7 +36,7 @@ const TokenDebugger = () => {
     };
 
     updateTokenInfo();
-    const interval = setInterval(updateTokenInfo, 10000); // Cada 10 segundos
+    const interval = setInterval(updateTokenInfo, 10000);
 
     return () => clearInterval(interval);
   }, []);
@@ -75,7 +74,6 @@ const TokenDebugger = () => {
     }
   };
 
-  // ✅ NUEVA FUNCIÓN: Test completo de auth flow
   const handleCompleteAuthTest = async () => {
     setLoading(true);
     try {
@@ -108,14 +106,13 @@ const TokenDebugger = () => {
     }
   };
 
-  // ✅ NUEVA FUNCIÓN: Mostrar estado de tokens
   const handleShowTokenStatus = async () => {
     setLoading(true);
     try {
       const status = await getTokenStatus();
 
       const message = `Estado de Tokens:
-      
+     
 🔑 Tiene tokens: ${status.hasTokens ? "Sí" : "No"}
 ⏰ Expirando pronto: ${status.isExpiring ? "Sí" : "No"}
 📅 Expires In: ${status.expiresIn || "N/A"}s
@@ -143,7 +140,6 @@ Refresh Token: ${status.refreshToken || "None"}`;
           text: "Continuar",
           onPress: async () => {
             try {
-              // Simular token expirado modificando el timestamp
               const AsyncStorage =
                 require("@react-native-async-storage/async-storage").default;
               await AsyncStorage.setItem("login_timestamp", "0");
@@ -224,7 +220,7 @@ Refresh Token: ${status.refreshToken || "None"}`;
           <View style={styles.infoRow}>
             <Text style={styles.label}>Auto-Refresh Activo:</Text>
             <Chip
-              icon={tokenExpiring ? "refresh" : "refresh-off"}
+              icon={tokenExpiring ? "refresh" : "refresh-circle"} // ✅ CORREGIDO: ícono válido
               style={[
                 styles.chip,
                 tokenExpiring ? styles.warningChip : styles.infoChip,
@@ -254,7 +250,6 @@ Refresh Token: ${status.refreshToken || "None"}`;
             Refresh Manual
           </Button>
 
-          {/* ✅ NUEVOS BOTONES */}
           <Button
             mode="contained"
             onPress={handleCompleteAuthTest}

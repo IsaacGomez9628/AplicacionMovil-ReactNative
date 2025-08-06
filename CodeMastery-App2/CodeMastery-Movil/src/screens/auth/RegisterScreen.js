@@ -198,35 +198,8 @@ export default function RegisterScreen({ navigation }) {
   return (
     <AuthContainer statusBarStyle="light-content">
       <ScreenTransition type="slideUp">
-        <StatusIndicator
-          type="error"
-          message={errorMessage}
-          visible={showError}
-          onHide={() => setShowError(false)}
-        />
-
         <View style={styles.content}>
           {/* Indicador de conexión */}
-          <View style={{ marginBottom: 20 }}>
-            <Text
-              style={{
-                textAlign: "center",
-                color:
-                  connectionStatus === "connected"
-                    ? "#10b981"
-                    : connectionStatus === "disconnected"
-                    ? "#ef4444"
-                    : "#6b7280",
-              }}
-            >
-              Estado:{" "}
-              {connectionStatus === "connected"
-                ? "✅ Conectado"
-                : connectionStatus === "disconnected"
-                ? "❌ Desconectado"
-                : "🔍 Verificando..."}
-            </Text>
-          </View>
 
           <ScreenTransition type="fadeIn" delay={200}>
             <Text variant="headlineMedium" style={styles.title}>
@@ -239,23 +212,6 @@ export default function RegisterScreen({ navigation }) {
               Únete a nuestra plataforma de aprendizaje
             </Text>
           </ScreenTransition>
-
-          {/* Botones de Debug (solo en desarrollo) */}
-          {__DEV__ && (
-            <View style={{ marginBottom: 20, gap: 10 }}>
-              <PaperButton mode="outlined" onPress={checkConnection} compact>
-                🔍 Verificar Conexión
-              </PaperButton>
-              <PaperButton
-                mode="outlined"
-                onPress={testDirectRegister}
-                loading={loading}
-                compact
-              >
-                🧪 Test Directo de Registro
-              </PaperButton>
-            </View>
-          )}
 
           <ScreenTransition type="slideUp" delay={600}>
             <AuthCard>

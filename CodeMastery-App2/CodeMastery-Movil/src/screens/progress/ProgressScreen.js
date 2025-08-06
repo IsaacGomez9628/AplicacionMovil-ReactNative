@@ -1,4 +1,4 @@
-// src/screens/progress/ProgressScreen.js
+// src/screens/progress/ProgressScreen.js - CORREGIDO
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, ProgressBar, Button } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query";
@@ -11,35 +11,99 @@ import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 export default function ProgressScreen({ navigation }) {
   const { user } = useAuth();
 
-  const { data: progress, isLoading: progressLoading } = useQuery({
+  const {
+    data: progress,
+    isLoading: progressLoading,
+    error: progressError,
+  } = useQuery({
     queryKey: ["userProgress", user?.id],
     queryFn: () => progressService.getUserProgress(user?.id),
     enabled: !!user?.id,
+    retry: 2,
+    onError: (error) => {
+      console.error("❌ Progress query error:", error);
+    },
+    onSuccess: (data) => {
+      console.log("✅ Progress data received:", data);
+    },
   });
 
-  const { data: summary, isLoading: summaryLoading } = useQuery({
+  const {
+    data: summary,
+    isLoading: summaryLoading,
+    error: summaryError,
+  } = useQuery({
     queryKey: ["userSummary", user?.id],
     queryFn: () => progressService.getUserSummary(user?.id),
     enabled: !!user?.id,
+    retry: 2,
+    onError: (error) => {
+      console.error("❌ Summary query error:", error);
+    },
+    onSuccess: (data) => {
+      console.log("✅ Summary data received:", data);
+    },
   });
 
-  // ✅ CORREGIDO: No pasamos user_id, el backend lo obtiene del token
-  const { data: attempts, isLoading: attemptsLoading } = useQuery({
+  // ✅ CORREGIDO: Mejor manejo de la consulta de intentos
+  const {
+    data: attempts,
+    isLoading: attemptsLoading,
+    error: attemptsError,
+  } = useQuery({
     queryKey: ["userAttempts"],
-    queryFn: () => lessonService.getUserAttempts(),
+    queryFn: async () => {
+      try {
+        const result = await lessonService.getUserAttempts();
+        console.log("✅ Attempts data received:", result);
+        return Array.isArray(result) ? result : [];
+      } catch (error) {
+        console.error("❌ Error fetching attempts:", error);
+        return [];
+      }
+    },
     enabled: !!user?.id,
+    retry: 1,
+    initialData: [],
   });
 
-  if (progressLoading || summaryLoading || attemptsLoading)
-    return <LoadingScreen />;
+  if (progressLoading || summaryLoading || attemptsLoading) {
+    return <LoadingScreen message="Cargando tu progreso..." />;
+  }
+
+  if (progressError || summaryError || attemptsError) {
+    console.error("❌ Screen errors:", {
+      progress: progressError?.message,
+      summary: summaryError?.message,
+      attempts: attemptsError?.message,
+    });
+  }
 
   const completionPercentage = summary?.completion_percentage || 0;
-
-  // ✅ CORREGIDO: Validamos que attempts sea un array antes de usar slice
-  const recentAttempts = Array.isArray(attempts) ? attempts.slice(0, 5) : [];
+  const safeAttempts = Array.isArray(attempts) ? attempts : [];
+  const recentAttempts = safeAttempts.slice(0, 5);
+  const safeProgress = Array.isArray(progress) ? progress : [];
 
   return (
     <ScrollView style={styles.container}>
+      {/* DEBUG INFO - Solo en desarrollo */}
+      {__DEV__ && (
+        <Card style={[styles.summaryCard, { backgroundColor: "#fff3cd" }]}>
+          <Card.Content>
+            <Text variant="titleSmall" style={{ color: "#856404" }}>
+              DEBUG INFO
+            </Text>
+            <Text style={{ fontSize: 12, color: "#856404" }}>
+              Progress: {safeProgress.length} items{"\n"}
+              Summary: {summary ? "OK" : "NULL"}
+              {"\n"}
+              Attempts: {safeAttempts.length} items{"\n"}
+              User ID: {user?.id || "NULL"}
+            </Text>
+          </Card.Content>
+        </Card>
+      )}
+
       <Card style={styles.summaryCard}>
         <Card.Content>
           <Text variant="headlineSmall" style={styles.title}>
@@ -83,7 +147,7 @@ export default function ProgressScreen({ navigation }) {
             <View style={styles.statItem}>
               <Icon name="code-tags" size={32} color="#6366f1" />
               <Text variant="titleMedium" style={styles.statNumber}>
-                {Array.isArray(attempts) ? attempts.length : 0}
+                {safeAttempts.length}
               </Text>
               <Text variant="bodySmall" style={styles.statLabel}>
                 Ejercicios Enviados
@@ -93,15 +157,19 @@ export default function ProgressScreen({ navigation }) {
         </Card.Content>
       </Card>
 
-      {Array.isArray(progress) && progress.length > 0 && (
+      {/* Progreso por módulos */}
+      {safeProgress.length > 0 && (
         <Card style={styles.modulesCard}>
           <Card.Content>
             <Text variant="titleMedium" style={styles.sectionTitle}>
               Progreso por Módulo
             </Text>
 
-            {progress.map((moduleProgress) => (
-              <View key={moduleProgress.id} style={styles.moduleProgress}>
+            {safeProgress.map((moduleProgress, index) => (
+              <View
+                key={moduleProgress.id || index}
+                style={styles.moduleProgress}
+              >
                 <View style={styles.moduleHeader}>
                   <Text variant="titleSmall" style={styles.moduleName}>
                     {moduleProgress.module?.title ||
@@ -130,6 +198,7 @@ export default function ProgressScreen({ navigation }) {
         </Card>
       )}
 
+      {/* Intentos recientes */}
       {recentAttempts.length > 0 && (
         <Card style={styles.attemptsCard}>
           <Card.Content>
@@ -137,8 +206,8 @@ export default function ProgressScreen({ navigation }) {
               Intentos Recientes
             </Text>
 
-            {recentAttempts.map((attempt) => (
-              <View key={attempt.id} style={styles.attemptItem}>
+            {recentAttempts.map((attempt, index) => (
+              <View key={attempt.id || index} style={styles.attemptItem}>
                 <View style={styles.attemptHeader}>
                   <Icon
                     name={attempt.is_correct ? "check-circle" : "close-circle"}
@@ -165,6 +234,31 @@ export default function ProgressScreen({ navigation }) {
           </Card.Content>
         </Card>
       )}
+
+      {/* Mensaje cuando no hay datos */}
+      {safeProgress.length === 0 &&
+        recentAttempts.length === 0 &&
+        !progressLoading && (
+          <Card style={styles.emptyCard}>
+            <Card.Content>
+              <View style={styles.emptyContainer}>
+                <Icon name="chart-line" size={64} color="#d1d5db" />
+                <Text style={styles.emptyTitle}>¡Comienza tu aprendizaje!</Text>
+                <Text style={styles.emptyText}>
+                  Aún no tienes progreso registrado. Explora los cursos
+                  disponibles.
+                </Text>
+                <Button
+                  mode="contained"
+                  onPress={() => navigation.navigate("Courses")}
+                  style={styles.startButton}
+                >
+                  Ver Cursos
+                </Button>
+              </View>
+            </Card.Content>
+          </Card>
+        )}
     </ScrollView>
   );
 }
@@ -173,10 +267,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8fafc",
+    paddingHorizontal: 4, // ✅ Más espacio en contenedor
   },
   summaryCard: {
     margin: 16,
     marginBottom: 8,
+    elevation: 3,
   },
   title: {
     fontWeight: "bold",
@@ -264,5 +360,28 @@ const styles = StyleSheet.create({
   },
   viewAllButton: {
     marginTop: 16,
+  },
+  emptyCard: {
+    margin: 16,
+  },
+  emptyContainer: {
+    alignItems: "center",
+    paddingVertical: 32,
+  },
+  emptyTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 16,
+    marginBottom: 8,
+    textAlign: "center",
+  },
+  emptyText: {
+    color: "#6b7280",
+    textAlign: "center",
+    marginBottom: 24,
+    lineHeight: 20,
+  },
+  startButton: {
+    paddingHorizontal: 24,
   },
 });

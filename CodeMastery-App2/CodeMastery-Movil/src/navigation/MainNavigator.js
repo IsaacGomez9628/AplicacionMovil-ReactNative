@@ -1,3 +1,4 @@
+// src/navigation/MainNavigator.js - CORREGIDO
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
@@ -22,8 +23,6 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function CoursesStack() {
-  const { spacing } = useResponsive();
-
   return (
     <Stack.Navigator
       screenOptions={{
@@ -35,7 +34,10 @@ function CoursesStack() {
           fontWeight: "bold",
         },
         headerBackTitleVisible: false,
-        cardStyle: { backgroundColor: "#f8fafc" },
+        cardStyle: {
+          backgroundColor: "#f8fafc",
+          paddingHorizontal: 8, // ✅ Más espacio horizontal
+        },
       }}
     >
       <Stack.Screen
@@ -83,7 +85,10 @@ function ProgressStack() {
         headerTitleStyle: {
           fontWeight: "bold",
         },
-        cardStyle: { backgroundColor: "#f8fafc" },
+        cardStyle: {
+          backgroundColor: "#f8fafc",
+          paddingHorizontal: 8, // ✅ Más espacio horizontal
+        },
       }}
     >
       <Stack.Screen
@@ -107,7 +112,10 @@ function ProfileStack() {
           fontWeight: "bold",
         },
         headerBackTitleVisible: false,
-        cardStyle: { backgroundColor: "#f8fafc" },
+        cardStyle: {
+          backgroundColor: "#f8fafc",
+          paddingHorizontal: 8, // ✅ Más espacio horizontal
+        },
       }}
     >
       <Stack.Screen
@@ -162,6 +170,8 @@ export default function MainNavigator() {
           paddingBottom: Platform.OS === "ios" ? insets.bottom : spacing.sm,
           paddingTop: spacing.sm,
           height: Platform.OS === "ios" ? 80 + insets.bottom : 60,
+          // ✅ Mejoras de diseño
+          paddingHorizontal: spacing.md,
           ...Platform.select({
             ios: {
               shadowColor: "#000",
@@ -183,6 +193,7 @@ export default function MainNavigator() {
         },
         tabBarItemStyle: {
           paddingVertical: spacing.xs,
+          marginHorizontal: spacing.xs, // ✅ Más espacio entre tabs
         },
       })}
     >
