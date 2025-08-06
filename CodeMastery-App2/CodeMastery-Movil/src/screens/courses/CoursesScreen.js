@@ -1,3 +1,4 @@
+// src/screens/courses/CoursesScreen.js
 import { useState, useMemo } from "react";
 import { View, StyleSheet, FlatList, RefreshControl } from "react-native";
 import { Text, FAB, Searchbar } from "react-native-paper";
@@ -26,11 +27,16 @@ export default function CoursesScreen({ navigation }) {
   } = useQuery({
     queryKey: ["courses"],
     queryFn: courseService.getCourses,
-    onError: () => setShowError(true),
+    onError: (error) => {
+      console.error("Error loading courses:", error);
+      setShowError(true);
+    },
   });
 
+  // ✅ CORREGIDO: Validar que courses sea un array antes de usar filter
   const filteredCourses = useMemo(() => {
-    if (!courses) return [];
+    if (!Array.isArray(courses)) return [];
+
     return courses.filter(
       (course) =>
         course.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -40,11 +46,13 @@ export default function CoursesScreen({ navigation }) {
 
   if (isLoading) {
     return (
-      <LoadingSpinner
-        type="dots"
-        message="Cargando cursos..."
-        overlay={false}
-      />
+      <SafeContainer safeAreaType="container">
+        <LoadingSpinner
+          type="dots"
+          message="Cargando cursos..."
+          overlay={false}
+        />
+      </SafeContainer>
     );
   }
 
@@ -57,7 +65,7 @@ export default function CoursesScreen({ navigation }) {
         onPress={() =>
           navigation.navigate("CourseDetail", { courseId: item.id })
         }
-        shadowType="cardShadow" // ✅ Especificar tipo de sombra
+        shadowType="cardShadow"
         style={[
           styles.courseCard,
           {
@@ -98,13 +106,15 @@ export default function CoursesScreen({ navigation }) {
     <ScreenTransition type="scaleIn">
       <View style={styles.emptyContainer}>
         <Icon name="book-outline" size={64} color="#d1d5db" />
-        <Text style={styles.emptyText}>No hay cursos disponibles</Text>
+        <Text style={styles.emptyText}>
+          {error ? "Error al cargar cursos" : "No hay cursos disponibles"}
+        </Text>
         <AnimatedButton
           mode="outlined"
           onPress={() => refetch()}
           style={styles.retryButton}
           animationType="both"
-          shadowType="lightShadow" // ✅ Sombra ligera para botón outlined
+          shadowType="lightShadow"
         >
           Reintentar
         </AnimatedButton>
@@ -116,7 +126,11 @@ export default function CoursesScreen({ navigation }) {
     <ScreenTransition type="slideUp">
       <View style={styles.errorContainer}>
         <Icon name="alert-circle" size={48} color="#ef4444" />
-        <Text style={styles.errorText}>Error al cargar los cursos</Text>
+        <Text style={styles.errorText}>
+          {error?.response?.status === 401
+            ? "Sesión expirada. Por favor inicia sesión nuevamente."
+            : "Error al cargar los cursos"}
+        </Text>
         <AnimatedButton
           mode="contained"
           onPress={() => {
@@ -125,7 +139,7 @@ export default function CoursesScreen({ navigation }) {
           }}
           style={styles.retryButton}
           animationType="scale"
-          shadowType="shadow" // ✅ Sombra normal para botón contained
+          shadowType="shadow"
         >
           Reintentar
         </AnimatedButton>
@@ -133,6 +147,7 @@ export default function CoursesScreen({ navigation }) {
     </ScreenTransition>
   );
 
+  // Si hay error y no hay datos, mostrar pantalla de error
   if (error && !courses) {
     return (
       <SafeContainer safeAreaType="container">{renderError()}</SafeContainer>
@@ -145,7 +160,11 @@ export default function CoursesScreen({ navigation }) {
         <View style={styles.container}>
           <StatusIndicator
             type="error"
-            message="Error al cargar algunos cursos"
+            message={
+              error?.response?.status === 401
+                ? "Sesión expirada"
+                : "Error al cargar algunos cursos"
+            }
             visible={showError}
             onHide={() => setShowError(false)}
           />
@@ -156,7 +175,7 @@ export default function CoursesScreen({ navigation }) {
             value={searchQuery}
             style={[
               styles.searchbar,
-              utils.getShadow("lightShadow"), // ✅ Usar utils para sombra
+              utils.getShadow("lightShadow"),
               { marginHorizontal: spacing.md },
             ]}
           />
@@ -190,7 +209,7 @@ export default function CoursesScreen({ navigation }) {
             icon="plus"
             style={[
               styles.fab,
-              utils.getShadow("shadow"), // ✅ Usar utils para sombra del FAB
+              utils.getShadow("shadow"),
               {
                 bottom: spacing.lg,
                 right: spacing.lg,

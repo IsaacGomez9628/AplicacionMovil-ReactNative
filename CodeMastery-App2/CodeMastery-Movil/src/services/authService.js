@@ -1,9 +1,25 @@
-import api from "./api";
+// ✅ ARCHIVO CORREGIDO: src/services/authService.js
+import api, { setAuthToken, clearAuthToken } from "./api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
 class AuthService {
   constructor() {
     console.log("AuthService initialized");
+    this.initializeAuthState();
+  }
+
+  // ✅ NUEVO: Inicializar estado de autenticación al cargar la app
+  async initializeAuthState() {
+    try {
+      const token = await AsyncStorage.getItem("access_token");
+      if (token) {
+        setAuthToken(token);
+        console.log("🔑 Auth token restored from storage");
+      }
+    } catch (error) {
+      console.error("Error initializing auth state:", error);
+    }
   }
 
   async login(email, password) {
@@ -15,11 +31,24 @@ class AuthService {
         password: password,
       };
 
-      console.log("Sending login request with payload:", payload);
-
       const response = await api.post("/auth/login", payload);
 
-      console.log("✅ Login successful:", response.data);
+      // ✅ NUEVO: Guardar ambos tokens
+      const { access_token, refresh_token, token_type, expires_in } =
+        response.data;
+
+      await AsyncStorage.multiSet([
+        ["access_token", access_token],
+        ["refresh_token", refresh_token],
+        ["token_type", token_type],
+        ["token_expires_in", expires_in.toString()],
+        ["login_timestamp", Date.now().toString()],
+      ]);
+
+      // Configurar header por defecto
+      setAuthToken(access_token);
+
+      console.log("✅ Login successful with refresh token support");
 
       return response.data;
     } catch (error) {
@@ -64,11 +93,6 @@ class AuthService {
         password: password,
       };
 
-      console.log("Sending register request:", {
-        ...payload,
-        password: "***hidden***",
-      });
-
       const response = await api.post("/auth/register", payload);
 
       console.log("✅ Register successful:", response.data);
@@ -79,33 +103,21 @@ class AuthService {
         status: error.response?.status,
         data: error.response?.data,
         message: error.message,
-        stack: error.stack,
       });
 
-      // Manejo detallado de errores
       if (error.response?.status === 422) {
         const details = error.response.data.detail;
         if (Array.isArray(details)) {
           const messages = details
             .map((d) => `${d.loc[1]}: ${d.msg}`)
             .join("\n");
-          Alert.alert("Error de Validación", messages);
           throw new Error(messages);
         }
       }
 
       if (error.response?.status === 400) {
         const message = error.response.data.detail || "Email ya registrado";
-        Alert.alert("Error", message);
         throw new Error(message);
-      }
-
-      if (error.message === "Network Error") {
-        Alert.alert(
-          "Error de Conexión",
-          "No se puede conectar al servidor. Verifica tu conexión."
-        );
-        throw new Error("No se puede conectar al servidor");
       }
 
       throw error;
@@ -125,17 +137,123 @@ class AuthService {
     }
   }
 
-  setAuthToken(token) {
-    if (token) {
-      console.log("🔑 Setting auth token");
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-      console.log("🔓 Removing auth token");
-      delete api.defaults.headers.common["Authorization"];
+  // ✅ NUEVO: Refresh manual de token
+  async refreshToken() {
+    console.log("🔄 Manual token refresh...");
+
+    try {
+      const refreshToken = await AsyncStorage.getItem("refresh_token");
+
+      if (!refreshToken) {
+        throw new Error("No refresh token available");
+      }
+
+      const response = await api.post(
+        "/auth/refresh",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        }
+      );
+
+      const { access_token, refresh_token, token_type, expires_in } =
+        response.data;
+
+      await AsyncStorage.multiSet([
+        ["access_token", access_token],
+        ["refresh_token", refresh_token],
+        ["token_type", token_type],
+        ["token_expires_in", expires_in.toString()],
+        ["login_timestamp", Date.now().toString()],
+      ]);
+
+      setAuthToken(access_token);
+
+      console.log("✅ Manual token refresh successful");
+
+      return response.data;
+    } catch (error) {
+      console.error("❌ Manual token refresh failed:", error);
+      throw error;
     }
   }
 
-  // Método de prueba para verificar la conexión
+  // ✅ NUEVO: Logout mejorado
+  async logout() {
+    console.log("🔓 Logging out...");
+
+    try {
+      // Intentar logout del servidor (opcional)
+      try {
+        await api.post("/auth/logout");
+        console.log("✅ Server logout successful");
+      } catch (error) {
+        console.warn(
+          "Server logout failed, continuing with local logout:",
+          error.message
+        );
+      }
+
+      // Limpiar almacenamiento local
+      await AsyncStorage.multiRemove([
+        "access_token",
+        "refresh_token",
+        "token_type",
+        "token_expires_in",
+        "login_timestamp",
+        "user",
+      ]);
+
+      // Limpiar headers
+      clearAuthToken();
+
+      console.log("✅ Local logout successful");
+    } catch (error) {
+      console.error("❌ Logout error:", error);
+      // Aún así limpiar los tokens localmente
+      await AsyncStorage.multiRemove(["access_token", "refresh_token", "user"]);
+      clearAuthToken();
+    }
+  }
+
+  // ✅ NUEVO: Verificar si hay token válido
+  async hasValidToken() {
+    try {
+      const token = await AsyncStorage.getItem("access_token");
+      const refreshToken = await AsyncStorage.getItem("refresh_token");
+
+      return !!(token && refreshToken);
+    } catch (error) {
+      console.error("Error checking token validity:", error);
+      return false;
+    }
+  }
+
+  // ✅ NUEVO: Verificar tiempo de expiración
+  async isTokenExpiringSoon() {
+    try {
+      const expiresIn = await AsyncStorage.getItem("token_expires_in");
+      const loginTimestamp = await AsyncStorage.getItem("login_timestamp");
+
+      if (!expiresIn || !loginTimestamp) {
+        return true; // Asumir que expira si no hay información
+      }
+
+      const expiryTime = parseInt(loginTimestamp) + parseInt(expiresIn) * 1000;
+      const currentTime = Date.now();
+      const timeUntilExpiry = expiryTime - currentTime;
+
+      // Considerar que expira "pronto" si quedan menos de 5 minutos
+      return timeUntilExpiry < 5 * 60 * 1000;
+    } catch (error) {
+      console.error("Error checking token expiry:", error);
+      return true;
+    }
+  }
+
+  // Test de conexión de autenticación
   async testAuthConnection() {
     console.log("🧪 Testing auth connection...");
 

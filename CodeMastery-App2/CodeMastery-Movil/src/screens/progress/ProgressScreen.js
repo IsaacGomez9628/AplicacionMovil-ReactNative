@@ -1,3 +1,4 @@
+// src/screens/progress/ProgressScreen.js
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, ProgressBar, Button } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query";
@@ -22,16 +23,20 @@ export default function ProgressScreen({ navigation }) {
     enabled: !!user?.id,
   });
 
+  // ✅ CORREGIDO: No pasamos user_id, el backend lo obtiene del token
   const { data: attempts, isLoading: attemptsLoading } = useQuery({
-    queryKey: ["userAttempts", user?.id],
-    queryFn: () => lessonService.getUserAttempts(user?.id),
+    queryKey: ["userAttempts"],
+    queryFn: () => lessonService.getUserAttempts(),
     enabled: !!user?.id,
   });
 
-  if (progressLoading || summaryLoading) return <LoadingScreen />;
+  if (progressLoading || summaryLoading || attemptsLoading)
+    return <LoadingScreen />;
 
   const completionPercentage = summary?.completion_percentage || 0;
-  const recentAttempts = attempts?.slice(0, 5) || [];
+
+  // ✅ CORREGIDO: Validamos que attempts sea un array antes de usar slice
+  const recentAttempts = Array.isArray(attempts) ? attempts.slice(0, 5) : [];
 
   return (
     <ScrollView style={styles.container}>
@@ -78,7 +83,7 @@ export default function ProgressScreen({ navigation }) {
             <View style={styles.statItem}>
               <Icon name="code-tags" size={32} color="#6366f1" />
               <Text variant="titleMedium" style={styles.statNumber}>
-                {attempts?.length || 0}
+                {Array.isArray(attempts) ? attempts.length : 0}
               </Text>
               <Text variant="bodySmall" style={styles.statLabel}>
                 Ejercicios Enviados
@@ -88,7 +93,7 @@ export default function ProgressScreen({ navigation }) {
         </Card.Content>
       </Card>
 
-      {progress && progress.length > 0 && (
+      {Array.isArray(progress) && progress.length > 0 && (
         <Card style={styles.modulesCard}>
           <Card.Content>
             <Text variant="titleMedium" style={styles.sectionTitle}>
@@ -152,9 +157,7 @@ export default function ProgressScreen({ navigation }) {
 
             <Button
               mode="outlined"
-              onPress={() => {
-                /* Navegar a historial completo */
-              }}
+              onPress={() => navigation.navigate("AttemptsHistory")}
               style={styles.viewAllButton}
             >
               Ver Todos los Intentos

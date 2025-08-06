@@ -37,7 +37,6 @@ class User(UserBase):
     class Config:
         from_attributes = True
 
-# Auth schemas
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
@@ -45,6 +44,15 @@ class UserLogin(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+class TokenResponse(BaseModel):  # ✅ NUEVO: Respuesta completa con refresh token
+    access_token: str
+    refresh_token: str
+    token_type: str
+    expires_in: int  # Tiempo de expiración en segundos
+
+class RefreshTokenRequest(BaseModel):  # ✅ NUEVO: Para solicitudes de refresh
+    refresh_token: str
 
 class TokenData(BaseModel):
     email: Optional[str] = None

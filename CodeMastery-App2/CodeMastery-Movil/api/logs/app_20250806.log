@@ -1,0 +1,94 @@
+2025-08-06 10:26:12,666 - main - INFO - Registrando routers...
+2025-08-06 10:32:06,392 - main - INFO - Request: GET /health
+2025-08-06 10:32:06,393 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-06 10:32:06,395 - main - INFO - Response status: 200
+2025-08-06 10:33:45,954 - main - INFO - Request: GET /health
+2025-08-06 10:33:45,957 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-06 10:33:45,962 - main - INFO - Response status: 200
+2025-08-06 10:33:45,982 - main - INFO - Request: GET /health
+2025-08-06 10:33:45,985 - main - INFO - Headers: {'host': '172.20.10.3:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-06 10:33:45,987 - main - INFO - Response status: 200
+2025-08-06 10:33:46,028 - main - INFO - Request: POST /auth/register
+2025-08-06 10:33:46,029 - main - INFO - Headers: {'host': '172.20.10.3:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'origin': 'http://172.20.10.3:19006', 'content-type': 'application/json', 'content-length': '101'}
+2025-08-06 10:33:46,055 - routers.auth - INFO - Register attempt for email: mobile_test_1754498026@example.com
+2025-08-06 10:33:46,056 - routers.auth - INFO - Request headers: {'host': '172.20.10.3:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'origin': 'http://172.20.10.3:19006', 'content-type': 'application/json', 'content-length': '101'}
+2025-08-06 10:33:46,056 - routers.auth - INFO - User data received: name=Test User Mobile, email=mobile_test_1754498026@example.com
+2025-08-06 10:33:46,133 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\XB148\OneDrive\Documentos\codemastery-app\api\venv\lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-08-06 10:33:46,946 - routers.auth - INFO - User successfully registered: mobile_test_1754498026@example.com with ID: 10
+2025-08-06 10:33:46,949 - main - INFO - Response status: 200
+2025-08-06 10:33:51,116 - main - INFO - Registrando routers...
+2025-08-06 10:36:14,151 - main - INFO - Registrando routers...
+2025-08-06 10:36:14,266 - main - INFO - Request: GET /health
+2025-08-06 10:36:14,266 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-06 10:36:14,268 - main - INFO - Response status: 200
+2025-08-06 10:37:16,411 - main - INFO - Request: GET /health
+2025-08-06 10:37:16,413 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-06 10:37:16,415 - main - INFO - Response status: 200
+2025-08-06 10:37:20,321 - main - INFO - Registrando routers...
+2025-08-06 10:37:20,444 - main - INFO - Request: GET /health
+2025-08-06 10:37:20,444 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-06 10:37:20,447 - main - INFO - Response status: 200
+2025-08-06 10:37:20,455 - main - INFO - Request: GET /health
+2025-08-06 10:37:20,455 - main - INFO - Headers: {'host': '127.0.0.1:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-06 10:37:20,459 - main - INFO - Response status: 200
+2025-08-06 10:37:20,468 - main - INFO - Request: GET /health
+2025-08-06 10:37:20,469 - main - INFO - Headers: {'host': '172.20.10.3:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-06 10:37:20,470 - main - INFO - Response status: 200
+2025-08-06 10:38:08,634 - main - INFO - Request: GET /
+2025-08-06 10:38:08,636 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json'}
+2025-08-06 10:38:08,637 - main - INFO - Root endpoint accessed
+2025-08-06 10:38:08,638 - main - INFO - Response status: 200
+2025-08-06 10:38:12,655 - main - INFO - Registrando routers...
+2025-08-06 10:38:12,752 - main - INFO - Request: GET /health
+2025-08-06 10:38:12,753 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json'}
+2025-08-06 10:38:12,754 - main - INFO - Response status: 200
+2025-08-06 10:38:12,769 - main - INFO - Request: POST /auth/register
+2025-08-06 10:38:12,769 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '87'}
+2025-08-06 10:38:12,784 - routers.auth - INFO - Register attempt for email: test_1754498292@example.com
+2025-08-06 10:38:12,785 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '87'}
+2025-08-06 10:38:12,785 - routers.auth - INFO - User data received: name=Test User, email=test_1754498292@example.com
+2025-08-06 10:38:12,830 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\XB148\OneDrive\Documentos\codemastery-app\api\venv\lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-08-06 10:38:13,627 - routers.auth - INFO - User successfully registered: test_1754498292@example.com with ID: 11
+2025-08-06 10:38:13,632 - main - INFO - Response status: 200
+2025-08-06 10:38:13,654 - main - INFO - Request: POST /auth/login
+2025-08-06 10:38:13,664 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '66'}
+2025-08-06 10:38:13,670 - routers.auth - INFO - Login attempt for email: test_1754498292@example.com
+2025-08-06 10:38:13,672 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '66'}
+2025-08-06 10:38:14,367 - routers.auth - INFO - Login successful for user: test_1754498292@example.com
+2025-08-06 10:38:14,369 - main - INFO - Response status: 200
+2025-08-06 10:38:14,387 - main - INFO - Request: GET /auth/me
+2025-08-06 10:38:14,388 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0XzE3NTQ0OTgyOTJAZXhhbXBsZS5jb20iLCJleHAiOjE3NTQ1MDAwOTQsInR5cGUiOiJhY2Nlc3MifQ.bIgTXRRd2N89g8qB3KkmZ_XrxDDLEYupK7kgdMu6U4Y'}
+2025-08-06 10:38:14,395 - main - INFO - Response status: 401
+2025-08-06 10:38:14,404 - main - INFO - Request: GET /courses/
+2025-08-06 10:38:14,405 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json'}
+2025-08-06 10:38:14,409 - main - INFO - Response status: 403
+2025-08-06 10:40:22,567 - main - INFO - Registrando routers...
+2025-08-06 10:45:23,920 - main - INFO - Registrando routers...
+2025-08-06 10:45:27,715 - main - INFO - Registrando routers...
+2025-08-06 10:45:27,819 - main - INFO - Request: GET /
+2025-08-06 10:45:27,820 - main - INFO - Root endpoint accessed
+2025-08-06 10:45:27,822 - main - INFO - Response status: 200
+2025-08-06 10:45:27,829 - main - INFO - Request: GET /health
+2025-08-06 10:45:27,831 - main - INFO - Response status: 200
+2025-08-06 10:45:28,185 - routers.auth - INFO - Register attempt for email: test_1754498728@example.com
+2025-08-06 10:45:28,186 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '87'}
+2025-08-06 10:45:28,187 - routers.auth - INFO - User data received: name=Test User, email=test_1754498728@example.com
+2025-08-06 10:45:28,243 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\XB148\OneDrive\Documentos\codemastery-app\api\venv\lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-08-06 10:45:29,038 - routers.auth - INFO - User successfully registered: test_1754498728@example.com with ID: 12
+2025-08-06 10:45:29,087 - routers.auth - INFO - Login attempt for email: test_1754498728@example.com
+2025-08-06 10:45:29,091 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '66'}
+2025-08-06 10:45:29,815 - routers.auth - INFO - Login successful for user: test_1754498728@example.com
+2025-08-06 10:45:29,938 - main - INFO - Request: GET /courses/
+2025-08-06 10:45:29,943 - main - INFO - Response status: 403

@@ -1,69 +1,53 @@
-import { api } from "./api";
+// src/services/lessonService.js
+import api from "./api";
 
-// ✅ CORRECCIÓN: lessonService.js corregido
-class LessonService {
-  async getLesson(lessonId) {
+export const lessonService = {
+  // Obtener una lección específica
+  getLesson: async (lessonId) => {
     const response = await api.get(`/lessons/${lessonId}`);
     return response.data;
-  }
+  },
 
-  async submitCode(lessonId, codeSubmitted) {
+  // Enviar código de ejercicio
+  submitCode: async (lessonId, codeSubmitted) => {
     const response = await api.post(`/lessons/${lessonId}/enviar`, {
       code_submitted: codeSubmitted,
     });
     return response.data;
-  }
+  },
 
-  async getLastAttempt(lessonId, userId) {
-    const response = await api.get(
-      `/lessons/${lessonId}/ultimo-intento?user_id=${userId}`
-    );
-    return response.data;
-  }
+  // Obtener último intento de una lección específica
+  getLastAttempt: async (lessonId) => {
+    try {
+      const response = await api.get(`/lessons/${lessonId}/ultimo-intento`);
+      return response.data;
+    } catch (error) {
+      if (error.response?.status === 404) {
+        return null; // No hay intentos previos
+      }
+      throw error;
+    }
+  },
 
-  async getUserAttempts(userId) {
-    const response = await api.get(`/lessons/intentos?user_id=${userId}`);
-    return response.data;
-  }
+  // ✅ CORREGIDO: Obtener todos los intentos del usuario (sin pasar user_id)
+  getUserAttempts: async () => {
+    try {
+      // El backend obtiene el user_id del token JWT, no necesitamos pasarlo
+      const response = await api.get("/lessons/intentos");
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error getting user attempts:",
+        error.response?.data || error
+      );
+      // Si hay error, retornamos un array vacío para evitar crashes
+      return [];
+    }
+  },
 
-  async deleteAttempt(attemptId) {
+  // Eliminar un intento
+  deleteAttempt: async (attemptId) => {
     const response = await api.delete(`/lessons/intentos/${attemptId}`);
     return response.data;
-  }
-}
-
-// ✅ CORRECCIÓN: moduleService.js corregido
-class ModuleService {
-  async getModule(moduleId) {
-    const response = await api.get(`/modules/${moduleId}`);
-    return response.data;
-  }
-
-  async getModuleLessons(moduleId) {
-    const response = await api.get(`/modules/${moduleId}/lessons`);
-    return response.data;
-  }
-}
-
-// ✅ CORRECCIÓN: progressService.js corregido
-class ProgressService {
-  async getUserProgress(userId) {
-    const response = await api.get(`/progress/${userId}`);
-    return response.data;
-  }
-
-  async updateProgress(userId, moduleId, progressData) {
-    const response = await api.put(
-      `/progress/?user_id=${userId}&module_id=${moduleId}`,
-      progressData
-    );
-    return response.data;
-  }
-
-  async getUserSummary(userId) {
-    const response = await api.get(`/progress/resumen/${userId}`);
-    return response.data;
-  }
-}
-
-export const lessonService = new LessonService();
+  },
+};

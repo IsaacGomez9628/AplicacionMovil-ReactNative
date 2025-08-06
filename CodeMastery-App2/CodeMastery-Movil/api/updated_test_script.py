@@ -10,7 +10,7 @@ from datetime import datetime
 
 # ✅ CONFIGURACIÓN ACTUALIZADA PARA PUERTO 8001
 BASE_URL = "http://localhost:8001"
-NETWORK_IP = "192.168.1.8"  # Tu IP detectada
+NETWORK_IP = "172.20.10.3"  # Tu IP detectada
 NETWORK_URL = f"http://{NETWORK_IP}:8001"
 TIMEOUT = 10
 

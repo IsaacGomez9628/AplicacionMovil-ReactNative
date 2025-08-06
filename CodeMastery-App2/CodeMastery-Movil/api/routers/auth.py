@@ -3,12 +3,13 @@ from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User
-from schemas import UserCreate, UserLogin, Token, User as UserSchema
+from schemas import UserCreate, UserLogin, TokenResponse, User as UserSchema  # ✅ NUEVO: TokenResponse
 from auth import (
     authenticate_user, 
-    create_access_token, 
+    create_token_pair,  # ✅ NUEVO
     get_password_hash, 
     get_current_user,
+    get_current_user_from_refresh_token,  # ✅ NUEVO
     ACCESS_TOKEN_EXPIRE_MINUTES
 )
 import logging
@@ -20,10 +21,7 @@ router = APIRouter()
 
 @router.post("/register", response_model=UserSchema)
 async def register(user: UserCreate, request: Request, db: Session = Depends(get_db)):
-    """
-    Registro de nuevo usuario con logging detallado
-    """
-    # Log de entrada
+    """Registro de nuevo usuario con logging detallado"""
     logger.info(f"Register attempt for email: {user.email}")
     logger.info(f"Request headers: {dict(request.headers)}")
     logger.info(f"User data received: name={user.name}, email={user.email}")
@@ -79,11 +77,9 @@ async def register(user: UserCreate, request: Request, db: Session = Depends(get
             detail=f"Internal server error: {str(e)}"
         )
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=TokenResponse)  # ✅ CAMBIO: Nuevo response model
 async def login(user_credentials: UserLogin, request: Request, db: Session = Depends(get_db)):
-    """
-    Login con logging detallado
-    """
+    """Login con tokens de acceso y refresh"""
     logger.info(f"Login attempt for email: {user_credentials.email}")
     logger.info(f"Request headers: {dict(request.headers)}")
     
@@ -97,18 +93,12 @@ async def login(user_credentials: UserLogin, request: Request, db: Session = Dep
                 headers={"WWW-Authenticate": "Bearer"},
             )
         
-        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-        access_token = create_access_token(
-            data={"sub": user.email}, 
-            expires_delta=access_token_expires
-        )
+        # ✅ NUEVO: Crear par de tokens
+        tokens = create_token_pair(user.email)
         
         logger.info(f"Login successful for user: {user.email}")
         
-        return {
-            "access_token": access_token, 
-            "token_type": "bearer"
-        }
+        return tokens
         
     except HTTPException:
         raise
@@ -119,10 +109,46 @@ async def login(user_credentials: UserLogin, request: Request, db: Session = Dep
             detail=f"Internal server error: {str(e)}"
         )
 
+@router.post("/refresh", response_model=TokenResponse)  # ✅ NUEVO: Endpoint de refresh
+async def refresh_token(
+    request: Request, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user_from_refresh_token)
+):
+    """Refrescar token de acceso usando refresh token"""
+    logger.info(f"Token refresh for user: {current_user.email}")
+    
+    try:
+        # Crear nuevo par de tokens
+        tokens = create_token_pair(current_user.email)
+        
+        logger.info(f"Token refresh successful for user: {current_user.email}")
+        
+        return tokens
+        
+    except Exception as e:
+        logger.error(f"Unexpected error during token refresh: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Internal server error: {str(e)}"
+        )
+
 @router.get("/me", response_model=UserSchema)
 async def read_users_me(current_user: User = Depends(get_current_user)):
     logger.info(f"User info requested for: {current_user.email}")
     return current_user
+
+@router.post("/logout")  # ✅ NUEVO: Endpoint de logout
+async def logout(request: Request, current_user: User = Depends(get_current_user)):
+    """Logout del usuario (invalidar tokens del lado del cliente)"""
+    logger.info(f"Logout for user: {current_user.email}")
+    
+    # Nota: En una implementación completa, aquí podrías:
+    # 1. Agregar el token a una blacklist
+    # 2. Guardar en Redis o base de datos
+    # 3. Invalidar todos los tokens del usuario
+    
+    return {"message": "Logout successful"}
 
 # Endpoint de prueba para verificar que el auth router funciona
 @router.get("/test")

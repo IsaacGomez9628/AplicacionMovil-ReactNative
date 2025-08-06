@@ -35,9 +35,9 @@ def test_mobile_connectivity():
     
     # URLs a probar (localhost + IP local)
     urls_to_test = [
-        f"http://localhost:8000",
-        f"http://127.0.0.1:8000", 
-        f"http://{local_ip}:8000"
+        f"http://localhost:8001",
+        f"http://127.0.0.1:8001", 
+        f"http://{local_ip}:8001"
     ]
     
     results = {}
@@ -68,7 +68,7 @@ def test_mobile_connectivity():
         }
         
         response = requests.options(
-            f"http://{local_ip}:8000/auth/register", 
+            f"http://{local_ip}:8001/auth/register", 
             headers=headers, 
             timeout=5
         )
@@ -98,7 +98,7 @@ def test_mobile_connectivity():
             
         print(f"\n📱 CONFIGURACIÓN PARA REACT NATIVE:")
         print(f"   Actualiza YOUR_COMPUTER_IP = \"{local_ip}\"")
-        print(f"   URL base será: http://{local_ip}:8000")
+        print(f"   URL base será: http://{local_ip}:8001")
         
         return True
     else:
@@ -113,7 +113,7 @@ def test_ports():
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(5)
-        result = sock.connect_ex((local_ip, 8000))
+        result = sock.connect_ex((local_ip, 8001))
         sock.close()
         
         if result == 0:
@@ -132,7 +132,7 @@ def main():
     
     # Verificar que FastAPI esté corriendo
     try:
-        response = requests.get("http://localhost:8000/health", timeout=3)
+        response = requests.get("http://localhost:8001/health", timeout=3)
         if response.status_code != 200:
             print("❌ FastAPI no está corriendo en localhost:8000")
             print("   Ejecuta: uvicorn main:app --reload --host 0.0.0.0 --port 8000")

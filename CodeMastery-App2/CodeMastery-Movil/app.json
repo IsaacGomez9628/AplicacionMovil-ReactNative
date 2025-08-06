@@ -1,44 +1,48 @@
 {
   "expo": {
-    "name": "learning-app",
-    "slug": "learning-app",
+    "name": "CodeMastery",
+    "slug": "codemastery-movil",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.yourcompany.learningapp"
+      "bundleIdentifier": "com.yourcompany.codemastery"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.yourcompany.codemastery",
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "extra": {
+      "eas": {
+        "projectId": "your-project-id-here"
+      }
+    },
+    "newArchEnabled": false,
     "plugins": [
       [
-        "expo-screen-orientation",
+        "expo-dev-launcher",
         {
-          "initialOrientation": "PORTRAIT_UP"
+          "launchMode": "most-recent"
         }
-      ],
-      "expo-secure-store"
-    ],
-    "experiments": {
-      "typedRoutes": false
-    }
+      ]
+    ]
   }
 }

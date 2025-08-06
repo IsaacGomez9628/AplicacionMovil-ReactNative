@@ -1,54 +1,45 @@
-// ✅ CONFIGURACIÓN ACTUALIZADA PARA PUERTO 8001
-// Archivo: src/services/api.js
-
+// ✅ ARCHIVO CORREGIDO: src/services/api.js
 import axios from "axios";
 import { Platform, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Device from "expo-device";
-import * as Network from "expo-network";
 
-// ✅ CONFIGURACIÓN MEJORADA DE URL BASE CON PUERTO 8001
+// ✅ CONFIGURACIÓN DE URL BASE CORREGIDA
 const getBaseURL = () => {
-  // ⚠️ ACTUALIZAR ESTA IP CON TU IP LOCAL
-  const YOUR_COMPUTER_IP = "192.168.1.8"; // ← Tu IP detectada
+  const YOUR_COMPUTER_IP = "172.20.10.3"; // ← Tu IP detectada
 
   if (__DEV__) {
     if (Platform.OS === "android") {
       if (Device.isDevice) {
-        // Dispositivo Android físico
         console.log(`🤖 Android Device URL: http://${YOUR_COMPUTER_IP}:8001`);
         return `http://${YOUR_COMPUTER_IP}:8001`;
       } else {
-        // Emulador Android (necesita IP especial)
         console.log("🤖 Android Emulator URL: http://10.0.2.2:8001");
         return "http://10.0.2.2:8001";
       }
     } else if (Platform.OS === "ios") {
       if (Device.isDevice) {
-        // Dispositivo iOS físico
         console.log(`📱 iOS Device URL: http://${YOUR_COMPUTER_IP}:8001`);
         return `http://${YOUR_COMPUTER_IP}:8001`;
       } else {
-        // Simulador iOS
         console.log("📱 iOS Simulator URL: http://localhost:8001");
         return "http://localhost:8001";
       }
     } else {
-      // Web
       console.log("🌐 Web URL: http://localhost:8001");
       return "http://localhost:8001";
     }
   } else {
-    // Producción
     return "https://tu-api-produccion.com";
   }
 };
 
 const API_BASE_URL = getBaseURL();
 
-// ✅ CONFIGURACIÓN AXIOS
+// ✅ CONFIGURACIÓN AXIOS CON REFRESH TOKEN AUTOMÁTICO
 export const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 30000, // 30 segundos
+  timeout: 30000,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -58,9 +49,25 @@ export const api = axios.create({
   },
 });
 
-// ✅ INTERCEPTORS (sin cambios, solo logging mejorado)
+// ✅ SISTEMA DE REFRESH TOKEN AUTOMÁTICO
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
+
+// ✅ INTERCEPTOR DE REQUEST
 api.interceptors.request.use(
-  (config) => {
+  async (config) => {
     console.log("🚀 API Request:", {
       method: config.method?.toUpperCase(),
       url: `${config.baseURL}${config.url}`,
@@ -68,19 +75,16 @@ api.interceptors.request.use(
         ...config.headers,
         Authorization: config.headers.Authorization ? "[HIDDEN]" : "None",
       },
-      data: config.data
-        ? typeof config.data === "object"
-          ? JSON.stringify(config.data)
-          : config.data
-        : "None",
     });
 
-    if (
-      config.method === "post" ||
-      config.method === "put" ||
-      config.method === "patch"
-    ) {
-      config.headers["Content-Type"] = "application/json";
+    // Agregar token automáticamente si existe
+    try {
+      const token = await AsyncStorage.getItem("access_token");
+      if (token && !config.headers.Authorization) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (error) {
+      console.error("Error getting token from storage:", error);
     }
 
     return config;
@@ -91,6 +95,7 @@ api.interceptors.request.use(
   }
 );
 
+// ✅ INTERCEPTOR DE RESPONSE CON REFRESH AUTOMÁTICO
 api.interceptors.response.use(
   (response) => {
     console.log("✅ API Response:", {
@@ -101,65 +106,131 @@ api.interceptors.response.use(
     });
     return response;
   },
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+
     console.error("❌ API Error Details:", {
       message: error.message,
       status: error.response?.status,
       statusText: error.response?.statusText,
       data: error.response?.data,
       url: error.config?.url,
-      baseURL: error.config?.baseURL,
     });
 
+    // ✅ MANEJO AUTOMÁTICO DE TOKEN EXPIRADO
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        // Si ya se está refrescando, poner en cola
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return api(originalRequest);
+          })
+          .catch((err) => {
+            return Promise.reject(err);
+          });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        const refreshToken = await AsyncStorage.getItem("refresh_token");
+
+        if (!refreshToken) {
+          throw new Error("No refresh token available");
+        }
+
+        console.log("🔄 Attempting token refresh...");
+
+        const refreshResponse = await axios.post(
+          `${API_BASE_URL}/auth/refresh`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${refreshToken}`,
+              "Content-Type": "application/json",
+            },
+            timeout: 10000,
+          }
+        );
+
+        const { access_token, refresh_token } = refreshResponse.data;
+
+        // Guardar nuevos tokens
+        await AsyncStorage.setItem("access_token", access_token);
+        await AsyncStorage.setItem("refresh_token", refresh_token);
+
+        console.log("✅ Token refreshed successfully");
+
+        // Actualizar header por defecto
+        api.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+        originalRequest.headers.Authorization = `Bearer ${access_token}`;
+
+        processQueue(null, access_token);
+        isRefreshing = false;
+
+        // Reintentar la petición original
+        return api(originalRequest);
+      } catch (refreshError) {
+        console.error("❌ Token refresh failed:", refreshError);
+
+        processQueue(refreshError, null);
+        isRefreshing = false;
+
+        // Limpiar tokens y notificar logout
+        await AsyncStorage.multiRemove([
+          "access_token",
+          "refresh_token",
+          "user",
+        ]);
+
+        // Emitir evento para que AuthContext maneje el logout
+        if (global.authContext) {
+          global.authContext.handleTokenExpired();
+        }
+
+        return Promise.reject(refreshError);
+      }
+    }
+
+    // Otros errores de red
     if (error.code === "ECONNABORTED") {
       Alert.alert(
         "Timeout",
         "La solicitud tardó demasiado. Verifica tu conexión."
       );
-    } else if (
-      error.message === "Network Error" ||
-      error.code === "NETWORK_ERROR"
-    ) {
+    } else if (error.message === "Network Error") {
       Alert.alert(
         "Error de Conexión",
-        `No se puede conectar al servidor.\n\n` +
-          `URL: ${API_BASE_URL}\n\n` +
-          `Pasos para solucionar:\n` +
-          `1. Verificar que FastAPI esté corriendo:\n` +
-          `   uvicorn main:app --host 0.0.0.0 --port 8001\n\n` +
-          `2. Verificar firewall de Windows\n\n` +
-          `3. Comprobar que ambos dispositivos estén en la misma red WiFi\n\n` +
-          `4. IP configurada: ${API_BASE_URL.split("//")[1].split(":")[0]}`
+        `No se puede conectar al servidor.\n\nURL: ${API_BASE_URL}\n\nVerifica que el servidor esté corriendo y tu conexión sea estable.`
       );
-    } else if (error.response?.status === 401) {
-      console.log("🔐 Token expired or invalid");
-    } else if (error.response?.status === 422) {
-      const details = error.response.data.detail;
-      if (Array.isArray(details)) {
-        const messages = details
-          .map((d) => `${d.loc?.[1] || "field"}: ${d.msg}`)
-          .join("\n");
-        console.error("Validation errors:", messages);
-      }
     }
 
     return Promise.reject(error);
   }
 );
 
-// ✅ FUNCIÓN DE TEST DE CONEXIÓN ACTUALIZADA
+// ✅ FUNCIONES DE UTILIDAD PARA TOKENS
+export const setAuthToken = (token) => {
+  if (token) {
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers.common["Authorization"];
+  }
+};
+
+export const clearAuthToken = () => {
+  delete api.defaults.headers.common["Authorization"];
+};
+
+// ✅ TEST DE CONEXIÓN
 export const testConnection = async () => {
   try {
     console.log(`🔍 Testing connection to: ${API_BASE_URL}`);
-    console.log(
-      `🌐 Platform: ${Platform.OS}, Device: ${
-        Device.isDevice ? "Physical" : "Simulator"
-      }`
-    );
-
     const response = await api.get("/health");
-
-    console.log("✅ Connection test successful:", response.data);
     return {
       success: true,
       data: response.data,
@@ -167,57 +238,11 @@ export const testConnection = async () => {
       status: response.status,
     };
   } catch (error) {
-    console.error("❌ Connection test failed:", {
-      message: error.message,
-      status: error.response?.status,
-      data: error.response?.data,
-      url: `${API_BASE_URL}/health`,
-    });
-
     return {
       success: false,
       error: error.response?.data?.detail || error.message,
       status: error.response?.status || "NETWORK_ERROR",
       url: `${API_BASE_URL}/health`,
-    };
-  }
-};
-
-// ✅ TESTS ESPECÍFICOS ACTUALIZADOS
-export const testRegisterEndpoint = async () => {
-  try {
-    console.log("🧪 Testing register endpoint...");
-    const testData = {
-      name: "Test User",
-      email: `test${Date.now()}@example.com`,
-      password: "test123456",
-    };
-
-    console.log("📤 Test data:", {
-      ...testData,
-      password: "***hidden***",
-    });
-
-    const response = await api.post("/auth/register", testData);
-
-    console.log("✅ Register test successful:", response.data);
-    return {
-      success: true,
-      data: response.data,
-      status: response.status,
-    };
-  } catch (error) {
-    console.error("❌ Register test failed:", {
-      status: error.response?.status,
-      data: error.response?.data,
-      message: error.message,
-    });
-
-    return {
-      success: false,
-      error: error.response?.data?.detail || error.message,
-      status: error.response?.status || "UNKNOWN",
-      details: error.response?.data,
     };
   }
 };

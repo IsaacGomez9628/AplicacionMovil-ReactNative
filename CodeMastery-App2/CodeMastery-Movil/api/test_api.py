@@ -10,7 +10,7 @@ from datetime import datetime
 from urllib.parse import urljoin
 
 # ✅ CONFIGURACIÓN MEJORADA
-BASE_URL = "http://localhost:8000"  # Cambia por tu URL
+BASE_URL = "http://localhost:8001"  # Cambia por tu URL
 TIMEOUT = 30  # 30 segundos de timeout
 
 # ✅ CONFIGURACIÓN DE SESSION PARA REUTILIZAR CONEXIONES

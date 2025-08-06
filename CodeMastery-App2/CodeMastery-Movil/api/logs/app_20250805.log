@@ -196,3 +196,94 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-08-05 23:22:26,664 - main - INFO - Request: GET /lessons/10/ultimo-intento
 2025-08-05 23:22:26,665 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
 2025-08-05 23:22:26,677 - main - INFO - Response status: 404
+2025-08-05 23:26:41,538 - main - INFO - Request: GET /lessons/intentos
+2025-08-05 23:26:41,539 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:26:41,551 - main - INFO - Response status: 422
+2025-08-05 23:26:52,640 - main - INFO - Request: GET /auth/me
+2025-08-05 23:26:52,641 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:26:52,646 - routers.auth - INFO - User info requested for: gr27271593@gmail.com
+2025-08-05 23:26:52,648 - main - INFO - Response status: 200
+2025-08-05 23:26:52,739 - main - INFO - Request: GET /courses/
+2025-08-05 23:26:52,740 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:26:52,753 - main - INFO - Response status: 200
+2025-08-05 23:28:28,670 - main - INFO - Request: GET /auth/me
+2025-08-05 23:28:28,671 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:28:28,680 - routers.auth - INFO - User info requested for: gr27271593@gmail.com
+2025-08-05 23:28:28,681 - main - INFO - Response status: 200
+2025-08-05 23:28:28,772 - main - INFO - Request: GET /courses/
+2025-08-05 23:28:28,772 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:28:28,784 - main - INFO - Response status: 200
+2025-08-05 23:28:42,944 - main - INFO - Request: GET /auth/me
+2025-08-05 23:28:42,945 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:28:42,951 - routers.auth - INFO - User info requested for: gr27271593@gmail.com
+2025-08-05 23:28:42,952 - main - INFO - Response status: 200
+2025-08-05 23:28:43,057 - main - INFO - Request: GET /courses/
+2025-08-05 23:28:43,057 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:28:43,069 - main - INFO - Response status: 200
+2025-08-05 23:29:04,753 - main - INFO - Request: GET /auth/me
+2025-08-05 23:29:04,754 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:29:04,759 - routers.auth - INFO - User info requested for: gr27271593@gmail.com
+2025-08-05 23:29:04,762 - main - INFO - Response status: 200
+2025-08-05 23:29:04,853 - main - INFO - Request: GET /courses/
+2025-08-05 23:29:04,853 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:29:04,864 - main - INFO - Response status: 200
+2025-08-05 23:29:49,047 - main - INFO - Request: GET /courses/
+2025-08-05 23:29:49,048 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:29:49,058 - main - INFO - Response status: 200
+2025-08-05 23:29:50,363 - main - INFO - Request: GET /courses/
+2025-08-05 23:29:50,364 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:29:50,374 - main - INFO - Response status: 200
+2025-08-05 23:29:52,207 - main - INFO - Request: GET /courses/
+2025-08-05 23:29:52,207 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:29:52,217 - main - INFO - Response status: 200
+2025-08-05 23:37:26,254 - main - INFO - Request: GET /auth/me
+2025-08-05 23:37:26,255 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:37:26,262 - routers.auth - INFO - User info requested for: gr27271593@gmail.com
+2025-08-05 23:37:26,264 - main - INFO - Response status: 200
+2025-08-05 23:37:26,356 - main - INFO - Request: GET /courses/
+2025-08-05 23:37:26,356 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:37:26,368 - main - INFO - Response status: 200
+2025-08-05 23:39:27,991 - main - INFO - Request: GET /courses/
+2025-08-05 23:39:27,992 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:39:28,003 - main - INFO - Response status: 200
+2025-08-05 23:43:54,760 - main - INFO - Request: GET /auth/me
+2025-08-05 23:43:54,761 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:43:54,771 - routers.auth - INFO - User info requested for: gr27271593@gmail.com
+2025-08-05 23:43:54,773 - main - INFO - Response status: 200
+2025-08-05 23:43:54,878 - main - INFO - Request: GET /courses/
+2025-08-05 23:43:54,879 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:43:54,890 - main - INFO - Response status: 200
+2025-08-05 23:44:30,086 - main - INFO - Request: GET /progress/5
+2025-08-05 23:44:30,088 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:44:30,091 - main - INFO - Request: GET /progress/resumen/5
+2025-08-05 23:44:30,092 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:44:30,092 - main - INFO - Request: GET /lessons/intentos
+2025-08-05 23:44:30,092 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:44:30,112 - main - INFO - Response status: 200
+2025-08-05 23:44:30,119 - main - INFO - Response status: 422
+2025-08-05 23:44:30,121 - main - INFO - Response status: 200
+2025-08-05 23:46:52,433 - main - INFO - Request: GET /auth/me
+2025-08-05 23:46:52,434 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:46:52,442 - routers.auth - INFO - User info requested for: gr27271593@gmail.com
+2025-08-05 23:46:52,445 - main - INFO - Response status: 200
+2025-08-05 23:46:52,534 - main - INFO - Request: GET /courses/
+2025-08-05 23:46:52,535 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:46:52,548 - main - INFO - Response status: 200
+2025-08-06 00:06:49,462 - main - INFO - Request: GET /auth/me
+2025-08-06 00:06:49,467 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-06 00:06:49,473 - main - INFO - Response status: 401
+2025-08-06 00:06:49,567 - main - INFO - Request: GET /courses/
+2025-08-06 00:06:49,568 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-06 00:06:49,571 - main - INFO - Response status: 401
+2025-08-06 00:08:06,077 - main - INFO - Request: GET /auth/me
+2025-08-06 00:08:06,084 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-06 00:08:06,090 - main - INFO - Response status: 401
+2025-08-06 00:08:06,184 - main - INFO - Request: GET /courses/
+2025-08-06 00:08:06,185 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-06 00:08:06,188 - main - INFO - Response status: 401
+2025-08-06 00:15:44,235 - main - INFO - Request: GET /auth/me
+2025-08-06 00:15:44,236 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-06 00:15:44,251 - main - INFO - Response status: 401
+2025-08-06 00:15:44,363 - main - INFO - Request: GET /courses/
+2025-08-06 00:15:44,364 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-06 00:15:44,371 - main - INFO - Response status: 401
