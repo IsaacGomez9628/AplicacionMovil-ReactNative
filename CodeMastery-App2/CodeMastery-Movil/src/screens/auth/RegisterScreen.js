@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Alert } from "react-native";
-import { Text, Divider } from "react-native-paper";
+import { Text, Divider, Button as PaperButton } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -13,6 +13,7 @@ import ScreenTransition from "../../components/ScreenTransition";
 import StatusIndicator from "../../components/StatusIndicator";
 import { getAuthStyles } from "../../theme/darkTheme";
 import useResponsive from "../../hooks/useResponsive";
+import { testConnection, testRegisterEndpoint } from "../../services/api";
 
 const schema = yup.object({
   name: yup
@@ -34,6 +35,7 @@ export default function RegisterScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [connectionStatus, setConnectionStatus] = useState("unknown");
   const { register } = useAuth();
   const responsive = useResponsive();
   const styles = getAuthStyles(responsive);
@@ -52,24 +54,71 @@ export default function RegisterScreen({ navigation }) {
     },
   });
 
+  // Verificar conexión al montar el componente
+  useEffect(() => {
+    checkConnection();
+  }, []);
+
+  const checkConnection = async () => {
+    console.log("🔍 Checking connection...");
+    const result = await testConnection();
+
+    if (result.success) {
+      console.log("✅ Connection OK");
+      setConnectionStatus("connected");
+    } else {
+      console.log("❌ Connection Failed");
+      setConnectionStatus("disconnected");
+      Alert.alert(
+        "Problema de Conexión",
+        "No se puede conectar al servidor. Verifica que:\n\n1. El servidor esté corriendo (npm run api)\n2. La IP en api.js sea correcta\n3. Tu dispositivo esté en la misma red"
+      );
+    }
+  };
+
+  const testDirectRegister = async () => {
+    console.log("🧪 Testing direct register...");
+    setLoading(true);
+
+    const result = await testRegisterEndpoint();
+
+    if (result.success) {
+      Alert.alert(
+        "✅ Test Exitoso",
+        "El endpoint de registro funciona correctamente"
+      );
+    } else {
+      Alert.alert("❌ Test Fallido", result.error);
+    }
+
+    setLoading(false);
+  };
+
   const onSubmit = async (data) => {
+    console.log("📝 Form submitted:", data);
     setLoading(true);
     setShowError(false);
 
     try {
+      console.log("Calling register service...");
       const result = await register(data.name, data.email, data.password);
+
+      console.log("Register result:", result);
+
       if (result.success) {
         Alert.alert(
-          "Éxito",
+          "✅ Éxito",
           "Cuenta creada exitosamente. Ahora puedes iniciar sesión.",
           [{ text: "OK", onPress: () => navigation.navigate("Login") }]
         );
       } else {
+        console.log("Register failed:", result.error);
         setErrorMessage(result.error);
         setShowError(true);
       }
     } catch (error) {
-      setErrorMessage("Ocurrió un error inesperado");
+      console.error("Register error:", error);
+      setErrorMessage(error.message || "Ocurrió un error inesperado");
       setShowError(true);
     } finally {
       setLoading(false);
@@ -87,6 +136,28 @@ export default function RegisterScreen({ navigation }) {
         />
 
         <View style={styles.content}>
+          {/* Indicador de conexión */}
+          <View style={{ marginBottom: 20 }}>
+            <Text
+              style={{
+                textAlign: "center",
+                color:
+                  connectionStatus === "connected"
+                    ? "#10b981"
+                    : connectionStatus === "disconnected"
+                    ? "#ef4444"
+                    : "#6b7280",
+              }}
+            >
+              Estado:{" "}
+              {connectionStatus === "connected"
+                ? "✅ Conectado"
+                : connectionStatus === "disconnected"
+                ? "❌ Desconectado"
+                : "🔍 Verificando..."}
+            </Text>
+          </View>
+
           <ScreenTransition type="fadeIn" delay={200}>
             <Text variant="headlineMedium" style={styles.title}>
               Crear Cuenta
@@ -98,6 +169,23 @@ export default function RegisterScreen({ navigation }) {
               Únete a nuestra plataforma de aprendizaje
             </Text>
           </ScreenTransition>
+
+          {/* Botones de Debug (solo en desarrollo) */}
+          {__DEV__ && (
+            <View style={{ marginBottom: 20, gap: 10 }}>
+              <PaperButton mode="outlined" onPress={checkConnection} compact>
+                🔍 Verificar Conexión
+              </PaperButton>
+              <PaperButton
+                mode="outlined"
+                onPress={testDirectRegister}
+                loading={loading}
+                compact
+              >
+                🧪 Test Directo de Registro
+              </PaperButton>
+            </View>
+          )}
 
           <ScreenTransition type="slideUp" delay={600}>
             <AuthCard>
@@ -173,7 +261,7 @@ export default function RegisterScreen({ navigation }) {
                 variant="primary"
                 onPress={handleSubmit(onSubmit)}
                 loading={loading}
-                disabled={loading}
+                disabled={loading || connectionStatus === "disconnected"}
                 icon="account-plus"
               >
                 {loading ? "Creando cuenta..." : "Crear Cuenta"}
