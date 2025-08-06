@@ -39,34 +39,44 @@ async def log_requests(request, call_next):
     logger.info(f"Request: {request.method} {request.url.path}")
     logger.info(f"Headers: {dict(request.headers)}")
     
-    # Log del body para POST/PUT
-    if request.method in ["POST", "PUT"]:
-        body = await request.body()
-        logger.info(f"Body: {body.decode('utf-8') if body else 'Empty'}")
-        # Recrear el request con el body
-        from starlette.requests import Request
-        request = Request(request.scope, receive=lambda: body)
-    
     response = await call_next(request)
     logger.info(f"Response status: {response.status_code}")
     return response
 
-# Configurar CORS - MÁS ESPECÍFICO Y SEGURO
+# ✅ CONFIGURACIÓN CORS CORREGIDA CON TU IP ESPECÍFICA
 origins = [
-    "http://192.168.56.1:19006",      # Expo web
-    "http://192.168.56.1:8081",        # Metro bundler
-    "http://192.168.56.1:19006",  # Tu IP local - CAMBIA ESTO
-    "http://192.168.56.1:8081",   # Tu IP local - CAMBIA ESTO
-    "http://192.168.56.1:19006",       # Android emulator
-    "http://192.168.56.1:8081",        # Android emulator
-    "exp://192.168.56.1:8081",    # Expo Go - CAMBIA ESTO
-    "http://192.168.56.1:19006",      # Localhost alternativo
-    "http://192.168.56.1:8081",       # Localhost alternativo
+    # Desarrollo local
+    "http://localhost:3000",
+    "http://localhost:8081", 
+    "http://localhost:19006",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8081",
+    "http://127.0.0.1:19006",
+    
+    # ✅ TU IP ESPECÍFICA DETECTADA - Puerto 8001
+    "http://192.168.1.8:8001",
+    "http://192.168.1.8:19006",
+    "http://192.168.1.8:8081",
+    "http://192.168.1.8:3000",
+    
+    # Expo URLs
+    "exp://192.168.1.8:8081",
+    "exp://192.168.1.8:19006",
+    
+    # Android Emulator
+    "http://10.0.2.2:8001",
+    "http://10.0.2.2:8081",
+    "http://10.0.2.2:19006",
+    
+    # Adicionales para debugging
+    "http://192.168.1.8:8080",
+    "http://localhost:8080",
 ]
 
+# ✅ CORS MIDDLEWARE CORREGIDO
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins,  # ✅ Lista específica (NO usar "*")
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["*"],
@@ -89,7 +99,8 @@ async def root():
     return {
         "message": "Learning Platform API - Funcionando correctamente!",
         "version": "1.0.0",
-        "docs": "/docs"
+        "docs": "/docs",
+        "status": "healthy"
     }
 
 @app.get("/health")
@@ -97,7 +108,8 @@ async def health_check():
     return {
         "status": "healthy",
         "message": "API is running",
-        "timestamp": datetime.now().isoformat()
+        "timestamp": datetime.now().isoformat(),
+        "version": "1.0.0"
     }
 
 # Endpoint de test para verificar conexión
@@ -107,8 +119,14 @@ async def test_connection(data: dict = None):
     return {
         "received": data,
         "timestamp": datetime.now().isoformat(),
-        "message": "Connection successful"
+        "message": "Connection successful",
+        "status": "ok"
     }
+
+# ✅ ENDPOINT PARA DEBUG DE CORS
+@app.options("/{path:path}")
+async def cors_handler(path: str):
+    return {"message": "CORS preflight handled"}
 
 if __name__ == "__main__":
     import os
@@ -117,8 +135,8 @@ if __name__ == "__main__":
     logger.info("Starting API server...")
     uvicorn.run(
         "main:app",
-        host="0.0.0.0",
-        port=8000,
+        host="0.0.0.0",  # ✅ Importante para dispositivos móviles
+        port=8001,       # ✅ Puerto actualizado
         reload=True,
         log_level="info"
     )

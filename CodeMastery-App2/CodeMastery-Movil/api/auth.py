@@ -26,12 +26,15 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
 def verify_password(plain_password, hashed_password):
+    """Verificar contraseña plana contra hash"""
     return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password):
+    """Generar hash de contraseña"""
     return pwd_context.hash(password)
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    """Crear token de acceso JWT"""
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -42,9 +45,11 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 def get_user_by_email(db: Session, email: str):
+    """Obtener usuario por email"""
     return db.query(User).filter(User.email == email).first()
 
 def authenticate_user(db: Session, email: str, password: str):
+    """Autenticar usuario con email y contraseña"""
     user = get_user_by_email(db, email)
     if not user:
         return False
@@ -56,6 +61,7 @@ async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
     db: Session = Depends(get_db)
 ):
+    """Obtener usuario actual desde token JWT"""
     try:
         payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")

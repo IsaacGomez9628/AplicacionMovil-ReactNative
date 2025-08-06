@@ -2,3 +2,197 @@
 2025-08-05 21:40:45,791 - __main__ - INFO - Starting API server...
 2025-08-05 21:40:48,585 - __mp_main__ - INFO - Registrando routers...
 2025-08-05 21:40:48,904 - main - INFO - Registrando routers...
+2025-08-05 22:38:40,899 - main - INFO - Registrando routers...
+2025-08-05 22:39:19,563 - main - INFO - Request: GET /
+2025-08-05 22:39:19,564 - main - INFO - Headers: {'host': 'localhost:8000', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json'}
+2025-08-05 22:39:19,569 - main - INFO - Root endpoint accessed
+2025-08-05 22:39:19,571 - main - INFO - Response status: 200
+2025-08-05 22:39:19,581 - main - INFO - Request: GET /health
+2025-08-05 22:39:19,582 - main - INFO - Headers: {'host': 'localhost:8000', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json'}
+2025-08-05 22:39:19,584 - main - INFO - Response status: 200
+2025-08-05 22:39:19,601 - main - INFO - Request: POST /auth/register
+2025-08-05 22:39:19,602 - main - INFO - Headers: {'host': 'localhost:8000', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '87'}
+2025-08-05 22:39:19,603 - main - INFO - Body data received for POST/PUT
+2025-08-05 22:39:19,624 - routers.auth - INFO - Register attempt for email: test_1754455159@example.com
+2025-08-05 22:39:19,625 - routers.auth - INFO - Request headers: {'host': 'localhost:8000', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '87'}
+2025-08-05 22:39:19,626 - routers.auth - INFO - User data received: name=Test User, email=test_1754455159@example.com
+2025-08-05 22:39:19,674 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\XB148\OneDrive\Documentos\codemastery-app\api\venv\lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-08-05 22:39:20,449 - routers.auth - INFO - User successfully registered: test_1754455159@example.com with ID: 6
+2025-08-05 22:39:20,453 - main - INFO - Response status: 200
+2025-08-05 22:39:20,471 - main - INFO - Request: POST /auth/login
+2025-08-05 22:39:20,472 - main - INFO - Headers: {'host': 'localhost:8000', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '66'}
+2025-08-05 22:39:20,474 - main - INFO - Body data received for POST/PUT
+2025-08-05 22:39:20,478 - routers.auth - INFO - Login attempt for email: test_1754455159@example.com
+2025-08-05 22:39:20,481 - routers.auth - INFO - Request headers: {'host': 'localhost:8000', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '66'}
+2025-08-05 22:39:21,210 - routers.auth - INFO - Login successful for user: test_1754455159@example.com
+2025-08-05 22:39:21,213 - main - INFO - Response status: 200
+2025-08-05 22:39:21,223 - main - INFO - Request: GET /auth/me
+2025-08-05 22:39:21,224 - main - INFO - Headers: {'host': 'localhost:8000', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0XzE3NTQ0NTUxNTlAZXhhbXBsZS5jb20iLCJleHAiOjE3NTQ0NTY5NjF9.bkhKXTqZnmaXy6s-ClKDrIstSA51VMx_hlreOIVYloI'}
+2025-08-05 22:39:21,233 - routers.auth - INFO - User info requested for: test_1754455159@example.com
+2025-08-05 22:39:21,235 - main - INFO - Response status: 200
+2025-08-05 22:39:21,248 - main - INFO - Request: GET /courses/
+2025-08-05 22:39:21,253 - main - INFO - Headers: {'host': 'localhost:8000', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json'}
+2025-08-05 22:39:21,259 - main - INFO - Response status: 403
+2025-08-05 22:44:59,458 - main - INFO - Registrando routers...
+2025-08-05 22:51:43,373 - main - INFO - Request: GET /health
+2025-08-05 22:51:43,374 - main - INFO - Headers: {'host': 'localhost:8000', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-05 22:51:43,378 - main - INFO - Response status: 200
+2025-08-05 22:51:45,434 - main - INFO - Request: GET /health
+2025-08-05 22:51:45,434 - main - INFO - Headers: {'host': 'localhost:8000', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-05 22:51:45,436 - main - INFO - Response status: 200
+2025-08-05 22:51:45,465 - main - INFO - Request: GET /health
+2025-08-05 22:51:45,465 - main - INFO - Headers: {'host': '127.0.0.1:8000', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-05 22:51:45,467 - main - INFO - Response status: 200
+2025-08-05 23:02:55,332 - main - INFO - Registrando routers...
+2025-08-05 23:03:23,927 - main - INFO - Request: GET /health
+2025-08-05 23:03:23,927 - main - INFO - Headers: {'user-agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; es-MX) WindowsPowerShell/5.1.26100.4652', 'host': 'localhost:8001', 'connection': 'Keep-Alive'}
+2025-08-05 23:03:23,931 - main - INFO - Response status: 200
+2025-08-05 23:03:50,809 - main - INFO - Request: GET /health
+2025-08-05 23:03:50,809 - main - INFO - Headers: {'user-agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; es-MX) WindowsPowerShell/5.1.26100.4652', 'host': 'localhost:8001'}
+2025-08-05 23:03:50,811 - main - INFO - Response status: 200
+2025-08-05 23:04:29,637 - main - INFO - Registrando routers...
+2025-08-05 23:04:53,821 - main - INFO - Registrando routers...
+2025-08-05 23:07:52,716 - main - INFO - Registrando routers...
+2025-08-05 23:08:26,793 - main - INFO - Registrando routers...
+2025-08-05 23:08:37,274 - main - INFO - Request: GET /health
+2025-08-05 23:08:37,275 - main - INFO - Headers: {'user-agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; es-MX) WindowsPowerShell/5.1.26100.4652', 'host': '192.168.1.8:8001', 'connection': 'Keep-Alive'}
+2025-08-05 23:08:37,281 - main - INFO - Response status: 200
+2025-08-05 23:12:31,779 - main - INFO - Request: GET /health
+2025-08-05 23:12:31,780 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-05 23:12:31,782 - main - INFO - Response status: 200
+2025-08-05 23:12:31,791 - main - INFO - Request: GET /health
+2025-08-05 23:12:31,792 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-05 23:12:31,793 - main - INFO - Response status: 200
+2025-08-05 23:12:31,834 - main - INFO - Request: POST /auth/register
+2025-08-05 23:12:31,835 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'origin': 'http://192.168.1.8:19006', 'content-type': 'application/json', 'content-length': '101'}
+2025-08-05 23:12:31,836 - main - INFO - Body data received for POST/PUT
+2025-08-05 23:12:31,855 - routers.auth - INFO - Register attempt for email: mobile_test_1754457151@example.com
+2025-08-05 23:12:31,856 - routers.auth - INFO - Request headers: {'host': '192.168.1.8:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'origin': 'http://192.168.1.8:19006', 'content-type': 'application/json', 'content-length': '101'}
+2025-08-05 23:12:31,857 - routers.auth - INFO - User data received: name=Test User Mobile, email=mobile_test_1754457151@example.com
+2025-08-05 23:12:31,899 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\XB148\OneDrive\Documentos\codemastery-app\api\venv\lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-08-05 23:12:32,657 - routers.auth - INFO - User successfully registered: mobile_test_1754457151@example.com with ID: 7
+2025-08-05 23:12:32,660 - main - INFO - Response status: 200
+2025-08-05 23:15:42,123 - main - INFO - Registrando routers...
+2025-08-05 23:16:58,040 - main - INFO - Request: GET /health
+2025-08-05 23:16:58,041 - main - INFO - Headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-05 23:16:58,044 - main - INFO - Response status: 200
+2025-08-05 23:16:58,078 - main - INFO - Request: GET /health
+2025-08-05 23:16:58,084 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive'}
+2025-08-05 23:16:58,086 - main - INFO - Response status: 200
+2025-08-05 23:16:58,141 - main - INFO - Request: POST /auth/register
+2025-08-05 23:16:58,142 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'origin': 'http://192.168.1.8:19006', 'content-type': 'application/json', 'content-length': '101'}
+2025-08-05 23:16:58,167 - routers.auth - INFO - Register attempt for email: mobile_test_1754457418@example.com
+2025-08-05 23:16:58,168 - routers.auth - INFO - Request headers: {'host': '192.168.1.8:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'origin': 'http://192.168.1.8:19006', 'content-type': 'application/json', 'content-length': '101'}
+2025-08-05 23:16:58,169 - routers.auth - INFO - User data received: name=Test User Mobile, email=mobile_test_1754457418@example.com
+2025-08-05 23:16:58,217 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\XB148\OneDrive\Documentos\codemastery-app\api\venv\lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-08-05 23:16:58,929 - routers.auth - INFO - User successfully registered: mobile_test_1754457418@example.com with ID: 8
+2025-08-05 23:16:58,932 - main - INFO - Response status: 200
+2025-08-05 23:20:32,530 - main - INFO - Request: GET /health
+2025-08-05 23:20:32,531 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'accept': 'application/json', 'accept-language': 'en-US,en;q=0.9', 'connection': 'keep-alive', 'accept-encoding': 'gzip, deflate', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0'}
+2025-08-05 23:20:32,533 - main - INFO - Response status: 200
+2025-08-05 23:20:34,876 - main - INFO - Request: GET /health
+2025-08-05 23:20:34,878 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'accept': 'application/json', 'accept-language': 'en-US,en;q=0.9', 'connection': 'keep-alive', 'accept-encoding': 'gzip, deflate', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0'}
+2025-08-05 23:20:34,879 - main - INFO - Response status: 200
+2025-08-05 23:20:37,230 - main - INFO - Request: POST /auth/register
+2025-08-05 23:20:37,231 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'content-type': 'application/json', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'content-length': '84', 'accept-language': 'en-US,en;q=0.9', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:20:37,236 - routers.auth - INFO - Register attempt for email: test1754457638037@example.com
+2025-08-05 23:20:37,237 - routers.auth - INFO - Request headers: {'host': '192.168.1.8:8001', 'content-type': 'application/json', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'content-length': '84', 'accept-language': 'en-US,en;q=0.9', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:20:37,238 - routers.auth - INFO - User data received: name=Test User, email=test1754457638037@example.com
+2025-08-05 23:20:37,898 - routers.auth - INFO - User successfully registered: test1754457638037@example.com with ID: 9
+2025-08-05 23:20:37,900 - main - INFO - Response status: 200
+2025-08-05 23:20:58,844 - main - INFO - Request: POST /auth/register
+2025-08-05 23:20:58,846 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'content-type': 'application/json', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'content-length': '80', 'accept-language': 'en-US,en;q=0.9', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:20:58,848 - routers.auth - INFO - Register attempt for email: gr27271593@gmail.com
+2025-08-05 23:20:58,850 - routers.auth - INFO - Request headers: {'host': '192.168.1.8:8001', 'content-type': 'application/json', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'content-length': '80', 'accept-language': 'en-US,en;q=0.9', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:20:58,851 - routers.auth - INFO - User data received: name=Isaac Gomez Rangel, email=gr27271593@gmail.com
+2025-08-05 23:20:58,858 - routers.auth - WARNING - Registration failed: Email gr27271593@gmail.com already registered
+2025-08-05 23:20:58,866 - main - INFO - Response status: 400
+2025-08-05 23:21:13,252 - main - INFO - Request: POST /auth/login
+2025-08-05 23:21:13,253 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'content-type': 'application/json', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'content-length': '52', 'accept-language': 'en-US,en;q=0.9', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:13,256 - routers.auth - INFO - Login attempt for email: gr27271593@gmail.com
+2025-08-05 23:21:13,256 - routers.auth - INFO - Request headers: {'host': '192.168.1.8:8001', 'content-type': 'application/json', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'content-length': '52', 'accept-language': 'en-US,en;q=0.9', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:13,916 - routers.auth - INFO - Login successful for user: gr27271593@gmail.com
+2025-08-05 23:21:13,918 - main - INFO - Response status: 200
+2025-08-05 23:21:13,971 - main - INFO - Request: GET /auth/me
+2025-08-05 23:21:13,972 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:13,979 - routers.auth - INFO - User info requested for: gr27271593@gmail.com
+2025-08-05 23:21:13,981 - main - INFO - Response status: 200
+2025-08-05 23:21:14,134 - main - INFO - Request: GET /courses/
+2025-08-05 23:21:14,135 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:14,163 - main - INFO - Response status: 200
+2025-08-05 23:21:22,537 - main - INFO - Request: GET /lessons/intentos
+2025-08-05 23:21:22,538 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:22,539 - main - INFO - Request: GET /progress/5
+2025-08-05 23:21:22,540 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:22,542 - main - INFO - Request: GET /progress/resumen/5
+2025-08-05 23:21:22,542 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:22,587 - main - INFO - Response status: 422
+2025-08-05 23:21:22,595 - main - INFO - Response status: 200
+2025-08-05 23:21:22,599 - main - INFO - Response status: 200
+2025-08-05 23:21:47,750 - main - INFO - Request: GET /auth/me
+2025-08-05 23:21:47,750 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:47,757 - routers.auth - INFO - User info requested for: gr27271593@gmail.com
+2025-08-05 23:21:47,759 - main - INFO - Response status: 200
+2025-08-05 23:21:47,850 - main - INFO - Request: GET /courses/
+2025-08-05 23:21:47,851 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:47,861 - main - INFO - Response status: 200
+2025-08-05 23:21:54,382 - main - INFO - Request: GET /courses/css
+2025-08-05 23:21:54,383 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:54,385 - main - INFO - Request: GET /courses/css/modules
+2025-08-05 23:21:54,386 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:54,404 - main - INFO - Response status: 200
+2025-08-05 23:21:54,409 - main - INFO - Response status: 200
+2025-08-05 23:21:55,843 - main - INFO - Request: GET /modules/css-intro
+2025-08-05 23:21:55,844 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:55,845 - main - INFO - Request: GET /modules/css-intro/lessons
+2025-08-05 23:21:55,846 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:21:55,866 - main - INFO - Response status: 200
+2025-08-05 23:21:55,875 - main - INFO - Response status: 200
+2025-08-05 23:22:02,272 - main - INFO - Request: GET /lessons/9
+2025-08-05 23:22:02,273 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:02,293 - main - INFO - Response status: 200
+2025-08-05 23:22:02,341 - main - INFO - Request: GET /lessons/9/ultimo-intento
+2025-08-05 23:22:02,341 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:02,363 - main - INFO - Response status: 404
+2025-08-05 23:22:17,275 - main - INFO - Request: POST /lessons/9/enviar
+2025-08-05 23:22:17,277 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'content-type': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'connection': 'keep-alive', 'accept': 'application/json', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate', 'content-length': '220'}
+2025-08-05 23:22:17,311 - main - INFO - Response status: 200
+2025-08-05 23:22:17,350 - main - INFO - Request: GET /courses/
+2025-08-05 23:22:17,350 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:17,359 - main - INFO - Request: GET /courses/css
+2025-08-05 23:22:17,362 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:17,366 - main - INFO - Request: GET /modules/css-intro
+2025-08-05 23:22:17,367 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:17,367 - main - INFO - Request: GET /courses/css/modules
+2025-08-05 23:22:17,368 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:17,369 - main - INFO - Request: GET /modules/css-intro/lessons
+2025-08-05 23:22:17,370 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:17,370 - main - INFO - Request: GET /lessons/9
+2025-08-05 23:22:17,371 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:17,437 - main - INFO - Response status: 200
+2025-08-05 23:22:17,451 - main - INFO - Response status: 200
+2025-08-05 23:22:17,453 - main - INFO - Response status: 200
+2025-08-05 23:22:17,453 - main - INFO - Response status: 200
+2025-08-05 23:22:17,456 - main - INFO - Request: GET /lessons/9/ultimo-intento
+2025-08-05 23:22:17,456 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:17,461 - main - INFO - Response status: 200
+2025-08-05 23:22:17,467 - main - INFO - Response status: 200
+2025-08-05 23:22:17,475 - main - INFO - Response status: 200
+2025-08-05 23:22:26,593 - main - INFO - Request: GET /lessons/10
+2025-08-05 23:22:26,593 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:26,616 - main - INFO - Response status: 200
+2025-08-05 23:22:26,664 - main - INFO - Request: GET /lessons/10/ultimo-intento
+2025-08-05 23:22:26,665 - main - INFO - Headers: {'host': '192.168.1.8:8001', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017699 CFNetwork/3859.100.1 Darwin/25.0.0', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncjI3MjcxNTkzQGdtYWlsLmNvbSIsImV4cCI6MTc1NDQ1OTQ3M30.YQg4H2u_Vur6lsKg3q9NLUBfVetogIdB8VuQ0ES4Eh4', 'accept-encoding': 'gzip, deflate'}
+2025-08-05 23:22:26,677 - main - INFO - Response status: 404
