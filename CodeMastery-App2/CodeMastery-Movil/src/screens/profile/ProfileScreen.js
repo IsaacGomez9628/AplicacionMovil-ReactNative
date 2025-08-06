@@ -1,6 +1,7 @@
 import { StyleSheet, ScrollView, Alert } from "react-native";
 import { Text, Card, Button, Avatar, Divider, List } from "react-native-paper";
 import { useAuth } from "../../context/AuthContext";
+import TokenDebugger from "../../components/TokenDebugger";
 
 export default function ProfileScreen({ navigation }) {
   const { user, logout } = useAuth();
@@ -111,6 +112,7 @@ export default function ProfileScreen({ navigation }) {
           </Button>
         </Card.Content>
       </Card>
+      <TokenDebugger />
     </ScrollView>
   );
 }

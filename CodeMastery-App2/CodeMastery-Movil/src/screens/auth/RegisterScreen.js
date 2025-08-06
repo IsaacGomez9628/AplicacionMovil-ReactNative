@@ -1,3 +1,6 @@
+// ✅ MEJORA PARA: src/screens/auth/RegisterScreen.js
+// Agregar validación de email para evitar typos
+
 import { useState, useEffect } from "react";
 import { View, Alert } from "react-native";
 import { Text, Divider, Button as PaperButton } from "react-native-paper";
@@ -15,12 +18,20 @@ import { getAuthStyles } from "../../theme/darkTheme";
 import useResponsive from "../../hooks/useResponsive";
 import { testConnection, testRegisterEndpoint } from "../../services/api";
 
+// ✅ VALIDACIÓN DE EMAIL MEJORADA
 const schema = yup.object({
   name: yup
     .string()
     .min(2, "El nombre debe tener al menos 2 caracteres")
     .required("Nombre es requerido"),
-  email: yup.string().email("Email inválido").required("Email es requerido"),
+  email: yup
+    .string()
+    .email("Email inválido")
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|mx|es)$/,
+      "Email debe tener una extensión válida (.com, .org, .net, etc.)"
+    )
+    .required("Email es requerido"),
   password: yup
     .string()
     .min(6, "La contraseña debe tener al menos 6 caracteres")
@@ -44,6 +55,7 @@ export default function RegisterScreen({ navigation }) {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -53,6 +65,35 @@ export default function RegisterScreen({ navigation }) {
       confirmPassword: "",
     },
   });
+
+  // ✅ WATCH EMAIL PARA VALIDACIÓN EN TIEMPO REAL
+  const watchedEmail = watch("email");
+
+  // ✅ VALIDADOR DE EMAIL CON SUGERENCIAS
+  const validateEmailFormat = (email) => {
+    if (!email) return null;
+
+    const commonTypos = {
+      "gmail.con": "gmail.com",
+      "gmail.co": "gmail.com",
+      "yahoo.con": "yahoo.com",
+      "yahoo.co": "yahoo.com",
+      "hotmail.con": "hotmail.com",
+      "hotmail.co": "hotmail.com",
+      "outlook.con": "outlook.com",
+      "outlook.co": "outlook.com",
+    };
+
+    const domain = email.split("@")[1];
+    if (domain && commonTypos[domain]) {
+      return {
+        isTypo: true,
+        suggestion: email.replace(domain, commonTypos[domain]),
+      };
+    }
+
+    return { isTypo: false, suggestion: null };
+  };
 
   // Verificar conexión al montar el componente
   useEffect(() => {
@@ -95,7 +136,36 @@ export default function RegisterScreen({ navigation }) {
   };
 
   const onSubmit = async (data) => {
-    console.log("📝 Form submitted:", data);
+    console.log("📝 Form submitted:", {
+      ...data,
+      password: "***",
+      confirmPassword: "***",
+    });
+
+    // ✅ VALIDAR EMAIL ANTES DE ENVIAR
+    const emailValidation = validateEmailFormat(data.email);
+    if (emailValidation.isTypo) {
+      Alert.alert(
+        "⚠️ Posible Error en Email",
+        `¿Quisiste decir "${emailValidation.suggestion}"?\n\nEmail actual: ${data.email}`,
+        [
+          { text: "No, usar como está", style: "cancel" },
+          {
+            text: "Sí, corregir",
+            onPress: () => {
+              // Aquí podrías actualizar el formulario, pero por simplicidad
+              // le pedimos al usuario que lo corrija manualmente
+              Alert.alert(
+                "Corrección Sugerida",
+                `Por favor cambia tu email a: ${emailValidation.suggestion}`
+              );
+            },
+          },
+        ]
+      );
+      return;
+    }
+
     setLoading(true);
     setShowError(false);
 
@@ -213,15 +283,45 @@ export default function RegisterScreen({ navigation }) {
                     label="Email"
                     value={value}
                     onBlur={onBlur}
-                    onChangeText={onChange}
+                    onChangeText={(text) => {
+                      onChange(text);
+                      // Validación en tiempo real para sugerencias
+                      if (text && text.includes("@")) {
+                        const validation = validateEmailFormat(text);
+                        if (validation.isTypo) {
+                          console.log(
+                            `💡 Email suggestion: ${validation.suggestion}`
+                          );
+                        }
+                      }
+                    }}
                     error={!!errors.email}
                     errorMessage={errors.email?.message}
                     keyboardType="email-address"
                     autoCapitalize="none"
                     autoComplete="email"
+                    autoCorrect={false}
                   />
                 )}
               />
+
+              {/* ✅ MOSTRAR SUGERENCIA DE EMAIL SI HAY TYPO */}
+              {watchedEmail &&
+                (() => {
+                  const validation = validateEmailFormat(watchedEmail);
+                  return validation.isTypo ? (
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: "#f59e0b",
+                        marginTop: -8,
+                        marginBottom: 8,
+                      }}
+                    >
+                      💡 ¿Quisiste decir: {validation.suggestion}?
+                    </Text>
+                  ) : null;
+                })()}
 
               <Controller
                 control={control}

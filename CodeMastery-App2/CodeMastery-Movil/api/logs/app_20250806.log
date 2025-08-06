@@ -92,3 +92,296 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-08-06 10:45:29,815 - routers.auth - INFO - Login successful for user: test_1754498728@example.com
 2025-08-06 10:45:29,938 - main - INFO - Request: GET /courses/
 2025-08-06 10:45:29,943 - main - INFO - Response status: 403
+2025-08-06 11:01:01,616 - main - INFO - Request: GET /
+2025-08-06 11:01:01,618 - main - INFO - Root endpoint accessed
+2025-08-06 11:01:01,620 - main - INFO - Response status: 200
+2025-08-06 11:01:01,630 - main - INFO - Request: GET /health
+2025-08-06 11:01:01,632 - main - INFO - Response status: 200
+2025-08-06 11:01:01,749 - routers.auth - INFO - Register attempt for email: test_1754499661@example.com
+2025-08-06 11:01:01,750 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '87'}
+2025-08-06 11:01:01,750 - routers.auth - INFO - User data received: name=Test User, email=test_1754499661@example.com
+2025-08-06 11:01:02,448 - routers.auth - INFO - User successfully registered: test_1754499661@example.com with ID: 13
+2025-08-06 11:01:02,534 - routers.auth - INFO - Login attempt for email: test_1754499661@example.com
+2025-08-06 11:01:02,534 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'TestScript/1.0', 'accept-encoding': 'gzip, deflate', 'accept': 'application/json', 'connection': 'keep-alive', 'content-type': 'application/json', 'content-length': '66'}
+2025-08-06 11:01:03,227 - routers.auth - INFO - Login successful for user: test_1754499661@example.com
+2025-08-06 11:01:03,292 - main - INFO - Request: GET /courses/
+2025-08-06 11:01:03,297 - main - INFO - Response status: 403
+2025-08-06 14:10:12,107 - main - INFO - Registrando routers...
+2025-08-06 14:15:14,581 - main - INFO - Registrando routers...
+2025-08-06 14:16:02,968 - main - INFO - Request: GET /health
+2025-08-06 14:16:02,970 - main - INFO - Response status: 200
+2025-08-06 14:16:05,109 - routers.auth - INFO - Register attempt for email: debug_1754511362@test.com
+2025-08-06 14:16:05,109 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'content-length': '87', 'content-type': 'application/json'}
+2025-08-06 14:16:05,110 - routers.auth - INFO - User data received: name=Debug User, email=debug_1754511362@test.com
+2025-08-06 14:16:05,157 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\XB148\OneDrive\Documentos\codemastery-app\api\venv\lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-08-06 14:16:05,950 - routers.auth - INFO - User successfully registered: debug_1754511362@test.com with ID: 14
+2025-08-06 14:16:08,046 - routers.auth - INFO - Login attempt for email: debug_1754511362@test.com
+2025-08-06 14:16:08,047 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'content-length': '65', 'content-type': 'application/json'}
+2025-08-06 14:16:08,972 - routers.auth - INFO - Login successful for user: debug_1754511362@test.com
+2025-08-06 14:16:13,275 - main - INFO - Request: GET /courses/
+2025-08-06 14:16:13,367 - main - INFO - Response status: 401
+2025-08-06 14:16:15,553 - routers.auth - INFO - Token refresh for user: debug_1754511362@test.com
+2025-08-06 14:16:15,599 - routers.auth - INFO - Token refresh successful for user: debug_1754511362@test.com
+2025-08-06 14:20:16,350 - main - INFO - Registrando routers...
+2025-08-06 14:22:13,804 - main - INFO - Request: GET /health
+2025-08-06 14:22:13,806 - main - INFO - Response status: 200
+2025-08-06 14:22:15,971 - routers.auth - INFO - Register attempt for email: debug_1754511733@test.com
+2025-08-06 14:22:15,972 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'content-length': '87', 'content-type': 'application/json'}
+2025-08-06 14:22:15,973 - routers.auth - INFO - User data received: name=Debug User, email=debug_1754511733@test.com
+2025-08-06 14:22:16,018 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\XB148\OneDrive\Documentos\codemastery-app\api\venv\lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-08-06 14:22:16,785 - routers.auth - INFO - User successfully registered: debug_1754511733@test.com with ID: 15
+2025-08-06 14:22:18,868 - routers.auth - INFO - Login attempt for email: debug_1754511733@test.com
+2025-08-06 14:22:18,869 - routers.auth - INFO - Request headers: {'host': 'localhost:8001', 'user-agent': 'python-requests/2.32.3', 'accept-encoding': 'gzip, deflate', 'accept': '*/*', 'connection': 'keep-alive', 'content-length': '65', 'content-type': 'application/json'}
+2025-08-06 14:22:19,653 - auth - INFO -    Now UTC: 2025-08-06 20:22:19.633514
+2025-08-06 14:22:19,654 - auth - INFO -    Expires UTC: 2025-08-06 20:52:19.633514
+2025-08-06 14:22:19,654 - auth - INFO -    Now timestamp: 1754533339
+2025-08-06 14:22:19,655 - auth - INFO -    Exp timestamp: 1754535139
+2025-08-06 14:22:19,670 - auth - INFO -    Now UTC: 2025-08-06 20:22:19.655045
+2025-08-06 14:22:19,671 - auth - INFO -    Expires UTC: 2025-08-13 20:22:19.655045
+2025-08-06 14:22:19,671 - routers.auth - INFO - Login successful for user: debug_1754511733@test.com
+2025-08-06 14:22:21,863 - auth - INFO -    Current timestamp: 1754533341
+2025-08-06 14:22:21,863 - auth - INFO -    Token exp timestamp: 1754535139
+2025-08-06 14:22:21,864 - auth - INFO -    Current UTC: 2025-08-06 20:22:21.864859
+2025-08-06 14:22:21,865 - auth - INFO -    Token exp UTC: 2025-08-06 20:52:19
+2025-08-06 14:22:21,903 - routers.auth - INFO - User info requested for: debug_1754511733@test.com
+2025-08-06 14:22:23,952 - main - INFO - Request: GET /courses/
+2025-08-06 14:22:24,005 - auth - INFO -    Current timestamp: 1754533343
+2025-08-06 14:22:24,006 - auth - INFO -    Token exp timestamp: 1754535139
+2025-08-06 14:22:24,006 - auth - INFO -    Current UTC: 2025-08-06 20:22:24.006172
+2025-08-06 14:22:24,070 - auth - INFO -    Token exp UTC: 2025-08-06 20:52:19
+2025-08-06 14:22:24,153 - main - INFO - Response status: 200
+2025-08-06 14:22:26,281 - auth - INFO -    Current timestamp: 1754533346
+2025-08-06 14:22:26,282 - auth - INFO -    Token exp timestamp: 1755138139
+2025-08-06 14:22:26,283 - auth - INFO -    Current UTC: 2025-08-06 20:22:26.283888
+2025-08-06 14:22:26,285 - auth - INFO -    Token exp UTC: 2025-08-13 20:22:19
+2025-08-06 14:22:26,333 - routers.auth - INFO - Token refresh for user: debug_1754511733@test.com
+2025-08-06 14:22:26,351 - auth - INFO -    Now UTC: 2025-08-06 20:22:26.334648
+2025-08-06 14:22:26,352 - auth - INFO -    Expires UTC: 2025-08-06 20:52:26.334648
+2025-08-06 14:22:26,352 - auth - INFO -    Now timestamp: 1754533346
+2025-08-06 14:22:26,353 - auth - INFO -    Exp timestamp: 1754535146
+2025-08-06 14:22:26,368 - auth - INFO -    Now UTC: 2025-08-06 20:22:26.353924
+2025-08-06 14:22:26,369 - auth - INFO -    Expires UTC: 2025-08-13 20:22:26.353924
+2025-08-06 14:22:26,370 - routers.auth - INFO - Token refresh successful for user: debug_1754511733@test.com
+2025-08-06 14:22:28,674 - auth - INFO -    Current timestamp: 1754533348
+2025-08-06 14:22:28,675 - auth - INFO -    Token exp timestamp: 1754535146
+2025-08-06 14:22:28,675 - auth - INFO -    Current UTC: 2025-08-06 20:22:28.675396
+2025-08-06 14:22:28,676 - auth - INFO -    Token exp UTC: 2025-08-06 20:52:26
+2025-08-06 14:22:28,738 - routers.auth - INFO - User info requested for: debug_1754511733@test.com
+2025-08-06 14:30:33,348 - main - INFO - Request: GET /health
+2025-08-06 14:30:33,351 - main - INFO - Response status: 200
+2025-08-06 14:30:54,932 - routers.auth - INFO - Register attempt for email: isaac@gmail.con
+2025-08-06 14:30:54,933 - routers.auth - INFO - Request headers: {'host': '172.20.10.3:8001', 'content-type': 'application/json', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017702 CFNetwork/3859.100.1 Darwin/25.0.0', 'content-length': '75', 'accept-language': 'en-US,en;q=0.9', 'accept-encoding': 'gzip, deflate'}
+2025-08-06 14:30:54,933 - routers.auth - INFO - User data received: name=Isaac Gomez Rangel, email=isaac@gmail.con
+2025-08-06 14:30:55,688 - routers.auth - INFO - User successfully registered: isaac@gmail.con with ID: 16
+2025-08-06 14:31:21,640 - routers.auth - INFO - Login attempt for email: isaac@gmail.com
+2025-08-06 14:31:21,643 - routers.auth - INFO - Request headers: {'host': '172.20.10.3:8001', 'content-type': 'application/json', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017702 CFNetwork/3859.100.1 Darwin/25.0.0', 'content-length': '47', 'accept-language': 'en-US,en;q=0.9', 'accept-encoding': 'gzip, deflate'}
+2025-08-06 14:31:21,721 - routers.auth - WARNING - Login failed for email: isaac@gmail.com
+2025-08-06 14:34:29,052 - routers.auth - INFO - Login attempt for email: isaac@gmail.con
+2025-08-06 14:34:29,053 - routers.auth - INFO - Request headers: {'host': '172.20.10.3:8001', 'content-type': 'application/json', 'connection': 'keep-alive', 'accept': 'application/json', 'user-agent': 'Expo/1017702 CFNetwork/3859.100.1 Darwin/25.0.0', 'content-length': '47', 'accept-language': 'en-US,en;q=0.9', 'accept-encoding': 'gzip, deflate'}
+2025-08-06 14:34:29,866 - auth - INFO -    Now UTC: 2025-08-06 20:34:29.852180
+2025-08-06 14:34:29,866 - auth - INFO -    Expires UTC: 2025-08-06 21:04:29.852180
+2025-08-06 14:34:29,867 - auth - INFO -    Now timestamp: 1754534069
+2025-08-06 14:34:29,868 - auth - INFO -    Exp timestamp: 1754535869
+2025-08-06 14:34:29,882 - auth - INFO -    Now UTC: 2025-08-06 20:34:29.868215
+2025-08-06 14:34:29,883 - auth - INFO -    Expires UTC: 2025-08-13 20:34:29.868215
+2025-08-06 14:34:29,884 - routers.auth - INFO - Login successful for user: isaac@gmail.con
+2025-08-06 14:34:30,118 - auth - INFO -    Current timestamp: 1754534070
+2025-08-06 14:34:30,119 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:34:30,119 - auth - INFO -    Current UTC: 2025-08-06 20:34:30.119233
+2025-08-06 14:34:30,120 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:34:30,161 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:34:30,317 - main - INFO - Request: GET /courses/
+2025-08-06 14:34:30,396 - auth - INFO -    Current timestamp: 1754534070
+2025-08-06 14:34:30,397 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:34:30,398 - auth - INFO -    Current UTC: 2025-08-06 20:34:30.397783
+2025-08-06 14:34:30,398 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:34:30,444 - main - INFO - Response status: 200
+2025-08-06 14:34:33,374 - main - INFO - Request: GET /progress/16
+2025-08-06 14:34:33,473 - auth - INFO -    Current timestamp: 1754534073
+2025-08-06 14:34:33,477 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:34:33,477 - auth - INFO -    Current UTC: 2025-08-06 20:34:33.477771
+2025-08-06 14:34:33,478 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:34:33,572 - main - INFO - Request: GET /progress/resumen/16
+2025-08-06 14:34:33,577 - main - INFO - Request: GET /lessons/intentos
+2025-08-06 14:34:33,633 - auth - INFO -    Current timestamp: 1754534073
+2025-08-06 14:34:33,634 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:34:33,634 - auth - INFO -    Current UTC: 2025-08-06 20:34:33.634197
+2025-08-06 14:34:33,635 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:34:33,724 - auth - INFO -    Current timestamp: 1754534073
+2025-08-06 14:34:33,725 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:34:33,725 - auth - INFO -    Current UTC: 2025-08-06 20:34:33.725323
+2025-08-06 14:34:33,726 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:34:33,940 - main - INFO - Response status: 200
+2025-08-06 14:34:33,951 - main - INFO - Response status: 422
+2025-08-06 14:34:33,956 - main - INFO - Response status: 200
+2025-08-06 14:34:38,137 - auth - INFO -    Current timestamp: 1754534078
+2025-08-06 14:34:38,138 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:34:38,138 - auth - INFO -    Current UTC: 2025-08-06 20:34:38.138284
+2025-08-06 14:34:38,139 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:34:38,176 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:34:40,592 - main - INFO - Request: GET /lessons/intentos
+2025-08-06 14:34:40,663 - auth - INFO -    Current timestamp: 1754534080
+2025-08-06 14:34:40,664 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:34:40,665 - auth - INFO -    Current UTC: 2025-08-06 20:34:40.665435
+2025-08-06 14:34:40,665 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:34:40,703 - main - INFO - Response status: 422
+2025-08-06 14:35:11,326 - auth - INFO -    Current timestamp: 1754534111
+2025-08-06 14:35:11,327 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:35:11,328 - auth - INFO -    Current UTC: 2025-08-06 20:35:11.328307
+2025-08-06 14:35:11,328 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:35:11,366 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:35:11,549 - main - INFO - Request: GET /courses/
+2025-08-06 14:35:11,623 - auth - INFO -    Current timestamp: 1754534111
+2025-08-06 14:35:11,625 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:35:11,625 - auth - INFO -    Current UTC: 2025-08-06 20:35:11.625064
+2025-08-06 14:35:11,626 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:35:11,686 - main - INFO - Response status: 200
+2025-08-06 14:35:13,903 - auth - INFO -    Current timestamp: 1754534113
+2025-08-06 14:35:13,903 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:35:13,904 - auth - INFO -    Current UTC: 2025-08-06 20:35:13.904208
+2025-08-06 14:35:13,905 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:35:13,964 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:35:24,079 - auth - INFO -    Current timestamp: 1754534124
+2025-08-06 14:35:24,080 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:35:24,087 - auth - INFO -    Current UTC: 2025-08-06 20:35:24.087550
+2025-08-06 14:35:24,096 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:35:24,151 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:35:30,520 - auth - INFO -    Current timestamp: 1754534130
+2025-08-06 14:35:30,521 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:35:30,521 - auth - INFO -    Current UTC: 2025-08-06 20:35:30.521343
+2025-08-06 14:35:30,521 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:35:30,559 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:35:33,099 - auth - INFO -    Current timestamp: 1754534133
+2025-08-06 14:35:33,105 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:35:33,109 - auth - INFO -    Current UTC: 2025-08-06 20:35:33.109769
+2025-08-06 14:35:33,111 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:35:33,161 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:35:33,969 - auth - INFO -    Current timestamp: 1754534133
+2025-08-06 14:35:33,971 - auth - INFO -    Token exp timestamp: 1754535869
+2025-08-06 14:35:33,971 - auth - INFO -    Current UTC: 2025-08-06 20:35:33.971012
+2025-08-06 14:35:33,971 - auth - INFO -    Token exp UTC: 2025-08-06 21:04:29
+2025-08-06 14:35:34,092 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:35:35,174 - auth - INFO -    Current timestamp: 1754534135
+2025-08-06 14:35:35,175 - auth - INFO -    Token exp timestamp: 1755138869
+2025-08-06 14:35:35,176 - auth - INFO -    Current UTC: 2025-08-06 20:35:35.176333
+2025-08-06 14:35:35,177 - auth - INFO -    Token exp UTC: 2025-08-13 20:34:29
+2025-08-06 14:35:35,212 - routers.auth - INFO - Token refresh for user: isaac@gmail.con
+2025-08-06 14:35:35,327 - auth - INFO -    Now UTC: 2025-08-06 20:35:35.213428
+2025-08-06 14:35:35,338 - auth - INFO -    Expires UTC: 2025-08-06 21:05:35.213428
+2025-08-06 14:35:35,345 - auth - INFO -    Now timestamp: 1754534135
+2025-08-06 14:35:35,346 - auth - INFO -    Exp timestamp: 1754535935
+2025-08-06 14:35:35,355 - auth - INFO -    Now UTC: 2025-08-06 20:35:35.347068
+2025-08-06 14:35:35,355 - auth - INFO -    Expires UTC: 2025-08-13 20:35:35.347068
+2025-08-06 14:35:35,356 - routers.auth - INFO - Token refresh successful for user: isaac@gmail.con
+2025-08-06 14:35:36,959 - main - INFO - Request: GET /health
+2025-08-06 14:35:36,962 - main - INFO - Response status: 200
+2025-08-06 14:35:37,017 - routers.auth - INFO - Register attempt for email: test_direct_1754512537776@example.com
+2025-08-06 14:35:37,019 - routers.auth - INFO - Request headers: {'host': '172.20.10.3:8001', 'content-type': 'application/json', 'user-agent': 'Expo/1017702 CFNetwork/3859.100.1 Darwin/25.0.0', 'connection': 'keep-alive', 'accept': 'application/json', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJpc2FhY0BnbWFpbC5jb24iLCJleHAiOjE3NTQ1MzU5MzUsImlhdCI6MTc1NDUzNDEzNSwidHlwZSI6ImFjY2VzcyJ9.rT9xom8BFQz-fLYVFJoOGe0PqjlXLXdKDexjSdkKQR8', 'accept-encoding': 'gzip, deflate', 'content-length': '99'}
+2025-08-06 14:35:37,022 - routers.auth - INFO - User data received: name=Test User Direct, email=test_direct_1754512537776@example.com
+2025-08-06 14:35:37,859 - routers.auth - INFO - User successfully registered: test_direct_1754512537776@example.com with ID: 17
+2025-08-06 14:35:37,964 - routers.auth - INFO - Login attempt for email: test_direct_1754512537776@example.com
+2025-08-06 14:35:37,965 - routers.auth - INFO - Request headers: {'host': '172.20.10.3:8001', 'content-type': 'application/json', 'user-agent': 'Expo/1017702 CFNetwork/3859.100.1 Darwin/25.0.0', 'connection': 'keep-alive', 'accept': 'application/json', 'accept-language': 'en-US,en;q=0.9', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJpc2FhY0BnbWFpbC5jb24iLCJleHAiOjE3NTQ1MzU5MzUsImlhdCI6MTc1NDUzNDEzNSwidHlwZSI6ImFjY2VzcyJ9.rT9xom8BFQz-fLYVFJoOGe0PqjlXLXdKDexjSdkKQR8', 'accept-encoding': 'gzip, deflate', 'content-length': '73'}
+2025-08-06 14:35:38,860 - auth - INFO -    Now UTC: 2025-08-06 20:35:38.850859
+2025-08-06 14:35:38,861 - auth - INFO -    Expires UTC: 2025-08-06 21:05:38.850859
+2025-08-06 14:35:38,862 - auth - INFO -    Now timestamp: 1754534138
+2025-08-06 14:35:38,862 - auth - INFO -    Exp timestamp: 1754535938
+2025-08-06 14:35:38,871 - auth - INFO -    Now UTC: 2025-08-06 20:35:38.862232
+2025-08-06 14:35:38,872 - auth - INFO -    Expires UTC: 2025-08-13 20:35:38.862232
+2025-08-06 14:35:38,872 - routers.auth - INFO - Login successful for user: test_direct_1754512537776@example.com
+2025-08-06 14:35:39,242 - auth - INFO -    Current timestamp: 1754534139
+2025-08-06 14:35:39,242 - auth - INFO -    Token exp timestamp: 1754535938
+2025-08-06 14:35:39,242 - auth - INFO -    Current UTC: 2025-08-06 20:35:39.242232
+2025-08-06 14:35:39,243 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:38
+2025-08-06 14:35:39,270 - routers.auth - INFO - User info requested for: test_direct_1754512537776@example.com
+2025-08-06 14:35:39,408 - auth - INFO -    Current timestamp: 1754534139
+2025-08-06 14:35:39,409 - auth - INFO -    Token exp timestamp: 1755138938
+2025-08-06 14:35:39,410 - auth - INFO -    Current UTC: 2025-08-06 20:35:39.410764
+2025-08-06 14:35:39,412 - auth - INFO -    Token exp UTC: 2025-08-13 20:35:38
+2025-08-06 14:35:39,475 - routers.auth - INFO - Token refresh for user: test_direct_1754512537776@example.com
+2025-08-06 14:35:39,484 - auth - INFO -    Now UTC: 2025-08-06 20:35:39.475426
+2025-08-06 14:35:39,485 - auth - INFO -    Expires UTC: 2025-08-06 21:05:39.475426
+2025-08-06 14:35:39,485 - auth - INFO -    Now timestamp: 1754534139
+2025-08-06 14:35:39,486 - auth - INFO -    Exp timestamp: 1754535939
+2025-08-06 14:35:39,494 - auth - INFO -    Now UTC: 2025-08-06 20:35:39.486430
+2025-08-06 14:35:39,495 - auth - INFO -    Expires UTC: 2025-08-13 20:35:39.486430
+2025-08-06 14:35:39,495 - routers.auth - INFO - Token refresh successful for user: test_direct_1754512537776@example.com
+2025-08-06 14:35:43,927 - auth - INFO -    Current timestamp: 1754534143
+2025-08-06 14:35:43,927 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:35:43,928 - auth - INFO -    Current UTC: 2025-08-06 20:35:43.928499
+2025-08-06 14:35:43,928 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:35:43,971 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:35:53,996 - auth - INFO -    Current timestamp: 1754534153
+2025-08-06 14:35:53,996 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:35:53,997 - auth - INFO -    Current UTC: 2025-08-06 20:35:53.997048
+2025-08-06 14:35:53,997 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:35:54,034 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:36:04,016 - auth - INFO -    Current timestamp: 1754534163
+2025-08-06 14:36:04,017 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:36:04,018 - auth - INFO -    Current UTC: 2025-08-06 20:36:04.018223
+2025-08-06 14:36:04,018 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:36:04,052 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:36:13,938 - auth - INFO -    Current timestamp: 1754534173
+2025-08-06 14:36:13,941 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:36:13,942 - auth - INFO -    Current UTC: 2025-08-06 20:36:13.942253
+2025-08-06 14:36:13,943 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:36:13,973 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:36:22,945 - main - INFO - Request: GET /lessons/intentos
+2025-08-06 14:36:23,004 - auth - INFO -    Current timestamp: 1754534182
+2025-08-06 14:36:23,005 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:36:23,006 - auth - INFO -    Current UTC: 2025-08-06 20:36:23.006811
+2025-08-06 14:36:23,006 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:36:23,052 - main - INFO - Response status: 422
+2025-08-06 14:37:04,207 - auth - INFO -    Current timestamp: 1754534224
+2025-08-06 14:37:04,207 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:37:04,208 - auth - INFO -    Current UTC: 2025-08-06 20:37:04.208829
+2025-08-06 14:37:04,209 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:37:04,235 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:37:04,528 - main - INFO - Request: GET /courses/
+2025-08-06 14:37:04,645 - auth - INFO -    Current timestamp: 1754534224
+2025-08-06 14:37:04,645 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:37:04,646 - auth - INFO -    Current UTC: 2025-08-06 20:37:04.646641
+2025-08-06 14:37:04,646 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:37:04,683 - main - INFO - Response status: 200
+2025-08-06 14:38:00,022 - main - INFO - Request: GET /courses/
+2025-08-06 14:38:00,096 - auth - INFO -    Current timestamp: 1754534280
+2025-08-06 14:38:00,097 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:38:00,098 - auth - INFO -    Current UTC: 2025-08-06 20:38:00.098693
+2025-08-06 14:38:00,101 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:38:00,158 - main - INFO - Response status: 200
+2025-08-06 14:38:03,273 - main - INFO - Request: GET /progress/16
+2025-08-06 14:38:03,348 - auth - INFO -    Current timestamp: 1754534283
+2025-08-06 14:38:03,349 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:38:03,349 - auth - INFO -    Current UTC: 2025-08-06 20:38:03.349609
+2025-08-06 14:38:03,350 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:38:03,388 - main - INFO - Request: GET /lessons/intentos
+2025-08-06 14:38:03,391 - main - INFO - Request: GET /progress/resumen/16
+2025-08-06 14:38:03,470 - auth - INFO -    Current timestamp: 1754534283
+2025-08-06 14:38:03,471 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:38:03,472 - auth - INFO -    Current UTC: 2025-08-06 20:38:03.471003
+2025-08-06 14:38:03,472 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:38:03,554 - auth - INFO -    Current timestamp: 1754534283
+2025-08-06 14:38:03,555 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:38:03,555 - auth - INFO -    Current UTC: 2025-08-06 20:38:03.555899
+2025-08-06 14:38:03,556 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:38:03,581 - main - INFO - Response status: 200
+2025-08-06 14:38:03,585 - main - INFO - Response status: 422
+2025-08-06 14:38:03,591 - main - INFO - Response status: 200
+2025-08-06 14:38:06,048 - auth - INFO -    Current timestamp: 1754534285
+2025-08-06 14:38:06,048 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:38:06,049 - auth - INFO -    Current UTC: 2025-08-06 20:38:06.049352
+2025-08-06 14:38:06,050 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:38:06,208 - routers.auth - INFO - User info requested for: isaac@gmail.con
+2025-08-06 14:38:08,709 - main - INFO - Request: GET /lessons/intentos
+2025-08-06 14:38:08,847 - auth - INFO -    Current timestamp: 1754534288
+2025-08-06 14:38:08,848 - auth - INFO -    Token exp timestamp: 1754535935
+2025-08-06 14:38:08,848 - auth - INFO -    Current UTC: 2025-08-06 20:38:08.848017
+2025-08-06 14:38:08,849 - auth - INFO -    Token exp UTC: 2025-08-06 21:05:35
+2025-08-06 14:38:08,888 - main - INFO - Response status: 422

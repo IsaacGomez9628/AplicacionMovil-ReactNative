@@ -1,7 +1,7 @@
 // ✅ ARCHIVO CORREGIDO: src/context/AuthContext.js
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { authService } from "../services/authService"; // ✅ RUTA CORREGIDA
+import { authService } from "../services/authService"; // ✅ IMPORT CORREGIDO
 import { Alert } from "react-native";
 
 // Estado inicial
@@ -10,6 +10,7 @@ const initialState = {
   user: null,
   loading: true,
   error: null,
+  tokenExpiring: false, // ✅ NUEVO: Flag para token próximo a expirar
 };
 
 // Action types
@@ -20,11 +21,13 @@ const AUTH_ACTIONS = {
   LOGOUT: "LOGOUT",
   SET_USER: "SET_USER",
   CLEAR_ERROR: "CLEAR_ERROR",
-  TOKEN_REFRESH_SUCCESS: "TOKEN_REFRESH_SUCCESS", // ✅ NUEVO
-  TOKEN_EXPIRED: "TOKEN_EXPIRED", // ✅ NUEVO
+  TOKEN_REFRESH_SUCCESS: "TOKEN_REFRESH_SUCCESS",
+  TOKEN_EXPIRED: "TOKEN_EXPIRED",
+  TOKEN_EXPIRING_SOON: "TOKEN_EXPIRING_SOON", // ✅ NUEVO
+  RESET_STATE: "RESET_STATE", // ✅ NUEVO
 };
 
-// Reducer
+// ✅ REDUCER MEJORADO
 function authReducer(state, action) {
   switch (action.type) {
     case AUTH_ACTIONS.SET_LOADING:
@@ -40,6 +43,7 @@ function authReducer(state, action) {
         user: action.payload.user,
         loading: false,
         error: null,
+        tokenExpiring: false,
       };
 
     case AUTH_ACTIONS.LOGIN_ERROR:
@@ -49,9 +53,11 @@ function authReducer(state, action) {
         user: null,
         loading: false,
         error: action.payload,
+        tokenExpiring: false,
       };
 
     case AUTH_ACTIONS.LOGOUT:
+    case AUTH_ACTIONS.RESET_STATE:
       return {
         ...initialState,
         loading: false,
@@ -63,6 +69,7 @@ function authReducer(state, action) {
         user: action.payload,
         isAuthenticated: !!action.payload,
         loading: false,
+        error: null,
       };
 
     case AUTH_ACTIONS.CLEAR_ERROR:
@@ -71,17 +78,24 @@ function authReducer(state, action) {
         error: null,
       };
 
-    case AUTH_ACTIONS.TOKEN_REFRESH_SUCCESS: // ✅ NUEVO
+    case AUTH_ACTIONS.TOKEN_REFRESH_SUCCESS:
       return {
         ...state,
         error: null,
+        tokenExpiring: false,
       };
 
-    case AUTH_ACTIONS.TOKEN_EXPIRED: // ✅ NUEVO
+    case AUTH_ACTIONS.TOKEN_EXPIRED:
       return {
         ...initialState,
         loading: false,
         error: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+      };
+
+    case AUTH_ACTIONS.TOKEN_EXPIRING_SOON:
+      return {
+        ...state,
+        tokenExpiring: true,
       };
 
     default:
@@ -92,13 +106,28 @@ function authReducer(state, action) {
 // Context
 const AuthContext = createContext();
 
-// Provider
+// ✅ PROVIDER MEJORADO CON REFRESH AUTOMÁTICO
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // ✅ NUEVO: Manejar token expirado desde el interceptor
-  const handleTokenExpired = () => {
+  // ✅ Manejar token expirado desde el interceptor
+  const handleTokenExpired = async () => {
     console.log("🔐 Token expired, logging out user");
+
+    try {
+      // Limpiar almacenamiento
+      await AsyncStorage.multiRemove([
+        "access_token",
+        "refresh_token",
+        "token_type",
+        "token_expires_in",
+        "login_timestamp",
+        "user",
+      ]);
+    } catch (error) {
+      console.error("Error clearing storage on token expiry:", error);
+    }
+
     dispatch({ type: AUTH_ACTIONS.TOKEN_EXPIRED });
 
     Alert.alert(
@@ -113,7 +142,7 @@ export function AuthProvider({ children }) {
     );
   };
 
-  // ✅ NUEVO: Registrar el contexto globalmente para el interceptor
+  // ✅ Registrar el contexto globalmente para el interceptor
   useEffect(() => {
     global.authContext = { handleTokenExpired };
 
@@ -122,10 +151,48 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
-  // ✅ VERIFICAR AUTENTICACIÓN AL INICIAR
+  // ✅ VERIFICAR AUTENTICACIÓN AL INICIAR - MEJORADO
   useEffect(() => {
     checkAuthState();
   }, []);
+
+  // ✅ MONITOREO AUTOMÁTICO DE EXPIRACIÓN DE TOKEN
+  useEffect(() => {
+    let intervalId;
+
+    if (state.isAuthenticated) {
+      // Verificar cada minuto si el token está próximo a expirar
+      intervalId = setInterval(async () => {
+        try {
+          const isExpiring = await authService.isTokenExpiringSoon();
+
+          if (isExpiring && !state.tokenExpiring) {
+            console.log(
+              "⚠️ Token expiring soon, attempting automatic refresh..."
+            );
+            dispatch({ type: AUTH_ACTIONS.TOKEN_EXPIRING_SOON });
+
+            try {
+              await authService.refreshToken();
+              dispatch({ type: AUTH_ACTIONS.TOKEN_REFRESH_SUCCESS });
+              console.log("✅ Automatic token refresh successful");
+            } catch (refreshError) {
+              console.error("❌ Automatic token refresh failed:", refreshError);
+              handleTokenExpired();
+            }
+          }
+        } catch (error) {
+          console.error("Error checking token expiry:", error);
+        }
+      }, 60000); // Verificar cada minuto
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [state.isAuthenticated, state.tokenExpiring]);
 
   const checkAuthState = async () => {
     console.log("🔍 Checking auth state...");
@@ -139,6 +206,24 @@ export function AuthProvider({ children }) {
         console.log("❌ No valid tokens found");
         dispatch({ type: AUTH_ACTIONS.LOGOUT });
         return;
+      }
+
+      // ✅ MEJORADO: Verificar si el token está próximo a expirar
+      const isExpiring = await authService.isTokenExpiringSoon();
+
+      if (isExpiring) {
+        console.log("🔄 Token expiring soon, attempting refresh...");
+        try {
+          await authService.refreshToken();
+          console.log("✅ Token refreshed successfully");
+        } catch (refreshError) {
+          console.error(
+            "❌ Token refresh failed during startup:",
+            refreshError
+          );
+          dispatch({ type: AUTH_ACTIONS.LOGOUT });
+          return;
+        }
       }
 
       // Intentar obtener información del usuario
@@ -156,35 +241,29 @@ export function AuthProvider({ children }) {
     } catch (error) {
       console.error("❌ Auth check failed:", error);
 
-      // Si falla, intentar refresh automático
+      // Si falla, intentar refresh una vez más
       try {
-        const isExpiring = await authService.isTokenExpiringSoon();
+        console.log("🔄 Attempting emergency token refresh...");
+        await authService.refreshToken();
 
-        if (isExpiring) {
-          console.log("🔄 Token expiring soon, attempting refresh...");
-          await authService.refreshToken();
+        // Reintentar obtener usuario
+        const userData = await authService.getMe();
+        await AsyncStorage.setItem("user", JSON.stringify(userData));
 
-          // Reintentar obtener usuario
-          const userData = await authService.getMe();
-          await AsyncStorage.setItem("user", JSON.stringify(userData));
+        dispatch({
+          type: AUTH_ACTIONS.SET_USER,
+          payload: userData,
+        });
 
-          dispatch({
-            type: AUTH_ACTIONS.SET_USER,
-            payload: userData,
-          });
-
-          console.log("✅ Token refreshed and auth restored");
-        } else {
-          throw error;
-        }
-      } catch (refreshError) {
-        console.error("❌ Token refresh failed:", refreshError);
+        console.log("✅ Emergency token refresh successful");
+      } catch (emergencyError) {
+        console.error("❌ Emergency token refresh failed:", emergencyError);
         dispatch({ type: AUTH_ACTIONS.LOGOUT });
       }
     }
   };
 
-  // ✅ LOGIN
+  // ✅ LOGIN MEJORADO
   const login = async (email, password) => {
     console.log("🔐 Login attempt:", email);
     dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: true });
@@ -249,23 +328,23 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // ✅ LOGOUT
+  // ✅ LOGOUT MEJORADO
   const logout = async () => {
     console.log("🔓 Logout attempt");
     dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: true });
 
     try {
       await authService.logout();
-      dispatch({ type: AUTH_ACTIONS.LOGOUT });
+      dispatch({ type: AUTH_ACTIONS.RESET_STATE });
       console.log("✅ Logout successful");
     } catch (error) {
       console.error("❌ Logout error:", error);
       // Aún así hacer logout local
-      dispatch({ type: AUTH_ACTIONS.LOGOUT });
+      dispatch({ type: AUTH_ACTIONS.RESET_STATE });
     }
   };
 
-  // ✅ NUEVO: Refresh manual
+  // ✅ REFRESH MANUAL
   const refreshTokens = async () => {
     console.log("🔄 Manual token refresh requested");
 
@@ -286,7 +365,7 @@ export function AuthProvider({ children }) {
     dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR });
   };
 
-  // ✅ VERIFICAR SI EL TOKEN EXPIRA PRONTO (para mostrar advertencias)
+  // ✅ VERIFICAR SI EL TOKEN EXPIRA PRONTO
   const checkTokenExpiry = async () => {
     try {
       const isExpiring = await authService.isTokenExpiringSoon();
@@ -303,18 +382,17 @@ export function AuthProvider({ children }) {
     user: state.user,
     loading: state.loading,
     error: state.error,
+    tokenExpiring: state.tokenExpiring, // ✅ NUEVO
 
     // Métodos
     login,
     register,
     logout,
     clearError,
-    refreshTokens, // ✅ NUEVO
-    checkTokenExpiry, // ✅ NUEVO
-    handleTokenExpired, // ✅ NUEVO
-
-    // Estado adicional
-    checkAuthState, // ✅ Para refresh manual del estado
+    refreshTokens,
+    checkTokenExpiry,
+    handleTokenExpired,
+    checkAuthState, // Para refresh manual del estado
   };
 
   return (
